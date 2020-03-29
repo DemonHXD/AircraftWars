@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+.vs/
+cocos2d/
+libcocos2d.pdb

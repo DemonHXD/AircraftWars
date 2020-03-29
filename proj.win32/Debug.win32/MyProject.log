@@ -1,0 +1,5 @@
+﻿  WingAircraft.cpp
+e:\cocos2d-x_project\aircraftwars\proj.win32\wingaircraft.cpp(29): warning C4305: “参数”: 从“double”到“float”截断
+  MyProject.vcxproj -> E:\Cocos2d-x_project\AircraftWars\proj.win32\Debug.win32\MyProject.exe
+  Performing Custom Build Step
+  复制了 0 个文件
