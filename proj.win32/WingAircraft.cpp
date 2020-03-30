@@ -66,3 +66,4 @@ void WingAircraft::shoot(float dt) {
 	//将子弹添加到管理类中
 	BulletManager::getInstance()->addHeroBullet(bullet);
 }
+

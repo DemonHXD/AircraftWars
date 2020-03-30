@@ -228,7 +228,7 @@ bool GameSenceManager::init() {
 	hero->setPosition(Vec2(size.width / 2, hero->getContentSize().height / 2));
 	hero->setTag(HERO);
 	this->addChild(hero, 2);
-	hero->createWingAircraft();
+	
 	////创建左僚机
 	//WingAircraft* leftWa = WingAircraft::create();
 	//leftWa->setPosition(Vec2(hero->getPosition().x - 40, hero->getPosition().y));
@@ -320,7 +320,7 @@ void GameSenceManager::onExit() {
 	生产道具的自定义调度器
 */
 void GameSenceManager::createPropSchedule(float dt) {
-	Porp* porp = Porp::create();
+	Porp* porp = Porp::create((PorpType)(rand() % 2 + 1));
 	porp->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
 	this->addChild(porp, 10);
 	PorpManager::getInstance()->addPorp(porp);
@@ -434,8 +434,18 @@ void GameSenceManager::collisionHeroAndProp() {
 	for (Porp* porp : porpManager->porpList) {
 		bool isCrash = hero->getBoundingBox().intersectsRect(porp->getBoundingBox());
 		if (isCrash) {
-			//捡到道具后加一个防护罩
-			hero->isOpenDefense(true);
+			switch (porp->getType()) {
+			case PorpType::Shield:
+				//捡到防护罩道具后加一个防护罩
+				hero->isOpenDefense(true);
+				break;
+			case PorpType::WingAir:
+				//开启僚机文字动画
+				porp->WingAircraftTextAct();
+				//英雄开启僚机
+				hero->createWingAircraft();
+				break;
+			}
 			porp->setLive(false);//设置道具死亡
 		}
 	}

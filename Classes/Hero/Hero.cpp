@@ -342,7 +342,6 @@ void Hero::die() {
 	开启僚机
 */
 void Hero::createWingAircraft() {
-	//Node* p = _parent;
 	//创建左僚机
 	leftWa = WingAircraft::create();
 	leftWa->setPosition(Vec2(getPosition().x - 60, getPosition().y + 30));
@@ -354,4 +353,32 @@ void Hero::createWingAircraft() {
 	rightWa->setPosition(Vec2(getPosition().x + 60, getPosition().y + 30));
 	rightWa->setScale(0.7f);
 	_parent->addChild(rightWa, 5);
+
+	schedule(schedule_selector(Hero::WingAirUpdate), 1, 5, 15);
+}
+
+/*
+	僚机的调度器
+	僚机开启时间为30s
+	最后五秒会闪烁消失
+*/
+void Hero::WingAirUpdate(float dt) {
+	Blink* blink1 = Blink::create(1.0f, 2);
+	Blink* blink2 = Blink::create(1.0f, 2);
+	//if (leftWa != nullptr && rightWa != nullptr) {
+	//	leftWa->runAction(blink);
+	//	rightWa->runAction(blink);
+	//}
+	leftWa->runAction(blink1);
+	rightWa->runAction(blink2);
+	blinkCount++;
+	//count++;
+	if (blinkCount == 5) {
+		leftWa->removeFromParent();
+		rightWa->removeFromParent();
+		leftWa = nullptr;
+		rightWa = nullptr;
+		blinkCount = 0;
+		unschedule(schedule_selector(Hero::WingAirUpdate));
+	}
 }

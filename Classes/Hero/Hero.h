@@ -18,7 +18,7 @@ private:
 	int blinkCount = 0;//计算闪烁次数
 	bool isShield;//是否拥有防御罩
 	bool isMove;
-	WingAircraft *leftWa, *rightWa;
+	WingAircraft *leftWa = nullptr, *rightWa = nullptr;
 public:
 	~Hero();
 	Hero();
@@ -46,6 +46,8 @@ public:
 	void isOpenDefense(bool isShield);
 	//防护罩的调度器
 	void defenseUpdate(float dt);
+	//僚机的调度器
+	void WingAirUpdate(float dt);
 	//英雄死亡
 	void die();
 	//射击方法

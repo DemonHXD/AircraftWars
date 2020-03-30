@@ -144,7 +144,7 @@ void Enemy::die(){
 */
 void Enemy::shoot(float dt) {
 	float y = getPositionY();
-	y = y + 60 * dt;
+	y = y + 30 * dt;
 	//创建子弹
 	Bullet* bullet = Bullet::create(ENEMY, Missile);
 	//设置子弹的位置:敌机的坐标 + 敌机图片高度的一半
