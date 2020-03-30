@@ -1,6 +1,7 @@
 ﻿#include "Bullet.h"
 #include "BulletManager.h"
-
+#include "AudioEngine.h"
+using namespace experimental;
 Bullet::Bullet(int type, BulletType bulletType)
 	:speed(200), 
 	bulletType(bulletType),
@@ -92,5 +93,26 @@ void Bullet::update(float dt) {
 
 		//将当前子弹从管理类中移除
 		BulletManager::getInstance()->collection(this, type);
+	}
+}
+
+/*
+	发射子弹的声音
+*/
+void Bullet::shootSound(int type) {
+	int bulletEff;
+	switch (type) {
+	case -1:
+		bulletEff = AudioEngine::play2d("sound/enemyShoot.mp3");
+		AudioEngine::setVolume(bulletEff, 0.1);
+		break;	
+	case 1:
+		bulletEff = AudioEngine::play2d("sound/heroShoot.mp3");
+		AudioEngine::setVolume(bulletEff, 0.1);
+		break;	
+	case 2:
+		bulletEff = AudioEngine::play2d("sound/wingAirShoot.mp3");
+		AudioEngine::setVolume(bulletEff, 0.1);
+		break;
 	}
 }

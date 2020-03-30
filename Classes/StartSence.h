@@ -9,6 +9,11 @@ public:
 
 	virtual bool init();
 
+	StartSence();
+	~StartSence();
+
+	void clickMenuSound();
+
 	CREATE_FUNC(StartSence);
 };
 

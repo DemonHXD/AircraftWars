@@ -1,8 +1,10 @@
 ﻿#include "StartSence.h"
 #include "GameSenceManager.h"
 #include "SettingLayer.h"
+#include "AudioEngine.h"
 #include "ui/CocosGUI.h"//UI头文件
 using namespace cocos2d::ui;//UI命名空间
+using namespace experimental;
 USING_NS_CC;
 
 Scene* StartSence::createScene() {
@@ -10,6 +12,13 @@ Scene* StartSence::createScene() {
 	auto layer = StartSence::create();
 	scene->addChild(layer);
 	return scene;
+}
+StartSence::StartSence() {
+
+}
+
+StartSence::~StartSence() {
+	//AudioEngine::end();
 }
 
 bool StartSence::init() {
@@ -29,7 +38,8 @@ bool StartSence::init() {
 	startGameBtn->setPosition(Vec2(size.width / 2, size.height / 2 + 90));
 	this->addChild(startGameBtn, 1);
 	startGameBtn->setTag(1);
-	startGameBtn->addClickEventListener([](Ref*) {
+	startGameBtn->addClickEventListener([this](Ref*) {
+		clickMenuSound();
 		//创建一个新场景
 		Scene* GameSence = GameSenceManager::createScene();
 		//设置一个界面切换的动作，0.5秒的跳动动作
@@ -61,6 +71,8 @@ bool StartSence::init() {
 	this->addChild(aboutBtn, 1);
 
 	settingBtn->addClickEventListener([this, startGameBtn, settingBtn, helpBtn, aboutBtn](Ref*) {
+		//SimpleAudioEngine::getInstance()->playEffect("sound/button.mp3");
+		clickMenuSound();
 		//创建设置界面
 		SettingLayer* settingLayer = SettingLayer::create(this);
 		this->addChild(settingLayer);
@@ -79,4 +91,11 @@ bool StartSence::init() {
 	});
 
 	return true;
+}
+
+/*
+	点击按钮时声音
+*/
+void StartSence::clickMenuSound() {
+	AudioEngine::play2d("sound/button.mp3");
 }

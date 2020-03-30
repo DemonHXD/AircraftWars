@@ -2,6 +2,8 @@
 #include "EnemyManager.h"
 #include "bullet/BulletManager.h"
 #include "bullet/Bullet.h"
+#include "AudioEngine.h"
+using namespace experimental;
 #define ENEMY -1
 Enemy::Enemy(EnemyType type):enemyType(type), speed(30),isLive(true) {
 	//根据不同类型的敌机设置不同的血量
@@ -113,6 +115,9 @@ void Enemy::die(){
 	//分发敌机死亡的消息
 	_eventDispatcher->dispatchCustomEvent("onEnemyDeath", this);
 
+	//播放敌机死亡音效
+	int blastEff = AudioEngine::play2d("sound/enemyBlast.mp3", true);
+
 	isLive = false;
 	//播放死亡动画的时候需要关闭子弹调度器
 	unschedule(schedule_selector(Enemy::shoot));
@@ -129,8 +134,10 @@ void Enemy::die(){
 	//开启动画
 	Animate* animate = Animate::create(ani);
 
-	CallFunc* callFuncAct = CallFunc::create([this]() {
+	CallFunc* callFuncAct = CallFunc::create([this, blastEff]() {
 		EnemyManager::getInstance()->collection(this);
+		//关闭爆炸音效
+		AudioEngine::stop(blastEff);
 	});
 
 	//创建序列动作
@@ -147,6 +154,7 @@ void Enemy::shoot(float dt) {
 	y = y + 30 * dt;
 	//创建子弹
 	Bullet* bullet = Bullet::create(ENEMY, Missile);
+	bullet->shootSound(-1);
 	//设置子弹的位置:敌机的坐标 + 敌机图片高度的一半
 	bullet->setPosition(Vec2(getPositionX(), getPositionY() + 20));
 	//设置子弹的方向

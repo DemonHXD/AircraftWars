@@ -15,6 +15,11 @@ public:
 
 	virtual bool init();
 
+	GameSenceManager();
+	~GameSenceManager();
+
+
+
 	//创建英雄UI
 	void createUi();
 
@@ -42,10 +47,13 @@ public:
 	//检测英雄与道具的碰撞
 	void collisionHeroAndProp();
 
-	//回到开始界面 主菜单
-	void backMenu();
-
 	void addScore(int add_score);
+
+	void clickMenuSound();
+
+	int getBgmID() {
+		return bgmID;
+	}
 
 private:
 	BulletManager* bulletManager;//指向子弹管理类单例的指针
@@ -56,6 +64,7 @@ private:
 	//ShowNumberNode* numberSP;
 	TextAtlas* heroLiveCount;
 	Size size;
+	int bgmID;
 };
 
 #endif // __GameSenceManager_SCENE_H__

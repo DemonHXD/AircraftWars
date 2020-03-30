@@ -1,5 +1,7 @@
 ﻿#include "AppDelegate.h"
 #include "StartSence.h"
+#include "AudioEngine.h"
+using namespace experimental;
 
 USING_NS_CC;
 
@@ -82,15 +84,18 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // run
     director->runWithScene(scene);
 
+	//初始化声音
+	AudioEngine::preload("sound/game_music.mp3");
+
     return true;
 }
 
 // This function will be called when the app is inactive. When comes a phone call,it's be invoked too
 void AppDelegate::applicationDidEnterBackground() {
     Director::getInstance()->stopAnimation();
-
+	
     // if you use SimpleAudioEngine, it must be pause
-    // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+     //SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
 }
 
 // this function will be called when the app is active again
@@ -98,5 +103,5 @@ void AppDelegate::applicationWillEnterForeground() {
     Director::getInstance()->startAnimation();
 
     // if you use SimpleAudioEngine, it must resume here
-    // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+     //SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

@@ -199,11 +199,21 @@ Scene* GameSenceManager::createScene() {
 }
 
 
+GameSenceManager::GameSenceManager() {
+
+}
+
+GameSenceManager::~GameSenceManager() {
+}
 
 bool GameSenceManager::init() {
 	if (!Layer::init()) {
 		return false;
 	}
+
+	//开启背景音乐
+	bgmID = AudioEngine::play2d("sound/game_music.mp3", true);
+	AudioEngine::setVolume(bgmID, 0.3);
 
 	//获取窗口矩形大小(Size:width和height)
 	size = Director::getInstance()->getVisibleSize();
@@ -228,19 +238,6 @@ bool GameSenceManager::init() {
 	hero->setPosition(Vec2(size.width / 2, hero->getContentSize().height / 2));
 	hero->setTag(HERO);
 	this->addChild(hero, 2);
-	
-	////创建左僚机
-	//WingAircraft* leftWa = WingAircraft::create();
-	//leftWa->setPosition(Vec2(hero->getPosition().x - 40, hero->getPosition().y));
-	//this->addChild(leftWa, 5);
-
-	////创建右僚机
-	//WingAircraft* rightWa = WingAircraft::create();
-	//leftWa->setPosition(Vec2(hero->getPosition().x + 40, hero->getPosition().y));
-	//this->addChild(rightWa, 5);
-	
-
-	//hero->isOpenDefense(0.5f, true);
 
 	//创建scoreSP精灵
 	Sprite* scoreSP = Sprite::create("image/ui/Score.png");
@@ -269,6 +266,9 @@ bool GameSenceManager::init() {
 	return true;
 }
 
+/*
+	刷新分数
+*/
 void GameSenceManager::addScore(int add_score) {
 	//分数累加
 	score += add_score;
@@ -358,6 +358,9 @@ void GameSenceManager::createUi() {
 
 	//给暂停按钮添加点击事件
 	pauseBtn->addClickEventListener([this, hero, pauseBtn](Ref*){
+		//背景音乐暂停
+		AudioEngine::pause(bgmID);
+		clickMenuSound();
 		//游戏暂停
 		Director::getInstance()->pause();
 		//英雄不可移动
@@ -389,11 +392,7 @@ void GameSenceManager::createEnemy(float dt) {
 
 
 void GameSenceManager::update(float dt) {
-	//实时刷新分数
-	/*auto scoreSP = (Sprite *)this->getChildByTag(SCORESP);
-	numberSP->f_ShowNumber(score);
-	numberSP->setPosition(Vec2(scoreSP->getContentSize().width + (numberSP->getNumLenght() - 1) * 30, scoreSP->getContentSize().height / 2));*/
-
+	
 	//检测子弹与敌机的碰撞
 	collisionBulletAndEenmy();
 	//检测英雄与敌机的碰撞
@@ -473,15 +472,8 @@ void GameSenceManager::collisionHeroAndEenmyBullet() {
 }
 
 /*
-	回到主菜单
+	点击按钮时声音
 */
-void GameSenceManager::backMenu() {
-	//创建一个新场景
-	//Scene* startSence = StartSence::createScene();
-	//设置一个界面切换的动作，0.5秒的跳动动作
-	//auto reSence = TransitionJumpZoom::create(startSence);
-	//Director::getInstance()->popScene();
-	//游戏继续
-	//
-	
+void GameSenceManager::clickMenuSound() {
+	AudioEngine::play2d("sound/button.mp3");
 }

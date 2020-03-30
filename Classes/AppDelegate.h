@@ -1,8 +1,10 @@
-#ifndef  _APP_DELEGATE_H_
+﻿#ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-
+//音乐声音头文件
+//#include "SimpleAudioEngine.h"
+//using namespace CocosDenshion;
 /**
 @brief    The cocos2d Application.
 
@@ -34,6 +36,11 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+	/*
+		初始化声音
+	*/
+	//void initSound();
 };
 
 #endif // _APP_DELEGATE_H_

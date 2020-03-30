@@ -1,6 +1,8 @@
 ﻿#include "SettingLayer.h"
 #include "StartSence.h"
 #include "ui/CocosGUI.h"
+#include "AudioEngine.h"
+using namespace experimental;
 using namespace cocos2d::ui;
 SettingLayer* SettingLayer::create(StartSence* startSence) {
 	SettingLayer *ret = new (std::nothrow)SettingLayer(startSence);
@@ -17,7 +19,6 @@ SettingLayer::SettingLayer(StartSence* startSence):startSence(startSence) {
 
 }
 SettingLayer::~SettingLayer() {
-
 }
 
 bool SettingLayer::init() {
@@ -42,6 +43,7 @@ bool SettingLayer::init() {
 	Button* helpBtn = (Button*)startSence->getChildByTag(3);
 	Button* aboutBtn = (Button*)startSence->getChildByTag(4);
 	closeBtn->addClickEventListener([this, startBtn, settingBtn, helpBtn, aboutBtn](Ref*) {
+		clickMenuSound();
 		//移出暂停层
 		removeAllChildren();
 
@@ -59,27 +61,106 @@ bool SettingLayer::init() {
 	});
 
 	//开启或关闭声音精灵
-	Sprite* openCloseSoundSp = Sprite::create("image/ui/open_close_sound.png");
-	openCloseSoundSp->setPosition(Vec2(size.width / 2 - 60,size.height / 2 + 80));
-	//openCloseSoundSp->setScale(0.7f);
+	openCloseSoundSp = Sprite::create("image/ui/open_close_sound.png");
+	openCloseSoundSp->setPosition(Vec2(size.width / 2 - 60, size.height / 2 + 80));
 	this->addChild(openCloseSoundSp, 1);
 
 	//开启或关闭音效精灵
-	Sprite* openCloseSoundEffSp = Sprite::create("image/ui/open_close_sound_eff.png");
-	openCloseSoundEffSp->setPosition(Vec2(size.width / 2 - 60,size.height / 2));
-	//openCloseSoundEffSp->setScale(0.7f);
+	openCloseSoundEffSp = Sprite::create("image/ui/open_close_sound_eff.png");
+	openCloseSoundEffSp->setPosition(Vec2(size.width / 2 - 60, size.height / 2));
 	this->addChild(openCloseSoundEffSp, 1);
 
-	//声音按钮
-	Button* soundBtn = Button::create("image/ui/soundOn.png");
-	soundBtn->setPosition(Vec2(size.width / 2 + openCloseSoundSp->getContentSize().width - 90, 
-		size.height / 2 + 80));
-	this->addChild(soundBtn, 1);
+	initSoundEff();
+	initBGMusic();
 
-	//音效按钮
-	Button* soundEffBtn = Button::create("image/ui/musicOn.png");
-	soundEffBtn->setPosition(Vec2(size.width / 2 + openCloseSoundEffSp->getContentSize().width - 90,
-		size.height / 2));
-	this->addChild(soundEffBtn, 1);
+	
+
 	return true;
+}
+
+/*
+	初始化音效
+*/
+void SettingLayer::initSoundEff() {
+	Size size = Director::getInstance()->getVisibleSize();
+	//音效开按钮
+	Button* soundEffOpenBtn = Button::create("image/ui/musicOn.png");
+	soundEffOpenBtn->setPosition(Vec2(size.width / 2 + openCloseSoundEffSp->getContentSize().width - 90,
+		size.height / 2));
+	this->addChild(soundEffOpenBtn, 1);
+
+	//音效关按钮
+	Button* soundEffCloseBtn = Button::create("image/ui/musicOff.png");
+	soundEffCloseBtn->setPosition(Vec2(size.width / 2 + openCloseSoundEffSp->getContentSize().width - 90,
+		size.height / 2));
+	this->addChild(soundEffCloseBtn, 1);
+	//默认是开启音效
+	soundEffCloseBtn->setVisible(false);
+
+	//开启音效按钮事件
+	soundEffOpenBtn->addClickEventListener([this, soundEffOpenBtn, soundEffCloseBtn](Ref*) {
+		clickMenuSound();
+		//隐藏开始音效按钮
+		soundEffOpenBtn->setVisible(false);
+		//显示关闭音效按钮
+		soundEffCloseBtn->setVisible(true);
+		//关闭所有音效
+		AudioEngine::stopAll();
+	});
+
+	//关闭音效按钮事件
+	soundEffCloseBtn->addClickEventListener([this, soundEffCloseBtn, soundEffOpenBtn](Ref*) {
+		clickMenuSound();
+		//显示开始音效按钮
+		soundEffOpenBtn->setVisible(true);
+		//隐藏关闭音效按钮
+		soundEffCloseBtn->setVisible(false);
+		//关闭所有音效
+		AudioEngine::resumeAll();
+	});
+}
+
+/*
+	初始化背景音乐
+*/
+void SettingLayer::initBGMusic() {
+	Size size = Director::getInstance()->getVisibleSize();
+
+	//背景音乐开按钮
+	Button* soundOpenBtn = Button::create("image/ui/soundOn.png");
+	soundOpenBtn->setPosition(Vec2(size.width / 2 + openCloseSoundSp->getContentSize().width - 90,
+		size.height / 2 + 80));
+	this->addChild(soundOpenBtn, 1);
+	
+	//背景音乐关按钮
+	Button* soundCloseBtn = Button::create("image/ui/soundOff.png");
+	soundCloseBtn->setPosition(Vec2(size.width / 2 + openCloseSoundSp->getContentSize().width - 90,
+		size.height / 2 + 80));
+	soundCloseBtn->setVisible(false);
+	this->addChild(soundCloseBtn, 1);
+
+	//开启音效按钮事件
+	soundOpenBtn->addClickEventListener([this, soundOpenBtn, soundCloseBtn](Ref*) {
+		clickMenuSound();
+		//隐藏开始音效按钮
+		soundOpenBtn->setVisible(false);
+		//显示关闭音效按钮
+		soundCloseBtn->setVisible(true);
+	});
+
+	//关闭音效按钮事件
+	soundCloseBtn->addClickEventListener([this, soundCloseBtn, soundOpenBtn](Ref*) {
+		clickMenuSound();
+		//显示开始音效按钮
+		soundOpenBtn->setVisible(true);
+		//隐藏关闭音效按钮
+		soundCloseBtn->setVisible(false);
+	});
+}
+
+/*
+	点击按钮时声音
+*/
+void SettingLayer::clickMenuSound() {
+	AudioEngine::play2d("sound/button.mp3");
 }

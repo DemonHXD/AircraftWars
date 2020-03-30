@@ -4,6 +4,8 @@
 #include "StartSence.h"
 #include "EndSence.h"
 #include "cocos2d.h"
+#include "AudioEngine.h"
+using namespace experimental;
 using namespace cocos2d;
 using namespace cocos2d::ui;//UI命名空间
 
@@ -11,7 +13,7 @@ PauseLayer::PauseLayer(GameSenceManager *gameSenceManager):gameSenceManager(game
 
 }
 PauseLayer::~PauseLayer() {
-
+	//AudioEngine::end();
 }
 
 PauseLayer* PauseLayer::create(GameSenceManager *gameSenceManager) {
@@ -53,10 +55,16 @@ bool PauseLayer::init() {
 	this->addChild(resumeBtn, 5);
 	//获取父节点的暂停按钮
 	Button* pauseBtn = (Button*)gameSenceManager->getChildByTag(2);
+	//获取父节点的背景音乐ID
+	int bgmID = gameSenceManager->getBgmID();
 	//获取父节点的英雄
-	resumeBtn->addClickEventListener([this, pauseBtn](Ref*) {
+	resumeBtn->addClickEventListener([this, pauseBtn, eventListener, bgmID](Ref*) {
+		eventListener->setSwallowTouches(false);
+		clickMenuSound();
 		//移出暂停层
 		removeAllChildren();
+		//恢复背景音乐
+		AudioEngine::resume(bgmID);
 		//显示暂停按钮
 		pauseBtn->setVisible(true);
 		//游戏继续
@@ -69,6 +77,7 @@ bool PauseLayer::init() {
 	repateBtn->setScale(0.7f);
 	this->addChild(repateBtn, 5);
 	repateBtn->addClickEventListener([this](Ref*) {
+		clickMenuSound();
 		Director::getInstance()->resume();
 		Director::getInstance()->replaceScene(GameSenceManager::createScene());
 	});
@@ -79,6 +88,7 @@ bool PauseLayer::init() {
 	finishBtn->setScale(0.7f);
 	this->addChild(finishBtn, 5);
 	finishBtn->addClickEventListener([this](Ref*) {
+		clickMenuSound();
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
 		Director::getInstance()->replaceScene(EndSence::createScene());
@@ -90,6 +100,7 @@ bool PauseLayer::init() {
 	backMenuBtn->setScale(0.7f);
 	this->addChild(backMenuBtn, 5);
 	backMenuBtn->addClickEventListener([this](Ref*) {
+		clickMenuSound();
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
 		Director::getInstance()->replaceScene(StartSence::createScene());
@@ -98,4 +109,11 @@ bool PauseLayer::init() {
 	
 
 	return true;
+}
+
+/*
+	点击按钮时声音
+*/
+void PauseLayer::clickMenuSound() {
+	AudioEngine::play2d("sound/button.mp3");
 }
