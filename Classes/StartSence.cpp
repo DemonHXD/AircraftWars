@@ -1,6 +1,7 @@
 ﻿#include "StartSence.h"
 #include "GameSenceManager.h"
 #include "SettingLayer.h"
+#include "RankLayer.h"
 #include "AudioUtil.h"
 #include "ui/CocosGUI.h"//UI头文件
 using namespace cocos2d::ui;//UI命名空间
@@ -24,7 +25,8 @@ bool StartSence::init() {
 	if (!Layer::init()) {
 		return false;
 	}
-
+	//给当前类设置个tag
+	this->setTag(101);
 	Size size = Director::getInstance()->getVisibleSize();
 
 	//创建背景
@@ -93,6 +95,23 @@ bool StartSence::init() {
 	rankBtn->setPosition(Vec2(size.width - 40, size.height - 70));
 	rankBtn->setScale(0.7f);
 	this->addChild(rankBtn, 10);
+	rankBtn->addClickEventListener([this, startGameBtn, settingBtn, helpBtn, aboutBtn](Ref*) {
+		AudioUtil::getInstence()->buttonClickSound();
+		//创建设置界面
+		RankLayer* rankLayer = RankLayer::create(this);
+		this->addChild(rankLayer);
 
+		//隐藏开始游戏按钮
+		startGameBtn->setVisible(false);
+
+		//隐藏设置按钮
+		settingBtn->setVisible(false);
+
+		//隐藏帮助按钮
+		helpBtn->setVisible(false);
+
+		//隐藏关于我们按钮
+		aboutBtn->setVisible(false);
+	});
 	return true;
 }

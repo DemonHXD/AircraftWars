@@ -2,6 +2,7 @@
 #define __RankLayer_H__
 #include "cocos2d.h"
 using namespace cocos2d;
+
 class RankLayer : public Layer{
 public:
 	RankLayer(Layer *sence);
@@ -10,6 +11,8 @@ public:
 	bool init() override;
 private:
 	Layer *sence;
+	
+	Size size;
 };
 #endif // !__RankLayer_H__
 

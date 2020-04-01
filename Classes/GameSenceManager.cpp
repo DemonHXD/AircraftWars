@@ -218,7 +218,8 @@ bool GameSenceManager::init() {
 	if (!Layer::init()) {
 		return false;
 	}
-
+	//给当前类设置个tag
+	this->setTag(100);
 	//获取窗口矩形大小(Size:width和height)
 	size = Director::getInstance()->getVisibleSize();
 
@@ -318,6 +319,10 @@ void GameSenceManager::onEnter() {
 		Hero* userData = (Hero*)event->getUserData();
 		//设置英雄的生命值 
 		heroLiveCount->setString(std::to_string(userData->getLiveCount()));
+		if (userData->getLiveCount() == 0) {
+			userData->die();
+			UserDefault::getInstance()->setIntegerForKey("score", score);
+		}
 	});
 }
 
@@ -495,12 +500,12 @@ void GameSenceManager::collisionHeroAndEenmyBullet() {
 		if (isCrash) {
 			bullet->setLive(false);//设置子弹死亡
 			if (!hero->getShield()) {//如果没有防护罩
-				if (hero->getLiveCount() == 0) {
-					//进入游戏结束场景
-				} else {
+				//if (hero->getLiveCount() == 0) {
+				//	//进入游戏结束场景
+				//} else {
 					//英雄死亡一次
 					hero->hit();
-				}
+				////}
 			}
 		}
 	}

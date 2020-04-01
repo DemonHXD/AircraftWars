@@ -77,6 +77,7 @@ bool PauseLayer::init() {
 	this->addChild(repateBtn, 5);
 	repateBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
+		UserDefault::getInstance()->setIntegerForKey("score", gameSenceManager->getScore());
 		Director::getInstance()->resume();
 		Director::getInstance()->replaceScene(GameSenceManager::createScene());
 	});
@@ -88,6 +89,8 @@ bool PauseLayer::init() {
 	this->addChild(finishBtn, 5);
 	finishBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
+		AudioUtil::getInstence()->audioPause();
+		UserDefault::getInstance()->setIntegerForKey("score", gameSenceManager->getScore());
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
 		Director::getInstance()->replaceScene(EndSence::createScene());
@@ -100,6 +103,7 @@ bool PauseLayer::init() {
 	this->addChild(backMenuBtn, 5);
 	backMenuBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
+		UserDefault::getInstance()->setIntegerForKey("score", gameSenceManager->getScore());
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
 		Director::getInstance()->replaceScene(StartSence::createScene());
