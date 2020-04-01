@@ -6,18 +6,15 @@
 #include "Enemy/EnemyManager.h"
 #include "Bullet/BulletManager.h"
 #include "PorpManager.h"
-#include "ShowNumberNode.h"
-#include "NumberSprite.h"
 #include "Porp.h"
-#include "AudioEngine.h"
+#include "AudioUtil.h"
 #include "PauseLayer.h"
 #include "StartSence.h"
 #include "WingAircraft.h"
+#include "RankLayer.h"
 
 //#include "ui/CocosGUI.h"//UI头文件
 //using namespace cocos2d::ui;//UI命名空间
-
-using namespace experimental;
 
 #define SCORESP 30
 #define HERO 50
@@ -189,6 +186,17 @@ unscheduleAllCallbacks:关闭所有调度器
 		2.实现开始游戏场景/结束游戏场景/进行场景之间的转换
 */
 
+/*
+	构造函数 - 析构函数 - init
+	节点::create():构造(new) -- init(初始化) -- 析构函数
+
+	新场景创建create:新场景构造 -- 新场景init -- 旧场景析构
+
+	onEnter:当进入舞台/场景时调用(addChild)
+	注意:在使用onEnter前必须先显示调用父类的onEnter;
+	onExit:当退出舞台/场景的时调用(remove)
+	注意:在使用onExit前必须先显示调用父类的onExit;
+*/
 
 
 Scene* GameSenceManager::createScene() {
@@ -210,10 +218,6 @@ bool GameSenceManager::init() {
 	if (!Layer::init()) {
 		return false;
 	}
-
-	//开启背景音乐
-	bgmID = AudioEngine::play2d("sound/game_music.mp3", true);
-	AudioEngine::setVolume(bgmID, 0.3);
 
 	//获取窗口矩形大小(Size:width和height)
 	size = Director::getInstance()->getVisibleSize();
@@ -262,7 +266,12 @@ bool GameSenceManager::init() {
 	//开启创建敌机的调度器
 	schedule(schedule_selector(GameSenceManager::createEnemy), 3, -1, 1);
 
-	
+	//创建血条
+	//LoadingBar* hpBar = LoadingBar::create("image/ui/blood.png");//1.图片路径  2.LOCAL/PLIST
+	////设置百分比 
+	//hpBar->setPosition(Vec2(size.width / 2, size.height / 2));
+	//hpBar->setPercent(80);
+	//this->addChild(hpBar);
 	return true;
 }
 
@@ -281,7 +290,14 @@ void GameSenceManager::addScore(int add_score) {
 }
 
 void GameSenceManager::onEnter() {
+	//显示调用父类的onEnter
 	Layer::onEnter();
+
+	//开启背景音乐
+	AudioUtil::getInstence()->gameBGMSound();
+	//bgmID = AudioEngine::play2d("sound/game_music.mp3", true);
+	//AudioEngine::setVolume(bgmID, 0.3);
+
 	//自定义事件监听器
 	//监听敌机死亡的消息 - 加分
 	//1.添加自定义事件监听器
@@ -306,14 +322,21 @@ void GameSenceManager::onEnter() {
 }
 
 void GameSenceManager::onExit() {
+	//显示调用父类的onExit
 	Layer::onExit();
 	BulletManager::getInstance()->clearList();
 	EnemyManager::getInstance()->clearList();
 	PorpManager::getInstance()->clearList();
 
+	//关闭声音
+	//AudioEngine::stopAll();
+
 	//移出自定义监听器
 	_eventDispatcher->removeCustomEventListeners("onEnemyDeath");
 	_eventDispatcher->removeCustomEventListeners("onHeroDeath");
+
+	//发送分数给结束场景
+	_eventDispatcher->dispatchCustomEvent("finalScoreDeath", this);
 }
 
 /*
@@ -327,7 +350,7 @@ void GameSenceManager::createPropSchedule(float dt) {
 }
 
 /*
-	创建英雄UI
+	创建UI
 */
 void GameSenceManager::createUi() {
 	Sprite* heroUi = Sprite::create("image/hero/hero1_1.png");
@@ -355,24 +378,36 @@ void GameSenceManager::createUi() {
 	this->addChild(pauseBtn, 10);
 
 	Hero* hero = (Hero*)this->getChildByTag(HERO);
-
 	//给暂停按钮添加点击事件
 	pauseBtn->addClickEventListener([this, hero, pauseBtn](Ref*){
 		//背景音乐暂停
-		AudioEngine::pause(bgmID);
-		clickMenuSound();
+		AudioUtil::getInstence()->audioPause();
+		AudioUtil::getInstence()->buttonClickSound();
 		//游戏暂停
 		Director::getInstance()->pause();
-		//英雄不可移动
-		//hero->setMove(false);
 		//创建暂停界面
 		PauseLayer* pauseLayer = PauseLayer::create(this);
-		//pauseLayer->setTag(1);//设置标签
 		this->addChild(pauseLayer, 10);
 		//隐藏暂停按钮
 		pauseBtn->setVisible(false);
 	});
 
+	//创建排行榜按钮
+	Button* rankBtn = Button::create("image/ui/rank_normal.png", "image/ui/rank_pressed.png");
+	rankBtn->setPosition(Vec2(size.width - 100, size.height - 70));
+	rankBtn->setScale(0.7f);
+	rankBtn->setTag(3);
+	this->addChild(rankBtn, 10);
+	rankBtn->addClickEventListener([this](Ref*) {
+		//背景音乐暂停
+		AudioUtil::getInstence()->audioPause();
+		AudioUtil::getInstence()->buttonClickSound();
+		//游戏暂停
+		Director::getInstance()->pause();
+		//创建暂停界面
+		RankLayer* rankLayer = RankLayer::create(this);
+		this->addChild(rankLayer, 10);
+	});
 }
 
 /*
@@ -469,11 +504,4 @@ void GameSenceManager::collisionHeroAndEenmyBullet() {
 			}
 		}
 	}
-}
-
-/*
-	点击按钮时声音
-*/
-void GameSenceManager::clickMenuSound() {
-	AudioEngine::play2d("sound/button.mp3");
 }

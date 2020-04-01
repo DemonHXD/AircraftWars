@@ -1,7 +1,6 @@
 ﻿#include "Bullet.h"
 #include "BulletManager.h"
-#include "AudioEngine.h"
-using namespace experimental;
+#include "AudioUtil.h"
 Bullet::Bullet(int type, BulletType bulletType)
 	:speed(200), 
 	bulletType(bulletType),
@@ -103,16 +102,13 @@ void Bullet::shootSound(int type) {
 	int bulletEff;
 	switch (type) {
 	case -1:
-		bulletEff = AudioEngine::play2d("sound/enemyShoot.mp3");
-		AudioEngine::setVolume(bulletEff, 0.1);
+		AudioUtil::getInstence()->enemyShootSound();
 		break;	
 	case 1:
-		bulletEff = AudioEngine::play2d("sound/heroShoot.mp3");
-		AudioEngine::setVolume(bulletEff, 0.1);
+		AudioUtil::getInstence()->heroShoottSound();
 		break;	
 	case 2:
-		bulletEff = AudioEngine::play2d("sound/wingAirShoot.mp3");
-		AudioEngine::setVolume(bulletEff, 0.1);
+		AudioUtil::getInstence()->wingAirShoot();
 		break;
 	}
 }

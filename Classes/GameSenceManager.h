@@ -29,8 +29,9 @@ public:
 	//调度的方法
 	void createEnemy(float dt);//dt:从上一次调用到这一次调用的时间
 
-	virtual void onEnter();
-	virtual void onExit();
+	void onEnter() override;
+
+	void onExit() override;
 
 	//重写update方法
 	void update(float dt) override;
@@ -49,7 +50,9 @@ public:
 
 	void addScore(int add_score);
 
-	void clickMenuSound();
+	int getScore() {
+		return score;
+	}
 
 	int getBgmID() {
 		return bgmID;

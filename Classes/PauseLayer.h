@@ -9,7 +9,6 @@ public:
 	~PauseLayer();
 	static PauseLayer* create(GameSenceManager *gameSenceManager);
 	bool init() override;
-	void clickMenuSound();
 private:
 	GameSenceManager *gameSenceManager;
 };

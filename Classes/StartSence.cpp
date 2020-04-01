@@ -1,10 +1,9 @@
 ﻿#include "StartSence.h"
 #include "GameSenceManager.h"
 #include "SettingLayer.h"
-#include "AudioEngine.h"
+#include "AudioUtil.h"
 #include "ui/CocosGUI.h"//UI头文件
 using namespace cocos2d::ui;//UI命名空间
-using namespace experimental;
 USING_NS_CC;
 
 Scene* StartSence::createScene() {
@@ -39,7 +38,7 @@ bool StartSence::init() {
 	this->addChild(startGameBtn, 1);
 	startGameBtn->setTag(1);
 	startGameBtn->addClickEventListener([this](Ref*) {
-		clickMenuSound();
+		AudioUtil::getInstence()->buttonClickSound();
 		//创建一个新场景
 		Scene* GameSence = GameSenceManager::createScene();
 		//设置一个界面切换的动作，0.5秒的跳动动作
@@ -71,8 +70,7 @@ bool StartSence::init() {
 	this->addChild(aboutBtn, 1);
 
 	settingBtn->addClickEventListener([this, startGameBtn, settingBtn, helpBtn, aboutBtn](Ref*) {
-		//SimpleAudioEngine::getInstance()->playEffect("sound/button.mp3");
-		clickMenuSound();
+		AudioUtil::getInstence()->buttonClickSound();
 		//创建设置界面
 		SettingLayer* settingLayer = SettingLayer::create(this);
 		this->addChild(settingLayer);
@@ -90,12 +88,11 @@ bool StartSence::init() {
 		aboutBtn->setVisible(false);
 	});
 
-	return true;
-}
+	//创建排行榜按钮
+	Button* rankBtn = Button::create("image/ui/rank_normal.png", "image/ui/rank_pressed.png");
+	rankBtn->setPosition(Vec2(size.width - 40, size.height - 70));
+	rankBtn->setScale(0.7f);
+	this->addChild(rankBtn, 10);
 
-/*
-	点击按钮时声音
-*/
-void StartSence::clickMenuSound() {
-	AudioEngine::play2d("sound/button.mp3");
+	return true;
 }

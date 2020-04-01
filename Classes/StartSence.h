@@ -12,8 +12,6 @@ public:
 	StartSence();
 	~StartSence();
 
-	void clickMenuSound();
-
 	CREATE_FUNC(StartSence);
 };
 

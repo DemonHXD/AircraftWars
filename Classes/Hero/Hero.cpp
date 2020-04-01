@@ -1,6 +1,7 @@
 ﻿#include "Hero.h"
 #include "Bullet/Bullet.h"
 #include "Bullet/BulletManager.h"
+#include "EndSence.h"
 
 const float PI = 3.1415926;//圆周率
 bool flag = true;
@@ -181,9 +182,9 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 
 		//判断飞机的位置应该在(0-480)之间
 		if (pos.x >= 480) {
-			pos = Vec2(480, pos.y);
+			pos = Vec2(480 - getContentSize().width / 2, pos.y);
 		} else if (pos.x <= 0) {
-			pos = Vec2(0, pos.y);
+			pos = Vec2(getContentSize().width / 2, pos.y);
 		}
 
 		//判断飞机的y轴可移动的值应该在(0-800)之间
@@ -331,6 +332,9 @@ void Hero::die() {
 
 	CallFunc* callFuncAct = CallFunc::create([this]() {
 		this->removeFromParent();
+		Director::getInstance()->resume();
+		//切换场景(当前场景被销毁，新场景被创建)
+		Director::getInstance()->replaceScene(EndSence::createScene());
 	});
 
 	//创建序列动作

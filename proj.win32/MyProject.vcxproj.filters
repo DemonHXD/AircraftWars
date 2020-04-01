@@ -34,6 +34,9 @@
     <Filter Include="src\Sence">
       <UniqueIdentifier>{0f96239c-8d16-4186-9096-a3bbdadca1fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{55453b31-f941-41c0-9d4b-aff0638ca33e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,12 +66,6 @@
     <ClCompile Include="..\Classes\GameSenceManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\NumberSprite.cpp">
-      <Filter>src\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\ShowNumberNode.cpp">
-      <Filter>src\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Porp.cpp">
       <Filter>src\porp</Filter>
     </ClCompile>
@@ -88,6 +85,12 @@
       <Filter>src\hero</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\SettingLayer.cpp">
+      <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioUtil.cpp">
+      <Filter>src\util</Filter>
+    </ClCompile>
+    <ClCompile Include="RankLayer.cpp">
       <Filter>src\layer</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,12 +122,6 @@
     <ClInclude Include="..\Classes\GameSenceManager.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\NumberSprite.h">
-      <Filter>src\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\ShowNumberNode.h">
-      <Filter>src\ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Porp.h">
       <Filter>src\porp</Filter>
     </ClInclude>
@@ -145,6 +142,12 @@
     </ClInclude>
     <ClInclude Include="WingAircraft.h">
       <Filter>src\hero</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AudioUtil.h">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\RankLayer.h">
+      <Filter>src\layer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ AppDelegate::AppDelegate() {
 
 AppDelegate::~AppDelegate() 
 {
+	//AudioEngine::end();
 }
 
 //if you want a different context,just modify the value of glContextAttrs
@@ -81,11 +82,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // create a scene. it's an autorelease object
     auto scene = StartSence::createScene();
 
+	//初始化本地信息状态
+	UserDefault::getInstance()->setBoolForKey("effSound", true);
+	UserDefault::getInstance()->setBoolForKey("bgmSound", true);
+
     // run
     director->runWithScene(scene);
 
-	//初始化声音
-	AudioEngine::preload("sound/game_music.mp3");
+
+	
 
     return true;
 }

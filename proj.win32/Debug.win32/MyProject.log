@@ -1,11 +1,4 @@
-﻿  Bullet.cpp
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(61): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
-  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(66): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
-  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(107): warning C4305: “参数”: 从“double”到“float”截断
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(111): warning C4305: “参数”: 从“double”到“float”截断
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(115): warning C4305: “参数”: 从“double”到“float”截断
+﻿  RankLayer.cpp
   MyProject.vcxproj -> E:\Cocos2d-x_project\AircraftWars\proj.win32\Debug.win32\MyProject.exe
   Performing Custom Build Step
   复制了 0 个文件
