@@ -48,9 +48,6 @@
     <ClCompile Include="..\Classes\Bg\Bg.cpp">
       <Filter>src\bg</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Enemy\Enemy.cpp">
-      <Filter>src\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Enemy\EnemyManager.cpp">
       <Filter>src\enemy</Filter>
     </ClCompile>
@@ -63,35 +60,38 @@
     <ClCompile Include="..\Classes\Bullet\Bullet.cpp">
       <Filter>src\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\GameSenceManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Porp.cpp">
-      <Filter>src\porp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PorpManager.cpp">
-      <Filter>src\porp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\PauseLayer.cpp">
-      <Filter>src\layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\StartSence.cpp">
-      <Filter>src\Sence</Filter>
-    </ClCompile>
-    <ClCompile Include="EndSence.cpp">
-      <Filter>src\Sence</Filter>
-    </ClCompile>
-    <ClCompile Include="WingAircraft.cpp">
+    <ClCompile Include="..\Classes\Hero\WingAircraft.cpp">
       <Filter>src\hero</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\SettingLayer.cpp">
-      <Filter>src\layer</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioUtil.cpp">
+    <ClCompile Include="..\Classes\Utils\AudioUtil.cpp">
       <Filter>src\util</Filter>
     </ClCompile>
-    <ClCompile Include="RankLayer.cpp">
+    <ClCompile Include="..\Classes\Layer\PauseLayer.cpp">
       <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Layer\RankLayer.cpp">
+      <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Layer\SettingLayer.cpp">
+      <Filter>src\layer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sence\EndSence.cpp">
+      <Filter>src\Sence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sence\StartSence.cpp">
+      <Filter>src\Sence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Prop\Porp.cpp">
+      <Filter>src\porp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Prop\PorpManager.cpp">
+      <Filter>src\porp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sence\GameSence.cpp">
+      <Filter>src\Sence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Enemy\Enemy.cpp">
+      <Filter>src\enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +103,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Bg\Bg.h">
       <Filter>src\bg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Enemy\Enemy.h">
-      <Filter>src\enemy</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Enemy\EnemyManager.h">
       <Filter>src\enemy</Filter>
@@ -119,40 +116,46 @@
     <ClInclude Include="..\Classes\Bullet\Bullet.h">
       <Filter>src\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\GameSenceManager.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Porp.h">
-      <Filter>src\porp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PorpManager.h">
-      <Filter>src\porp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\PauseLayer.h">
-      <Filter>src\layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\SettingLayer.h">
-      <Filter>src\layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\StartSence.h">
-      <Filter>src\Sence</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\EndSence.h">
-      <Filter>src\Sence</Filter>
-    </ClInclude>
-    <ClInclude Include="WingAircraft.h">
+    <ClInclude Include="..\Classes\Hero\WingAircraft.h">
       <Filter>src\hero</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\AudioUtil.h">
+    <ClInclude Include="..\Classes\Utils\AudioUtil.h">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\RankLayer.h">
+    <ClInclude Include="..\Classes\Layer\PauseLayer.h">
       <Filter>src\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Layer\RankLayer.h">
+      <Filter>src\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Layer\SettingLayer.h">
+      <Filter>src\layer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sence\EndSence.h">
+      <Filter>src\Sence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sence\StartSence.h">
+      <Filter>src\Sence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Prop\Porp.h">
+      <Filter>src\porp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Prop\PorpManager.h">
+      <Filter>src\porp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sence\GameSence.h">
+      <Filter>src\Sence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Enemy\Enemy.h">
+      <Filter>src\enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
 </Project>

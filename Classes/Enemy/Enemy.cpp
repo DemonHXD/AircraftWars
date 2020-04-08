@@ -1,7 +1,8 @@
 ﻿#include "Enemy.h"
 #include "EnemyManager.h"
-#include "bullet/BulletManager.h"
-#include "bullet/Bullet.h"
+#include "Bullet/Bullet.h"
+#include "Bullet/BulletManager.h"
+#include "Utils/AudioUtil.h"
 #include "AudioEngine.h"
 using namespace experimental;
 #define ENEMY -1

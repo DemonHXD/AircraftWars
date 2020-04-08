@@ -1,4 +1,11 @@
-﻿  RankLayer.cpp
+﻿  Bullet.cpp
+e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(60): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
+  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
+e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(65): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
+  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
+e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(102): warning C4101: “bulletEff”: 未引用的局部变量
+AppDelegate.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/SAFESEH”规范)
+    正在创建库 E:\Cocos2d-x_project\AircraftWars\proj.win32\Debug.win32\MyProject.lib 和对象 E:\Cocos2d-x_project\AircraftWars\proj.win32\Debug.win32\MyProject.exp
   MyProject.vcxproj -> E:\Cocos2d-x_project\AircraftWars\proj.win32\Debug.win32\MyProject.exe
   Performing Custom Build Step
   复制了 0 个文件

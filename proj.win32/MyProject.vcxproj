@@ -153,38 +153,38 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Bullet\BulletManager.cpp" />
     <ClCompile Include="..\Classes\Enemy\Enemy.cpp" />
     <ClCompile Include="..\Classes\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="..\Classes\GameSenceManager.cpp" />
     <ClCompile Include="..\Classes\Hero\Hero.cpp" />
-    <ClCompile Include="..\Classes\PauseLayer.cpp" />
-    <ClCompile Include="..\Classes\Porp.cpp" />
-    <ClCompile Include="..\Classes\PorpManager.cpp" />
-    <ClCompile Include="..\Classes\SettingLayer.cpp" />
-    <ClCompile Include="..\Classes\StartSence.cpp" />
-    <ClCompile Include="AudioUtil.cpp" />
-    <ClCompile Include="EndSence.cpp" />
+    <ClCompile Include="..\Classes\Hero\WingAircraft.cpp" />
+    <ClCompile Include="..\Classes\Layer\PauseLayer.cpp" />
+    <ClCompile Include="..\Classes\Layer\RankLayer.cpp" />
+    <ClCompile Include="..\Classes\Layer\SettingLayer.cpp" />
+    <ClCompile Include="..\Classes\Prop\Porp.cpp" />
+    <ClCompile Include="..\Classes\Prop\PorpManager.cpp" />
+    <ClCompile Include="..\Classes\Sence\EndSence.cpp" />
+    <ClCompile Include="..\Classes\Sence\GameSence.cpp" />
+    <ClCompile Include="..\Classes\Sence\StartSence.cpp" />
+    <ClCompile Include="..\Classes\Utils\AudioUtil.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RankLayer.cpp" />
-    <ClCompile Include="WingAircraft.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\AudioUtil.h" />
     <ClInclude Include="..\Classes\Bg\Bg.h" />
     <ClInclude Include="..\Classes\Bullet\Bullet.h" />
     <ClInclude Include="..\Classes\Bullet\BulletManager.h" />
-    <ClInclude Include="..\Classes\EndSence.h" />
     <ClInclude Include="..\Classes\Enemy\Enemy.h" />
     <ClInclude Include="..\Classes\Enemy\EnemyManager.h" />
-    <ClInclude Include="..\Classes\GameSenceManager.h" />
     <ClInclude Include="..\Classes\Hero\Hero.h" />
-    <ClInclude Include="..\Classes\PauseLayer.h" />
-    <ClInclude Include="..\Classes\Porp.h" />
-    <ClInclude Include="..\Classes\PorpManager.h" />
-    <ClInclude Include="..\Classes\RankLayer.h" />
-    <ClInclude Include="..\Classes\SettingLayer.h" />
-    <ClInclude Include="..\Classes\StartSence.h" />
+    <ClInclude Include="..\Classes\Hero\WingAircraft.h" />
+    <ClInclude Include="..\Classes\Layer\PauseLayer.h" />
+    <ClInclude Include="..\Classes\Layer\RankLayer.h" />
+    <ClInclude Include="..\Classes\Layer\SettingLayer.h" />
+    <ClInclude Include="..\Classes\Prop\Porp.h" />
+    <ClInclude Include="..\Classes\Prop\PorpManager.h" />
+    <ClInclude Include="..\Classes\Sence\EndSence.h" />
+    <ClInclude Include="..\Classes\Sence\GameSence.h" />
+    <ClInclude Include="..\Classes\Sence\StartSence.h" />
+    <ClInclude Include="..\Classes\Utils\AudioUtil.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="WingAircraft.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cocos2d\cocos\2d\libcocos2d.vcxproj">
@@ -200,6 +200,9 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

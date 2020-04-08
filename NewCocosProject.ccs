@@ -1,0 +1,45 @@
+<Solution>
+  <PropertyGroup Name="NewCocosProject" Version="3.10.0.0" Type="CocosStudio" />
+  <SolutionFolder>
+    <Group ctype="ResourceGroup">
+      <RootFolder Name=".">
+        <Folder Name="scenes">
+          <Folder Name="start">
+            <Folder Name="image">
+              <Image Name="about.png" />
+              <Image Name="help.png" />
+              <Image Name="rank_normal.png" />
+              <Image Name="rank_pressed.png" />
+              <Image Name="setting.png" />
+              <Image Name="start_bg.png" />
+              <Image Name="startGame.png" />
+              <Image Name="musicOff.png" />
+              <Image Name="musicOn.png" />
+              <Image Name="open_close_sound.png" />
+              <Image Name="open_close_sound_eff.png" />
+              <Image Name="setting_bg.png" />
+              <Image Name="soundOff.png" />
+              <Image Name="soundOn.png" />
+              <Image Name="close_normal.png" />
+              <Image Name="close_pressed.png" />
+              <Image Name="zz-num-g.png" />
+              <Image Name="rankSp.png" />
+            </Folder>
+            <Folder Name="layers">
+              <Project Name="StartLayer.csd" Type="Layer" />
+              <Project Name="SettingLayer.csd" Type="Layer" />
+              <Project Name="RankLayer.csd" Type="Layer" />
+            </Folder>
+          </Folder>
+          <Folder Name="end">
+            <Folder Name="image" />
+          </Folder>
+          <Folder Name="game">
+            <Folder Name="image" />
+            <Folder Name="layers" />
+          </Folder>
+        </Folder>
+      </RootFolder>
+    </Group>
+  </SolutionFolder>
+</Solution>

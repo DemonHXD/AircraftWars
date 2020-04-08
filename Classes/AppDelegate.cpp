@@ -1,5 +1,5 @@
 ﻿#include "AppDelegate.h"
-#include "StartSence.h"
+#include "Sence/StartSence.h"
 #include "AudioEngine.h"
 using namespace experimental;
 
@@ -78,6 +78,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     //}
 
     register_all_packages();
+
+	//添加相对搜索路径
+	/*
+		参数1:相对路径
+		参数2:是否将搜索路径排到最前面
+	*/
+	FileUtils::getInstance()->addSearchPath("res/", true);
 
     // create a scene. it's an autorelease object
     auto scene = StartSence::createScene();

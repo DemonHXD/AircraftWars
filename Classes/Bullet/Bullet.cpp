@@ -1,6 +1,6 @@
 ﻿#include "Bullet.h"
 #include "BulletManager.h"
-#include "AudioUtil.h"
+#include "Utils/AudioUtil.h"
 Bullet::Bullet(int type, BulletType bulletType)
 	:speed(200), 
 	bulletType(bulletType),

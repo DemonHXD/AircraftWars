@@ -1,7 +1,7 @@
 ﻿#include "Hero.h"
 #include "Bullet/Bullet.h"
 #include "Bullet/BulletManager.h"
-#include "EndSence.h"
+#include "Sence/EndSence.h"
 
 const float PI = 3.1415926;//圆周率
 bool flag = true;
