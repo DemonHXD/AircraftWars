@@ -54,10 +54,6 @@ public:
 		return score;
 	}
 
-	int getBgmID() {
-		return bgmID;
-	}
-
 private:
 	BulletManager* bulletManager;//指向子弹管理类单例的指针
 	EnemyManager* enemyManager;//指向敌机管理类单例的指针
@@ -66,7 +62,7 @@ private:
 	TextAtlas* scoreText;
 	TextAtlas* heroLiveCount;
 	Size size;
-	int bgmID;
+	Node* root;
 };
 
 #endif // __GameSenceManager_SCENE_H__

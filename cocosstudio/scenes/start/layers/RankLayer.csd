@@ -6,21 +6,21 @@
       <ObjectData Name="Layer" Tag="29" ctype="GameLayerObjectData">
         <Size X="480.0000" Y="800.0000" />
         <Children>
-          <AbstractNodeData Name="bg" ActionTag="674341723" Alpha="216" Tag="30" IconVisible="False" ctype="SpriteObjectData">
+          <AbstractNodeData Name="bg" ActionTag="674341723" Alpha="102" Tag="30" IconVisible="False" ctype="SpriteObjectData">
             <Size X="480.0000" Y="800.0000" />
             <AnchorPoint />
             <Position />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
-            <CColor A="255" R="255" G="255" B="255" />
+            <CColor A="255" R="75" G="68" B="68" />
             <PrePosition />
             <PreSize X="1.0000" Y="1.0000" />
             <FileData Type="Normal" Path="scenes/start/image/start_bg.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="rankSp" ActionTag="-2039135897" Tag="32" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="-29.9994" RightMargin="-30.0006" TopMargin="121.5802" BottomMargin="118.4198" ctype="SpriteObjectData">
+          <AbstractNodeData Name="rankSp" ActionTag="-2039135897" Tag="32" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="-30.0000" RightMargin="-30.0000" TopMargin="121.5802" BottomMargin="118.4198" ctype="SpriteObjectData">
             <Size X="540.0000" Y="560.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="240.0006" Y="398.4198" />
+            <Position X="240.0000" Y="398.4198" />
             <Scale ScaleX="0.7000" ScaleY="0.7000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.4980" />
@@ -38,7 +38,7 @@
             <PreSize X="0.0292" Y="0.0225" />
             <LabelAtlasFileImage_CNB Type="Default" Path="Default/TextAtlas.png" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ScoreNumberText_2" ActionTag="-260991002" Tag="34" IconVisible="False" LeftMargin="211.0000" RightMargin="255.0000" TopMargin="386.0780" BottomMargin="395.9220" CharWidth="14" CharHeight="18" LabelText="0" StartChar="." ctype="TextAtlasObjectData">
+          <AbstractNodeData Name="ScoreNumberText_2" ActionTag="-260991002" Tag="34" IconVisible="False" LeftMargin="211.0000" RightMargin="255.0000" TopMargin="386.0781" BottomMargin="395.9219" CharWidth="14" CharHeight="18" LabelText="0" StartChar="." ctype="TextAtlasObjectData">
             <Size X="14.0000" Y="18.0000" />
             <AnchorPoint ScaleY="0.4999" />
             <Position X="211.0000" Y="404.9201" />

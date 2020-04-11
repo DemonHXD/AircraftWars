@@ -40,10 +40,10 @@ bool RankLayer::init() {
 	size = Director::getInstance()->getVisibleSize();
 
 	//关闭按钮
-	Button* closeMenuBtn = (Button*)root->getChildByTag(36);
+	Button* closeMenuBtn = dynamic_cast<Button*>(root->getChildByName("closeBtn"));
 
 	//背景
-	Sprite* bgSp = (Sprite*)root->getChildByTag(30);
+	Sprite* bgSp = dynamic_cast<Sprite*>(root->getChildByName("bg"));
 
 	if (sence->getTag() == 100) {
 		bgSp->setVisible(false);
@@ -69,9 +69,9 @@ bool RankLayer::init() {
 	}
 
 	//分数文本
-	TextAtlas *scoreText_1 = (TextAtlas*)root->getChildByTag(33);
-	TextAtlas *scoreText_2 = (TextAtlas*)root->getChildByTag(34);
-	TextAtlas *scoreText_3 = (TextAtlas*)root->getChildByTag(35);
+	TextAtlas *scoreText_1 = dynamic_cast<TextAtlas*>(root->getChildByName("ScoreNumberText_1"));
+	TextAtlas *scoreText_2 = dynamic_cast<TextAtlas*>(root->getChildByName("ScoreNumberText_2"));
+	TextAtlas *scoreText_3 = dynamic_cast<TextAtlas*>(root->getChildByName("ScoreNumberText_3"));
 	int score = UserDefault::getInstance()->getIntegerForKey("score");
 	scoreText_1->setString(std::to_string(score));
 	scoreText_2->setString("0");

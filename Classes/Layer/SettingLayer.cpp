@@ -31,7 +31,7 @@ bool SettingLayer::init() {
 	this->addChild(root);
 
 	//关闭按钮
-	Button* closeMenuBtn = (Button*)root->getChildByTag(28);
+	Button* closeMenuBtn = dynamic_cast<Button*>(root->getChildByName("closeMenuBtn"));
 	closeMenuBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
 		//移出暂停层
@@ -51,10 +51,10 @@ void SettingLayer::initSoundEff() {
 	//获取本地的状态信息
 	bool effState = UserDefault::getInstance()->getBoolForKey("effSound");
 	//音效开按钮
-	Button* soundEffOpenBtn = (Button*)root->getChildByTag(26);
+	Button* soundEffOpenBtn = dynamic_cast<Button*>(root->getChildByName("openEffBtn"));
 	
 	//音效关按钮
-	Button* soundEffCloseBtn = (Button*)root->getChildByTag(27);
+	Button* soundEffCloseBtn = dynamic_cast<Button*>(root->getChildByName("closeEffBtn"));
 
 	//默认是开启音效
 	if (effState) {
@@ -99,10 +99,10 @@ void SettingLayer::initBGMusic() {
 	//获取本地的状态信息
 	bool bgmState = UserDefault::getInstance()->getBoolForKey("bgmSound");
 	//背景音乐开按钮
-	Button* soundOpenBtn = (Button*)root->getChildByTag(23);
+	Button* soundOpenBtn = dynamic_cast<Button*>(root->getChildByName("openSoundBtn"));
 	
 	//背景音乐关按钮
-	Button* soundCloseBtn = (Button*)root->getChildByTag(25);
+	Button* soundCloseBtn = dynamic_cast<Button*>(root->getChildByName("closeSoundBtn"));
 
 	if (bgmState) {
 		soundOpenBtn->setVisible(true);

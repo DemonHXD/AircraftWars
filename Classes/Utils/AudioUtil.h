@@ -15,6 +15,8 @@ public:
 	void heroShoottSound();
 	//僚机射击声音
 	void wingAirShoot();
+	//敌机死亡音效
+	void enemyDesyEff();
 
 	//声音暂停
 	void audioPause();

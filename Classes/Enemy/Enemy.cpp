@@ -117,7 +117,9 @@ void Enemy::die(){
 	_eventDispatcher->dispatchCustomEvent("onEnemyDeath", this);
 
 	//播放敌机死亡音效
-	int blastEff = AudioEngine::play2d("sound/enemyBlast.mp3", true);
+	AudioUtil::getInstence()->enemyDesyEff();
+	//int blastEff = AudioEngine::play2d("sound/enemyBlast.mp3", true);
+	
 
 	isLive = false;
 	//播放死亡动画的时候需要关闭子弹调度器
@@ -135,10 +137,10 @@ void Enemy::die(){
 	//开启动画
 	Animate* animate = Animate::create(ani);
 
-	CallFunc* callFuncAct = CallFunc::create([this, blastEff]() {
+	CallFunc* callFuncAct = CallFunc::create([this]() {
 		EnemyManager::getInstance()->collection(this);
 		//关闭爆炸音效
-		AudioEngine::stop(blastEff);
+		//AudioEngine::stop(blastEff);
 	});
 
 	//创建序列动作

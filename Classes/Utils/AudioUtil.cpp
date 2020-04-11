@@ -63,16 +63,29 @@ void AudioUtil::wingAirShoot() {
 	}
 }
 
+//敌机死亡音效
+void AudioUtil::enemyDesyEff() {
+	if (instence->m_effAudioState) {
+		AudioEngine::setVolume(AudioEngine::play2d("sound/enemyBlast.mp3"), 0.1);
+	}
+}
+
 /*
 	声音暂停
 */
 void AudioUtil::audioPause() {
-	AudioEngine::pauseAll();
+	bool bgmState = UserDefault::getInstance()->getBoolForKey("bgmSound");
+	if (bgmState) {
+		AudioEngine::pauseAll();
+	}
 }
 
 /*
 	声音恢复
 */
 void AudioUtil::audioResume() {
-	AudioEngine::resumeAll();
+	bool bgmState = UserDefault::getInstance()->getBoolForKey("bgmSound");
+	if (bgmState) {
+		AudioEngine::resumeAll();
+	}
 }

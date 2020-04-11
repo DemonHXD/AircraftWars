@@ -1,5 +1,8 @@
 ﻿#include "EndSence.h"
 #include "GameSence.h"
+#include "StartSence.h"
+#include "cocostudio/CocoStudio.h"
+#include "Utils/AudioUtil.h"
 Scene* EndSence::createScene() {
 	auto scene = Scene::create();
 	auto layer = EndSence::create();
@@ -11,27 +14,24 @@ bool EndSence::init() {
 	if (!Layer::init()) {
 		return false;
 	}
-	Size size = Director::getInstance()->getVisibleSize();
+	//加载cocostudio文件
+	Node* root = CSLoader::createNode("scenes/end/layers/EndLayer.csb");
+	this->addChild(root);
 
-	//创建背景
-	Sprite* bgSp = Sprite::create("image/ui/finish_bg.png");
-	bgSp->setAnchorPoint(Vec2(0, 0));
-	this->addChild(bgSp, 0);
+	//返回菜单按钮
+	Button* backStartGame = dynamic_cast<Button*>(root->getChildByName("backMenuBtn"));
+	backStartGame->addClickEventListener([this](Ref*){
+		AudioUtil::getInstence()->buttonClickSound();
+		//创建一个新场景
+		Scene* StartSence = StartSence::createScene();
 
-	//创建游戏结束精灵
-	Sprite* gameOverSp = Sprite::create("image/ui/game_over.png");
-	gameOverSp->setPosition(Vec2(size.width / 2, size.height / 2 + 200));
-	this->addChild(gameOverSp, 1);
+		//设置一个界面切换的动作，0.5秒的跳动动作
+		auto reSence = TransitionJumpZoom::create(0.5f, StartSence);
+		Director::getInstance()->replaceScene(reSence);
+	});
 
-	//最终得分精灵
-	Sprite* finalScoreSp = Sprite::create("image/ui/final_score.png");
-	finalScoreSp->setPosition(Vec2(size.width / 2 - 100, size.height / 2 + 100));
-	this->addChild(finalScoreSp, 1);
-
-	scoreText = TextAtlas::create("0", "image/ui/zz-num-g.png", 36, 32, "0");
-	scoreText->setPosition(Vec2(size.width / 2 + 100, size.height / 2 + 100));
-	scoreText->setScale(0.8f);
-	this->addChild(scoreText, 5);
+	//分数数字
+	scoreText = dynamic_cast<TextAtlas*>(root->getChildByName("scoreNumberText"));
 
 	//开启监听
 	_eventDispatcher->addCustomEventListener("finalScoreDeath", [this](EventCustom* event) {
@@ -49,7 +49,6 @@ void EndSence::onEnter() {
 
 void EndSence::onExit() {
 	Layer::onExit();
-
 	//移出自定义监听器
 	_eventDispatcher->removeCustomEventListeners("finalScoreDeath");
 }

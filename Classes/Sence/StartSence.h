@@ -13,6 +13,8 @@ public:
 	~StartSence();
 
 	CREATE_FUNC(StartSence);
+private:
+	Node* root;
 };
 
 #endif // !__StartSence_H__

@@ -4,39 +4,76 @@
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
         <Folder Name="scenes">
+          <Folder Name="end">
+            <Folder Name="image">
+              <Image Name="backMenu_normal.png" />
+              <Image Name="backMenu_pressed.png" />
+              <Image Name="final_score.png" />
+              <Image Name="finish_bg.png" />
+              <Image Name="game_over.png" />
+            </Folder>
+            <Folder Name="layers">
+              <Project Name="EndLayer.csd" Type="Layer" />
+            </Folder>
+          </Folder>
+          <Folder Name="game">
+            <Folder Name="image">
+              <Image Name="backMenu_normal.png" />
+              <Image Name="backMenu_pressed.png" />
+              <Image Name="continueGame_normal.png" />
+              <Image Name="continueGame_pressed.png" />
+              <Image Name="finishGame_normal.png" />
+              <Image Name="finishGame_pressed.png.png" />
+              <Image Name="hero1_1.png" />
+              <Image Name="pause_nor.png" />
+              <Image Name="pause_press.png" />
+              <Image Name="pauseBG.png" />
+              <Image Name="rank_normal.png" />
+              <Image Name="rank_pressed.png" />
+              <Image Name="rePlay_normal.png" />
+              <Image Name="rePlay_pressed.png" />
+              <Image Name="Score.png" />
+              <Image Name="start_bg.png" />
+              <Image Name="x.png" />
+            </Folder>
+            <Folder Name="layers">
+              <Project Name="GameLayer.csd" Type="Layer" />
+              <Project Name="PauseLayer.csd" Type="Layer" />
+            </Folder>
+          </Folder>
           <Folder Name="start">
             <Folder Name="image">
               <Image Name="about.png" />
+              <Image Name="close_normal.png" />
+              <Image Name="close_pressed.png" />
               <Image Name="help.png" />
-              <Image Name="rank_normal.png" />
-              <Image Name="rank_pressed.png" />
-              <Image Name="setting.png" />
-              <Image Name="start_bg.png" />
-              <Image Name="startGame.png" />
               <Image Name="musicOff.png" />
               <Image Name="musicOn.png" />
               <Image Name="open_close_sound.png" />
               <Image Name="open_close_sound_eff.png" />
+              <Image Name="rank_normal.png" />
+              <Image Name="rank_pressed.png" />
+              <Image Name="rankSp.png" />
+              <Image Name="setting.png" />
               <Image Name="setting_bg.png" />
               <Image Name="soundOff.png" />
               <Image Name="soundOn.png" />
-              <Image Name="close_normal.png" />
-              <Image Name="close_pressed.png" />
+              <Image Name="start_bg.png" />
+              <Image Name="startGame.png" />
               <Image Name="zz-num-g.png" />
-              <Image Name="rankSp.png" />
             </Folder>
             <Folder Name="layers">
-              <Project Name="StartLayer.csd" Type="Layer" />
-              <Project Name="SettingLayer.csd" Type="Layer" />
               <Project Name="RankLayer.csd" Type="Layer" />
+              <Project Name="SettingLayer.csd" Type="Layer" />
+              <Project Name="StartLayer.csd" Type="Layer" />
             </Folder>
           </Folder>
-          <Folder Name="end">
-            <Folder Name="image" />
-          </Folder>
-          <Folder Name="game">
-            <Folder Name="image" />
-            <Folder Name="layers" />
+        </Folder>
+        <Folder Name="Sprite">
+          <Folder Name="hero">
+            <Folder Name="sprite">
+              <Project Name="hero.csd" Type="Node" />
+            </Folder>
           </Folder>
         </Folder>
       </RootFolder>

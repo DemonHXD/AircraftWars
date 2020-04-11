@@ -12,14 +12,9 @@
 #include "Layer/RankLayer.h"
 #include "StartSence.h"
 #include "Hero/WingAircraft.h"
+#include "cocostudio/CocoStudio.h"
 
-
-//#include "ui/CocosGUI.h"//UI头文件
-//using namespace cocos2d::ui;//UI命名空间
-
-#define SCORESP 30
 #define HERO 50
-#define BGSP 60
 
 USING_NS_CC;
 /*
@@ -219,6 +214,12 @@ bool GameSence::init() {
 	if (!Layer::init()) {
 		return false;
 	}
+
+	//加载cocostudio文件
+	root = CSLoader::createNode("scenes/game/layers/GameLayer.csb");
+	root->setLocalZOrder(5);
+	this->addChild(root);
+
 	//给当前类设置个tag
 	this->setTag(100);
 	//获取窗口矩形大小(Size:width和height)
@@ -236,7 +237,7 @@ bool GameSence::init() {
 		Bg* bg = Bg::create();
 		float h = bg->getContentSize().height;
 		bg->setPositionY(i * h);
-		this->addChild(bg, 0);
+		this->addChild(bg, -1);
 	}
 
 	//创建英雄
@@ -245,17 +246,8 @@ bool GameSence::init() {
 	hero->setTag(HERO);
 	this->addChild(hero, 2);
 
-	//创建scoreSP精灵
-	Sprite* scoreSP = Sprite::create("image/ui/Score.png");
-	scoreSP->setPosition(Vec2(size.width / 2 - 80, size.height - 55));
-	scoreSP->setTag(SCORESP);
-	this->addChild(scoreSP, 10);
-
-	//创建分数文本:1.显示的内容 2.图片的路径 3.字符宽度 4.字符高度 5.第一个字符
-	scoreText = TextAtlas::create("0", "image/ui/zz-num-g.png",36,32, "0");
-	scoreText->setPosition(Vec2(scoreSP->getContentSize().width, scoreSP->getContentSize().height / 2));
-	scoreText->setScale(0.8f);
-	scoreSP->addChild(scoreText, 5);
+	//获取分数文本
+	scoreText = dynamic_cast<TextAtlas*>(root->getChildByName("ScoreNumberText"));
 
 	createUi();
 
@@ -285,10 +277,6 @@ void GameSence::addScore(int add_score) {
 	score += add_score;
 	//修改文本的内容:设置文本的内容setString
 	scoreText->setString(std::to_string(score));
-	auto scoreSP = (Sprite *)this->getChildByTag(SCORESP);
-	//设置文本的位置
-	scoreText->setPosition(Vec2(scoreSP->getContentSize().width + (scoreText->getStringLength() - 1) * 15,
-		scoreSP->getContentSize().height / 2));
 }
 
 void GameSence::onEnter() {
@@ -359,33 +347,16 @@ void GameSence::createPropSchedule(float dt) {
 	创建UI
 */
 void GameSence::createUi() {
-	Sprite* heroUi = Sprite::create("image/hero/hero1_1.png");
-	heroUi->setScale(0.5f);
-	heroUi->setPosition(Vec2(50, 50));
-	this->addChild(heroUi, 4);
 
-	Sprite* x = Sprite::create("image/ui/x.png");
-	x->setPosition(Vec2(95, 50));
-	x->setScale(0.6f);
-	this->addChild(x, 4);
+	//获取血量文本
+	heroLiveCount = dynamic_cast<TextAtlas*>(root->getChildByName("heroHpText"));
 
-	heroLiveCount = TextAtlas::create("3", "image/ui/zz-num-g.png", 36, 32, "0");
-	heroLiveCount->setPosition(Vec2(130, 50));
-	heroLiveCount->setScale(0.7f);
-	this->addChild(heroLiveCount, 4);
+	//暂停按钮
+	Button* pauseBtn = dynamic_cast<Button*>(root->getChildByName("pauseBtn"));
+	pauseBtn->setTag(100);
 
-	//创建暂停按钮
-	Button* pauseBtn = Button::create("image/ui/pause_nor.png", "image/ui/pause_press.png");
-	pauseBtn->setPosition(Vec2(size.width - 40, size.height - 70));
-	pauseBtn->setScale(0.7f);
-	pauseBtn->setTag(2);
-	//设置层级关系:值越大越后渲染
-	pauseBtn->setLocalZOrder(10);
-	this->addChild(pauseBtn, 10);
-
-	Hero* hero = (Hero*)this->getChildByTag(HERO);
 	//给暂停按钮添加点击事件
-	pauseBtn->addClickEventListener([this, hero, pauseBtn](Ref*){
+	pauseBtn->addClickEventListener([this, pauseBtn](Ref*){
 		//背景音乐暂停
 		AudioUtil::getInstence()->audioPause();
 		AudioUtil::getInstence()->buttonClickSound();
@@ -394,23 +365,18 @@ void GameSence::createUi() {
 		//创建暂停界面
 		PauseLayer* pauseLayer = PauseLayer::create(this);
 		this->addChild(pauseLayer, 10);
-		//隐藏暂停按钮
-		pauseBtn->setVisible(false);
 	});
 
 	//创建排行榜按钮
-	Button* rankBtn = Button::create("image/ui/rank_normal.png", "image/ui/rank_pressed.png");
-	rankBtn->setPosition(Vec2(size.width - 100, size.height - 70));
-	rankBtn->setScale(0.7f);
+	Button* rankBtn = dynamic_cast<Button*>(root->getChildByName("rankBtn"));
 	rankBtn->setTag(3);
-	this->addChild(rankBtn, 10);
 	rankBtn->addClickEventListener([this](Ref*) {
 		//背景音乐暂停
 		AudioUtil::getInstence()->audioPause();
 		AudioUtil::getInstence()->buttonClickSound();
 		//游戏暂停
 		Director::getInstance()->pause();
-		//创建暂停界面
+		//创建排行榜界面
 		RankLayer* rankLayer = RankLayer::create(this);
 		this->addChild(rankLayer, 10);
 	});
