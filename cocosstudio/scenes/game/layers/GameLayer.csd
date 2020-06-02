@@ -34,13 +34,13 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="heroSp" ActionTag="1392514302" Tag="54" IconVisible="False" LeftMargin="2.8188" RightMargin="384.1812" TopMargin="686.3480" BottomMargin="-15.3481" ctype="SpriteObjectData">
+          <AbstractNodeData Name="heroSp" ActionTag="1392514302" Tag="54" IconVisible="False" LeftMargin="2.8231" RightMargin="384.1769" TopMargin="686.3467" BottomMargin="-15.3467" ctype="SpriteObjectData">
             <Size X="93.0000" Y="129.0000" />
             <AnchorPoint ScaleX="0.5880" ScaleY="0.4523" />
             <Position X="57.5071" Y="43.0000" />
             <Scale ScaleX="0.7000" ScaleY="0.7000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1198" Y="0.0537" />
+            <PrePosition X="0.1198" Y="0.0538" />
             <PreSize X="0.1937" Y="0.1612" />
             <FileData Type="Normal" Path="scenes/game/image/hero1_1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />

@@ -14,7 +14,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition />
             <PreSize X="1.0000" Y="1.0000" />
-            <FileData Type="Normal" Path="scenes/end/image/finish_bg.png" Plist="" />
+            <FileData Type="Normal" Path="scenes/buyHero/image/finish_bg.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="scoreSp" ActionTag="703842581" Tag="20" IconVisible="False" LeftMargin="32.5941" RightMargin="207.4059" TopMargin="169.6504" BottomMargin="580.3496" ctype="SpriteObjectData">

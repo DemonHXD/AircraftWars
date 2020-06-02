@@ -2,6 +2,7 @@
 #include "EnemyManager.h"
 #include "Bullet/Bullet.h"
 #include "Bullet/BulletManager.h"
+#include "bullet/BulletFactory.h"
 #include "Utils/AudioUtil.h"
 #include "AudioEngine.h"
 using namespace experimental;
@@ -156,8 +157,9 @@ void Enemy::shoot(float dt) {
 	float y = getPositionY();
 	y = y + 30 * dt;
 	//创建子弹
-	Bullet* bullet = Bullet::create(ENEMY, Missile);
-	bullet->shootSound(-1);
+	//Bullet* bullet = Bullet::create(ENEMY, Missile);
+	Bullet* bullet = BulletFactory::createBullet(EnemyBullet);
+	bullet->shootSound();
 	//设置子弹的位置:敌机的坐标 + 敌机图片高度的一半
 	bullet->setPosition(Vec2(getPositionX(), getPositionY() + 20));
 	//设置子弹的方向

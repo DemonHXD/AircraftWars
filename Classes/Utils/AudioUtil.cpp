@@ -50,7 +50,7 @@ void AudioUtil::enemyShootSound() {
 */
 void AudioUtil::heroShoottSound() {
 	if (instence->m_effAudioState) {
-		AudioEngine::setVolume(AudioEngine::play2d("sound/heroShoot.mp3"), 0.1);
+		AudioEngine::setVolume(AudioEngine::play2d("sound/heroShoot.mp3"), 0.01);
 	}
 }
 
@@ -67,6 +67,12 @@ void AudioUtil::wingAirShoot() {
 void AudioUtil::enemyDesyEff() {
 	if (instence->m_effAudioState) {
 		AudioEngine::setVolume(AudioEngine::play2d("sound/enemyBlast.mp3"), 0.1);
+	}
+}
+
+void AudioUtil::playTimi() {
+	if (instence->m_effAudioState) {
+		AudioEngine::setVolume(AudioEngine::play2d("sound/timi.mp3"), 0.5);
 	}
 }
 

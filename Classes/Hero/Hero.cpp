@@ -2,18 +2,19 @@
 #include "Bullet/Bullet.h"
 #include "Bullet/BulletManager.h"
 #include "Sence/EndSence.h"
+#include "Bullet/BulletFactory.h"
 
 const float PI = 3.1415926;//圆周率
 bool flag = true;
 #define HERO 1
-Hero::Hero() :speed(80), isShield(false), liveCount(3), isMove(true){
+Hero::Hero() :speed(80), isShield(false), liveCount(3), isMove(true), type(Type1){
 
 }
 Hero::~Hero() {
 
 }
 
-int Hero::type= SmallPlane;
+//int Hero::type= Type1;
 
 int Hero::count = 0;
 
@@ -39,7 +40,7 @@ Hero* Hero::create() {
 }
 
 Hero* Hero::create(const int herotype) {
-	type = herotype;
+	//type = herotype;
 	return create();
 }
 
@@ -47,20 +48,13 @@ Hero* Hero::create(const int herotype) {
 	初始化
 */
 bool Hero::init() {
-	std::string path = "";
-	switch (type) {
-	case SmallPlane:
-		path = "image/hero/hero0_1.png";
-		break;
-	case MidPlane:
-		path = "image/hero/hero1_1.png";
-		break;
-	}
-	if (!Sprite::initWithFile(path)) {
+	char filename[40];
+	sprintf_s(filename, "image/hero/hero_%d_1.png", type);
+	if (!Sprite::initWithFile(filename)) {
 		return false;
 	}
 	//开启英雄飞行动画
-	heroAction();
+	//heroAction();
 
 	//开启默认调度器
 	//scheduleUpdate();
@@ -82,31 +76,31 @@ void Hero::update(float dt) {
 */
 void Hero::heroAction() {
 	//创建图片收集者
-	Animation* animation = Animation::create();
-	char fileName[40];
-	switch (type) {
-	case SmallPlane:
-		for (int i = 1; i <= 6; i++) {
-			//std::string path = "image/hero/" + smallPlaneName[i];
-			sprintf_s(fileName, "image/hero/hero0_%d.png", i);
-			animation->addSpriteFrameWithFile(fileName);
-		}
-		break;
-	case MidPlane:
-		for (int i = 1; i <= 2; i++) {
-			//std::string path = "image/hero/" + midPlaneName[i];
-			sprintf_s(fileName, "image/hero/hero1_%d.png", i);
-			animation->addSpriteFrameWithFile(fileName);
-		}
-		break;
-	}
-	//间隔时间
-	animation->setDelayPerUnit(0.2f);
-	animation->setLoops(-1);
-	//开启动画
-	Animate* animate = Animate::create(animation);
-	animate->setTag(15);
-	this->runAction(animate);
+	//Animation* animation = Animation::create();
+	//char fileName[40];
+	//switch (type) {
+	//case SmallPlane:
+	//	for (int i = 1; i <= 6; i++) {
+	//		//std::string path = "image/hero/" + smallPlaneName[i];
+	//		sprintf_s(fileName, "image/hero/hero0_%d.png", i);
+	//		animation->addSpriteFrameWithFile(fileName);
+	//	}
+	//	break;
+	//case MidPlane:
+	//	for (int i = 1; i <= 2; i++) {
+	//		//std::string path = "image/hero/" + midPlaneName[i];
+	//		sprintf_s(fileName, "image/hero/hero1_%d.png", i);
+	//		animation->addSpriteFrameWithFile(fileName);
+	//	}
+	//	break;
+	//}
+	////间隔时间
+	//animation->setDelayPerUnit(0.2f);
+	//animation->setLoops(-1);
+	////开启动画
+	//Animate* animate = Animate::create(animation);
+	//animate->setTag(15);
+	//this->runAction(animate);
 }
 
 void Hero::setTouchEnabled(bool enabled) {
@@ -164,7 +158,6 @@ bool Hero::onTouchBegan(Touch* touch, Event* event) {
 	//	   2.intersectsRect(矩形) 判断两个矩形是否相交
 	//getBoundingBox是获取原始矩形的宽高，如果对其做了缩放，获取到的矩形还是原始矩形
 	bool isContain = getBoundingBox().containsPoint(touchPoint);
-
 	//判断触摸的那个点是否在英雄的身上
 	if (isContain) {
 		return true;
@@ -208,10 +201,11 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 /*
 	设置散弹效果
 */
-void Hero::createShotgun(float angle, BulletType type) {
+void Hero::createShotgun(float angle) {
 	//创建子弹
-	Bullet* bullet = Bullet::create(HERO,type);
-	bullet->shootSound(1);
+	//Bullet* bullet = Bullet::create(HERO,type);
+	Bullet* bullet = BulletFactory::createBullet(HeroBullet);
+	bullet->shootSound();
 	float h = getContentSize().height / 2;
 	//设置子弹的位置:英雄的坐标 + 英雄图片高度的一半
 	bullet->setPosition(getPosition() + Vec2(0, 0));
@@ -230,28 +224,19 @@ void Hero::createShotgun(float angle, BulletType type) {
 }
 
 void Hero::shoot(float dt) {
-	//始终用小导弹攻击
-	createShotgun(0, Rocket);
-	//if (flag)
-	//{
-	//	
-	//	float angle[7] = { -15,-10,-5,0,5,10,15 };
-	//	for (int i = 0; i < 7; i++)
-	//	{
-	//		createShotgun(angle[i], OrdinaryBullet);
-	//	}
-	//}
-	//else {
-	//	createShotgun(0, Rocket);
-	//}
-
-	//count++;
-
-	//if (count == 10)
-	//{
-	//	flag = !flag;
-	//	count = 0;
-	//}
+	/*if (bulletFlag)
+	{
+		
+		float angle[7] = { -15,-10,-5,0,5,10,15 };
+		for (int i = 0; i < 7; i++)
+		{
+			createShotgun(angle[i]);
+		}
+	}
+	else {
+		createShotgun(0);
+	}*/
+	createShotgun(0);
 }
 
 /*
@@ -386,4 +371,13 @@ void Hero::WingAirUpdate(float dt) {
 		blinkCount = 0;
 		unschedule(schedule_selector(Hero::WingAirUpdate));
 	}
+}
+
+/*
+	更改英雄外观
+*/
+void Hero::setAppearance(int type, int exp) {
+	char filename[40];
+	sprintf_s(filename, "image/hero/hero_%d_%d.png", type, exp);
+	setTexture(filename);
 }

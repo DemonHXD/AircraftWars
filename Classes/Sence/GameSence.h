@@ -8,7 +8,7 @@ using namespace cocos2d;
 class ShowNumberNode;
 class BulletManager;
 class EnemyManager;
-class PorpManager;
+class PropManager;
 class GameSence : public cocos2d::Layer {
 public:
 	static cocos2d::Scene* createScene();
@@ -57,7 +57,7 @@ public:
 private:
 	BulletManager* bulletManager;//指向子弹管理类单例的指针
 	EnemyManager* enemyManager;//指向敌机管理类单例的指针
-	PorpManager* porpManager;//指向道具管理类的单例指针
+	PropManager* propManager;//指向道具管理类的单例指针
 	int score = 0;
 	TextAtlas* scoreText;
 	TextAtlas* heroLiveCount;

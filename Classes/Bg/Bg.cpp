@@ -27,9 +27,9 @@ bool Bg::init() {
 	if (!Sprite::initWithFile("image/bg/bg1.jpg")) {
 		return false;
 	}
-	//初始化逻辑
 	//设置自己的锚点
 	setAnchorPoint(Vec2(0, 0));
+	//开启默认调度器
 	scheduleUpdate();
 	return true;
 }

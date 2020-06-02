@@ -5,8 +5,8 @@
 #include "Enemy/Enemy.h"
 #include "Enemy/EnemyManager.h"
 #include "Bullet/BulletManager.h"
-#include "Prop/PorpManager.h"
-#include "Prop/Porp.h"
+#include "Prop/propManager.h"
+#include "Prop/prop.h"
 #include "Utils/AudioUtil.h"
 #include "Layer/PauseLayer.h"
 #include "Layer/RankLayer.h"
@@ -194,6 +194,63 @@ unscheduleAllCallbacks:关闭所有调度器
 	注意:在使用onExit前必须先显示调用父类的onExit;
 */
 
+/*
+	1.cocos2d内存管理机制:引用计数(Ref类)  面试必考题！！！
+		Sprite - Node - Ref
+		Layer - Node - Ref
+		Scene - Node -Ref
+		Director - Ref
+	2.retain:引用计数+1
+	  release:引用计数-1(当引用计数为0时，释放内存)
+	  autoRelease:加入到自动释放池(这一帧绘制结束后所有在自动释放池里面的计数全部减1)
+	  retain和releae/autoRelease必须搭配使用，否则会出现内存泄漏
+	3.create:引用计数为1
+		addChild():引用计数+1(调用retain())
+		remove():当前节点被移出 引用计数-1(调用release())
+	4.例子1：
+		auto sp = Sprite::create("");//1
+		这一帧结束后引用计数为？//0
+		this->addChild(sp)；//报错，内存已经被释放 child != nullptr
+	  例子2：
+		auto sp = Sprite::create();//1
+		this->addChild(sp);//2
+		这一帧结束后引用计数为？//1
+	  例子3：
+		auto sp = Sprite::create();//1
+		sp-retain();//2
+		这一帧结束后引用计数为？//1
+		this->addChild(sp);//2
+		sp->release();//1
+	  例子4:
+	    auto sp= Sprite::create("");//1
+		node1->addChild(sp);//2
+		sp->retain();//3
+		sp->removeFromParent();//2
+		这一帧结束后？//1
+		node2->addChild(sp);//2
+		sp->release();
+	  例子5:
+	    auto sp = Sprite::create("");//1
+		auto sp1 = Sprite::create("");//1
+		sp->addChild(sp1);//sp 1/sp1 2
+		sp->retain();//sp 2
+		this->addChild(sp);//sp 3
+		sp->removeChild(sp1);//sp 3/sp1 2
+		this->removeChild(sp);//sp 2
+
+	内存优化机制：对象池技术
+		子弹工厂:BulletFactory(简单工厂)
+		子弹管理:BulletManager(单例)
+			成员:生存池、死亡池
+			方法:1.添加子弹到生存池中，
+				 2.回收子弹：从生存池到死亡池
+				 3.查找死亡池中符合条件的子弹
+
+	作业：
+		1.敌机的对象池
+		2.道具/技能等
+*/
+
 
 Scene* GameSence::createScene() {
 	auto scene = Scene::create();
@@ -228,7 +285,7 @@ bool GameSence::init() {
 	//给管理类的指针赋值
 	bulletManager = BulletManager::getInstance();
 	enemyManager = EnemyManager::getInstance();
-	porpManager = PorpManager::getInstance();
+	propManager = PropManager::getInstance();
 
 	
 
@@ -241,7 +298,7 @@ bool GameSence::init() {
 	}
 
 	//创建英雄
-	Hero* hero = Hero::create(MidPlane);
+	Hero* hero = Hero::create();
 	hero->setPosition(Vec2(size.width / 2, hero->getContentSize().height / 2));
 	hero->setTag(HERO);
 	this->addChild(hero, 2);
@@ -252,7 +309,7 @@ bool GameSence::init() {
 	createUi();
 
 	//开启创建道具调度器
-	schedule(schedule_selector(GameSence::createPropSchedule), 25, -1, 0);
+	schedule(schedule_selector(GameSence::createPropSchedule), 20, -1, 0);
 
 	//开启默认调度器
 	scheduleUpdate();
@@ -309,6 +366,8 @@ void GameSence::onEnter() {
 		//设置英雄的生命值 
 		heroLiveCount->setString(std::to_string(userData->getLiveCount()));
 		if (userData->getLiveCount() == 0) {
+			//关闭调度器
+			unscheduleUpdate();
 			userData->die();
 			UserDefault::getInstance()->setIntegerForKey("score", score);
 		}
@@ -320,7 +379,7 @@ void GameSence::onExit() {
 	Layer::onExit();
 	BulletManager::getInstance()->clearList();
 	EnemyManager::getInstance()->clearList();
-	PorpManager::getInstance()->clearList();
+	PropManager::getInstance()->clearList();
 
 	//关闭声音
 	//AudioEngine::stopAll();
@@ -337,10 +396,10 @@ void GameSence::onExit() {
 	生产道具的自定义调度器
 */
 void GameSence::createPropSchedule(float dt) {
-	Porp* porp = Porp::create((PorpType)(rand() % 2 + 1));
-	porp->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
-	this->addChild(porp, 10);
-	PorpManager::getInstance()->addPorp(porp);
+	Prop* prop = Prop::create((PropType)(rand() % 3 + 1));
+	prop->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
+	this->addChild(prop, 10);
+	PropManager::getInstance()->addPorp(prop);
 }
 
 /*
@@ -397,7 +456,9 @@ void GameSence::createEnemy(float dt) {
 }
 
 
-
+/*
+	默认调度器
+*/
 void GameSence::update(float dt) {
 	
 	//检测子弹与敌机的碰撞
@@ -416,7 +477,7 @@ void GameSence::collisionBulletAndEenmy() {
 	//范围for:特点:不能在遍历的过程中删除和添加;
 	//容器:(具有begin和end迭代器,且迭代器实现++)
 	//for (元素类型 变量名 : 数组 / 容器名);
-	for (Bullet* bullet : bulletManager->heroBulletList) {
+	for (Bullet* bullet : bulletManager->heroLives) {
 		for (Enemy* enemy : enemyManager->enemyList) {
 			//如果enemy为死亡状态
 			if (!enemy->getLive()) {
@@ -437,22 +498,25 @@ void GameSence::collisionBulletAndEenmy() {
 */
 void GameSence::collisionHeroAndProp() {
 	Hero* hero = (Hero*)this->getChildByTag(HERO);
-	for (Porp* porp : porpManager->porpList) {
-		bool isCrash = hero->getBoundingBox().intersectsRect(porp->getBoundingBox());
+	for (Prop* prop : propManager->porpList) {
+		bool isCrash = hero->getBoundingBox().intersectsRect(prop->getBoundingBox());
 		if (isCrash) {
-			switch (porp->getType()) {
-			case PorpType::Shield:
+			switch (prop->getType()) {
+			case PropType::Shield:
 				//捡到防护罩道具后加一个防护罩
 				hero->isOpenDefense(true);
 				break;
-			case PorpType::WingAir:
-				//开启僚机文字动画
-				porp->WingAircraftTextAct();
+			case PropType::WingAir:
 				//英雄开启僚机
 				hero->createWingAircraft();
 				break;
+			case PropType::ChangeBullet:
+				//英雄更改攻击方式
+				hero->changeBullet();
+				break;
 			}
-			porp->setLive(false);//设置道具死亡
+			prop->propTextAct();
+			prop->setLive(false);//设置道具死亡
 		}
 	}
 }
@@ -462,17 +526,12 @@ void GameSence::collisionHeroAndProp() {
 */
 void GameSence::collisionHeroAndEenmyBullet() {
 	Hero* hero = (Hero*)this->getChildByTag(HERO);
-	for (Bullet* bullet : bulletManager->enemyBulletList) {
+	for (Bullet* bullet : bulletManager->enemyLives) {
 		bool isCrash = bullet->getBoundingBox().intersectsRect(hero->getBoundingBox());
 		if (isCrash) {
 			bullet->setLive(false);//设置子弹死亡
 			if (!hero->getShield()) {//如果没有防护罩
-				//if (hero->getLiveCount() == 0) {
-				//	//进入游戏结束场景
-				//} else {
-					//英雄死亡一次
 					hero->hit();
-				////}
 			}
 		}
 	}

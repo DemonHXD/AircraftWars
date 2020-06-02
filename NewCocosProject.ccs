@@ -3,13 +3,231 @@
   <SolutionFolder>
     <Group ctype="ResourceGroup">
       <RootFolder Name=".">
+        <Folder Name="Background">
+          <Folder Name="4">
+            <Image Name="Repeated.png" />
+          </Folder>
+        </Folder>
+        <Folder Name="Characters">
+          <Folder Name="1">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="2">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="3">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="4">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="5">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="6">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="7">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+          <Folder Name="8">
+            <Folder Name="Fly">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+            </Folder>
+            <Folder Name="Walk">
+              <Image Name="1.png" />
+              <Image Name="2.png" />
+              <Image Name="3.png" />
+              <Image Name="4.png" />
+              <Image Name="5.png" />
+              <Image Name="6.png" />
+              <Image Name="7.png" />
+              <Image Name="8.png" />
+            </Folder>
+          </Folder>
+        </Folder>
+        <Folder Name="Enemy">
+          <Folder Name="1">
+            <Image Name="1.png" />
+            <Image Name="2.png" />
+            <Image Name="3.png" />
+            <Image Name="4.png" />
+            <Image Name="5.png" />
+            <Image Name="6.png" />
+            <Image Name="7.png" />
+            <Image Name="8.png" />
+          </Folder>
+        </Folder>
+        <Folder Name="Items">
+          <Folder Name="Coin">
+            <Image Name="1.png" />
+            <Image Name="2.png" />
+            <Image Name="3.png" />
+            <Image Name="4.png" />
+            <Image Name="5.png" />
+            <Image Name="6.png" />
+            <Image Name="7.png" />
+            <Image Name="8.png" />
+          </Folder>
+        </Folder>
+        <Folder Name="node">
+          <Folder Name="hero">
+            <Folder Name="ani">
+              <Project Name="HeroAni.csd" Type="Node" />
+            </Folder>
+            <Folder Name="image">
+              <Image Name="hero1_1.png" />
+              <Image Name="hero1_2.png" />
+              <File Name="img_plane_main.plist" />
+              <Image Name="img_plane_main.png" />
+            </Folder>
+          </Folder>
+        </Folder>
+        <Folder Name="Platform">
+          <Folder Name="Terran">
+            <Image Name="10.png" />
+            <Image Name="3.png" />
+            <Image Name="7.png" />
+            <Image Name="9.png" />
+          </Folder>
+          <Folder Name="Tree And Tile set">
+            <Image Name="1.png" />
+            <Image Name="5.png" />
+          </Folder>
+          <File Name=".DS_Store" />
+        </Folder>
+        <Folder Name="Projectile">
+          <Image Name="2.png" />
+          <Image Name="4.png" />
+          <Image Name="5.png" />
+          <Image Name="6.png" />
+          <Image Name="7.png" />
+          <Image Name="8.png" />
+          <Image Name="9.png" />
+        </Folder>
         <Folder Name="scenes">
+          <Folder Name="buyHero">
+            <Folder Name="image">
+              <Image Name="backTo.png" />
+              <Image Name="finish_bg.png" />
+            </Folder>
+            <Folder Name="layers">
+              <Project Name="BuyHeroLayer.csd" Type="Layer" />
+            </Folder>
+          </Folder>
           <Folder Name="end">
             <Folder Name="image">
               <Image Name="backMenu_normal.png" />
               <Image Name="backMenu_pressed.png" />
               <Image Name="final_score.png" />
-              <Image Name="finish_bg.png" />
               <Image Name="game_over.png" />
             </Folder>
             <Folder Name="layers">
@@ -42,8 +260,13 @@
             </Folder>
           </Folder>
           <Folder Name="start">
+            <Folder Name="ani">
+              <Project Name="hero_1.csd" Type="Node" />
+              <Project Name="StartGame.csd" Type="Node" />
+            </Folder>
             <Folder Name="image">
               <Image Name="about.png" />
+              <Image Name="buyHero.png" />
               <Image Name="close_normal.png" />
               <Image Name="close_pressed.png" />
               <Image Name="help.png" />
@@ -62,19 +285,45 @@
               <Image Name="startGame.png" />
               <Image Name="zz-num-g.png" />
             </Folder>
+            <Folder Name="item">
+              <Project Name="ChoiceItem.csd" Type="Layer" />
+            </Folder>
             <Folder Name="layers">
+              <Project Name="ChoiceLayer.csd" Type="Layer" />
               <Project Name="RankLayer.csd" Type="Layer" />
               <Project Name="SettingLayer.csd" Type="Layer" />
               <Project Name="StartLayer.csd" Type="Layer" />
             </Folder>
           </Folder>
-        </Folder>
-        <Folder Name="Sprite">
-          <Folder Name="hero">
-            <Folder Name="sprite">
-              <Project Name="hero.csd" Type="Node" />
+          <Folder Name="welcome">
+            <Folder Name="image">
+              <Image Name="welcome.png" />
+            </Folder>
+            <Folder Name="layers">
+              <Project Name="WelcomeLayer.csd" Type="Layer" />
             </Folder>
           </Folder>
+        </Folder>
+        <Folder Name="User Interface">
+          <Image Name="bg01.png" />
+          <Image Name="bg02.png" />
+          <Image Name="boxAtribut.png" />
+          <Image Name="boxStat.png" />
+          <Image Name="btn02.png" />
+          <Image Name="buyBtn.png" />
+          <Image Name="CloseBtn.png" />
+          <Image Name="jumpCtrler.png" />
+          <Image Name="Loadbar01.png" />
+          <Image Name="Loadbar02.png" />
+          <Image Name="Loadbar03.png" />
+          <Image Name="Loadbar04.png" />
+          <Image Name="MenuBtn.png" />
+          <Image Name="op3.png" />
+          <Image Name="PopupBox.png" />
+          <Image Name="RibonTitle.png" />
+          <Image Name="shootCtrl.png" />
+          <Image Name="Tittle1.png" />
+          <Image Name="YesBtn.png" />
         </Folder>
       </RootFolder>
     </Group>

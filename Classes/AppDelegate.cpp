@@ -1,10 +1,12 @@
 ﻿#include "AppDelegate.h"
-#include "Sence/StartSence.h"
+
+#include "Sence/WelcomeSence.h"
 #include "AudioEngine.h"
 using namespace experimental;
 
 USING_NS_CC;
 
+//static cocos2d::Size designResolutionSize = cocos2d::Size(2346, 1119);//修改成项目背景图的大小
 static cocos2d::Size designResolutionSize = cocos2d::Size(480, 800);//修改成项目背景图的大小
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
@@ -87,7 +89,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	FileUtils::getInstance()->addSearchPath("res/", true);
 
     // create a scene. it's an autorelease object
-    auto scene = StartSence::createScene();
+    auto scene = WelcomeSence::createScene();
+
+	//auto reSence = TransitionJumpZoom::create(1.5f, scene);
 
 	//初始化本地信息状态
 	UserDefault::getInstance()->setBoolForKey("effSound", true);

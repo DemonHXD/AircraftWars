@@ -150,6 +150,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\Bg\Bg.cpp" />
     <ClCompile Include="..\Classes\Bullet\Bullet.cpp" />
+    <ClCompile Include="..\Classes\Bullet\BulletFactory.cpp" />
     <ClCompile Include="..\Classes\Bullet\BulletManager.cpp" />
     <ClCompile Include="..\Classes\Enemy\Enemy.cpp" />
     <ClCompile Include="..\Classes\Enemy\EnemyManager.cpp" />
@@ -158,11 +159,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Layer\PauseLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\RankLayer.cpp" />
     <ClCompile Include="..\Classes\Layer\SettingLayer.cpp" />
-    <ClCompile Include="..\Classes\Prop\Porp.cpp" />
-    <ClCompile Include="..\Classes\Prop\PorpManager.cpp" />
+    <ClCompile Include="..\Classes\Prop\Prop.cpp" />
+    <ClCompile Include="..\Classes\Prop\PropManager.cpp" />
     <ClCompile Include="..\Classes\Sence\EndSence.cpp" />
     <ClCompile Include="..\Classes\Sence\GameSence.cpp" />
     <ClCompile Include="..\Classes\Sence\StartSence.cpp" />
+    <ClCompile Include="..\Classes\Sence\WelcomeSence.cpp" />
+    <ClCompile Include="..\Classes\Ui\ChoiceItem.cpp" />
     <ClCompile Include="..\Classes\Utils\AudioUtil.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -170,6 +173,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Bg\Bg.h" />
     <ClInclude Include="..\Classes\Bullet\Bullet.h" />
+    <ClInclude Include="..\Classes\Bullet\BulletFactory.h" />
     <ClInclude Include="..\Classes\Bullet\BulletManager.h" />
     <ClInclude Include="..\Classes\Enemy\Enemy.h" />
     <ClInclude Include="..\Classes\Enemy\EnemyManager.h" />
@@ -178,11 +182,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Layer\PauseLayer.h" />
     <ClInclude Include="..\Classes\Layer\RankLayer.h" />
     <ClInclude Include="..\Classes\Layer\SettingLayer.h" />
-    <ClInclude Include="..\Classes\Prop\Porp.h" />
-    <ClInclude Include="..\Classes\Prop\PorpManager.h" />
+    <ClInclude Include="..\Classes\Prop\Prop.h" />
+    <ClInclude Include="..\Classes\Prop\PropManager.h" />
     <ClInclude Include="..\Classes\Sence\EndSence.h" />
     <ClInclude Include="..\Classes\Sence\GameSence.h" />
     <ClInclude Include="..\Classes\Sence\StartSence.h" />
+    <ClInclude Include="..\Classes\Sence\WelcomeSence.h" />
+    <ClInclude Include="..\Classes\Ui\ChoiceItem.h" />
     <ClInclude Include="..\Classes\Utils\AudioUtil.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

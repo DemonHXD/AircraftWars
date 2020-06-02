@@ -39,6 +39,9 @@ public:
 	void setEffAudioState(bool audioState) {
 		m_effAudioState = audioState;
 	}
+
+	//timi提示音
+	void playTimi();
 private:
 	//背景音乐开关
 	bool m_bgmAudioState;

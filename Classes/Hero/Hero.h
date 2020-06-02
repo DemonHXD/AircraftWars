@@ -4,15 +4,16 @@
 #include "WingAircraft.h"
 using namespace cocos2d;
 
-enum Plane { SmallPlane, MidPlane, BigPlane };
+enum Plane { Type1 = 0, Type2, Type3, Type4};
 class Hero : public Sprite
 {
 private:
 	float speed;
+	bool bulletFlag = true;
 	//初始化生命值为3
 	int liveCount;
 	bool isChange = false;
-	static int type;				//默认是小飞机
+	int type;			//默认是小飞机
 	//static Hero* instance;
 	static int count;
 	int blinkCount = 0;//计算闪烁次数
@@ -53,10 +54,18 @@ public:
 	//射击方法
 	void shoot(float dt);		
 
+	//改变子弹攻击设计方式
+	inline void changeBullet() {
+		bulletFlag = !bulletFlag;
+	}
+
 	//开启僚机
 	void createWingAircraft();
 
-	void createShotgun(float angle, BulletType type);
+	//更改英雄外观
+	void setAppearance(int type, int exp);
+
+	void createShotgun(float angle);
 
 	//设置触摸是否开启
 	void setTouchEnabled(bool enabled);

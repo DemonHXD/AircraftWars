@@ -8,33 +8,124 @@ BulletManager::BulletManager() {
 }
 
 BulletManager::~BulletManager() {
+
+	//对所有在生存池中和死亡池中的子弹引用计数-1
+	for (auto bullet : heroLives) {
+		bullet->release();
+	}	
+	for (auto bullet : heroDeaths) {
+		bullet->release();
+	}	
+	
+	for (auto bullet : enemyLives) {
+		bullet->release();
+	}	
+	for (auto bullet : enemyDeaths) {
+		bullet->release();
+	}	
+	
+	for (auto bullet : wingAircraftLives) {
+		bullet->release();
+	}	
+	for (auto bullet : wingAircraftDeaths) {
+		bullet->release();
+	}
+
 	pInstance = nullptr;
+
+	clearList();
 }
 
 void BulletManager::addHeroBullet(Bullet* bullet) {
 	//将子弹添加到链表末尾
-	heroBulletList.push_back(bullet);
+	heroLives.push_back(bullet);
+	//bullet->retain();
 }
 
+//添加子弹:添加到生存池中
 void BulletManager::addEnemyBullet(Bullet* bullet) {
 	//将子弹添加到链表末尾
-	enemyBulletList.push_back(bullet);
+	enemyLives.push_back(bullet);
+	//bullet->retain();
 }
 
-void BulletManager::collection(Bullet* bullet, int type) {
-	if (type == 1) {
-		//将子弹从链表中移除
-		heroBulletList.remove(bullet);
-	} else {
-		//将子弹从链表中移除
-		enemyBulletList.remove(bullet);
+void BulletManager::addWingAircraftBullet(Bullet* bullet) {
+	wingAircraftLives.push_back(bullet);
+}
+
+//回收子弹，添加到死亡池中
+void BulletManager::collection(Bullet* bullet, BulletType bulletType) {
+	switch (bulletType) {
+	case HeroBullet:
+		//将英雄子弹从生存池中移除
+		heroLives.remove(bullet);
+		//将英雄子弹添加到死亡池中
+		heroDeaths.push_back(bullet);
+		break;
+	case EnemyBullet:
+		//将敌机子弹从生存池中移除
+		enemyLives.remove(bullet);
+		//将敌机子弹添加到死亡池中
+		enemyDeaths.push_back(bullet);
+		break;
+	case WingAircraftBullet:
+		//将僚机子弹从生存池中移除
+		wingAircraftLives.remove(bullet);
+		//将僚机子弹添加到死亡池中
+		wingAircraftDeaths.push_back(bullet);
+		break;
 	}
 	//将子弹从父节点上移除
 	bullet->removeFromParent();
 }
 
 void BulletManager::clearList() {
-	heroBulletList.clear();
-	enemyBulletList.clear();
+	heroLives.clear();
+	heroDeaths.clear();
+
+	enemyLives.clear();
+	enemyDeaths.clear();
+
+	wingAircraftLives.clear();
+	wingAircraftDeaths.clear();
 }
 
+Bullet* BulletManager::findInDeath(BulletType bulletType) {
+	Bullet* bt = nullptr;
+	switch (bulletType) {
+	case HeroBullet:
+		//遍历英雄死亡池中的子弹
+		for (Bullet* bullet : heroDeaths) {
+			if (bullet->getBulletType() == bulletType) {
+				bt = bullet;
+				//addHeroBullet(bt);
+				heroDeaths.remove(bt);//从死亡池中移出
+				break;
+			}
+		}
+		break;
+	case EnemyBullet:
+		//遍历敌机死亡池中的子弹
+		for (Bullet* bullet : enemyDeaths) {
+			if (bullet->getBulletType() == bulletType) {
+				bt = bullet;
+				//addEnemyBullet(bt);
+				enemyDeaths.remove(bt);//从死亡池中移出
+				break;
+			}
+		}
+		break;
+	case WingAircraftBullet:
+		//遍历僚机死亡池中的子弹
+		for (Bullet* bullet : wingAircraftDeaths) {
+			if (bullet->getBulletType() == bulletType) {
+				bt = bullet;
+				//addEnemyBullet(bt);
+				wingAircraftDeaths.remove(bt);//从死亡池中移出
+				break;
+			}
+		}
+		break;
+	}
+	return bt;
+}

@@ -81,17 +81,26 @@
     <ClCompile Include="..\Classes\Sence\StartSence.cpp">
       <Filter>src\Sence</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Prop\Porp.cpp">
-      <Filter>src\porp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\Prop\PorpManager.cpp">
-      <Filter>src\porp</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\Sence\GameSence.cpp">
       <Filter>src\Sence</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Enemy\Enemy.cpp">
       <Filter>src\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Ui\ChoiceItem.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Bullet\BulletFactory.cpp">
+      <Filter>src\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Prop\Prop.cpp">
+      <Filter>src\porp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Prop\PropManager.cpp">
+      <Filter>src\porp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sence\WelcomeSence.cpp">
+      <Filter>src\Sence</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,17 +146,26 @@
     <ClInclude Include="..\Classes\Sence\StartSence.h">
       <Filter>src\Sence</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\Prop\Porp.h">
-      <Filter>src\porp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\Prop\PorpManager.h">
-      <Filter>src\porp</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\Sence\GameSence.h">
       <Filter>src\Sence</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Enemy\Enemy.h">
       <Filter>src\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Ui\ChoiceItem.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Bullet\BulletFactory.h">
+      <Filter>src\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Prop\Prop.h">
+      <Filter>src\porp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Prop\PropManager.h">
+      <Filter>src\porp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sence\WelcomeSence.h">
+      <Filter>src\Sence</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

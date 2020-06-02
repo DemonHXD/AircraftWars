@@ -1,11 +1,12 @@
 ﻿#include "Bullet.h"
 #include "BulletManager.h"
 #include "Utils/AudioUtil.h"
-Bullet::Bullet(int type, BulletType bulletType)
+Bullet::Bullet(BulletType bulletType)
 	:speed(200), 
 	bulletType(bulletType),
-	type(type),
+	//type(type),
 	isLive(true),
+	dir(Vec2(0, 1)),
 	//atk(20 + rand() % 11)//伤害值:20-30:20 + (0-10) 
 	atk(10)//伤害值:20-30:20 + (0-10) 
 {
@@ -15,14 +16,10 @@ Bullet::~Bullet() {
 
 }
 
-Bullet* Bullet::create(int type, BulletType bulletType) {
-	Bullet* ret = new(std::nothrow) Bullet(type, bulletType);
+Bullet* Bullet::create(BulletType bulletType) {
+	Bullet* ret = new(std::nothrow) Bullet(bulletType);
 	if (ret && ret->init()) {
 		ret->autorelease();
-		//直接使用静态容器，在创建成功一个子弹后便添加进去
-		//bulletList.push_back(ret);
-		//开启子弹的调度器
-		//ret->
 		return ret;
 	}
 	delete ret;
@@ -30,10 +27,38 @@ Bullet* Bullet::create(int type, BulletType bulletType) {
 	return ret;
 }
 
+void Bullet::onEnter() {
+	Sprite::onEnter();
+
+	//开启调度器
+	scheduleUpdate();
+
+	bulletRun();
+
+	isLive = true;
+}
+
+//void Bullet::onExit() {
+//	Sprite::onExit();
+//
+//}
+
 bool Bullet::init() {
 	//根据不同的类型使用不同的路径
-	char filename[40];
-	sprintf_s(filename, "image/bullet_effect/bullet_%d_1.png", bulletType);//输出到字符数组中：1.数组的首地址  
+	char filename[80];
+
+	switch (bulletType) {
+	case HeroBullet:
+		setScale(0.3f);
+		sprintf_s(filename, "image/bullet_effect/hero/bullet_0_%d.png", 2);
+		break;
+	case EnemyBullet:
+		sprintf_s(filename, "image/bullet_effect/enemy/bullet_0_%d.png", 1);
+		break;
+	case WingAircraftBullet:
+		sprintf_s(filename, "image/bullet_effect/wingAircraft/bullet_0_%d.png", 1);
+		break;
+	}
 
 	if (!Sprite::initWithFile(filename)) {
 		return false;
@@ -42,7 +67,7 @@ bool Bullet::init() {
 	//设置子弹的锚点
 	setAnchorPoint(Vec2(0.5, 0));
 
-	scheduleUpdate();
+	//scheduleUpdate();
 	return true;
 }
 
@@ -50,22 +75,27 @@ bool Bullet::init() {
 	子弹动画
 */
 void Bullet::bulletRun() {
+	char filename[80];
 	//创建图片收集者
 	Animation* animation = Animation::create();
-	if (bulletType == Missile || bulletType == Rocket) {
-		for (int i = 1; i <= 2; i++) {
-			char filename[40];
-			sprintf(filename, "image/bullet_effect/bullet_%d_%d.png", bulletType, i);
-			log("%s", filename);
+	if (bulletType == HeroBullet) {
+		for (int i = 2; i <= 4; i++) {
+			sprintf(filename, "image/bullet_effect/hero/bullet_0_%d.png", i);
 			animation->addSpriteFrameWithFileName(filename);
 		}
-	} else if (bulletType == OrdinaryBullet) {
-		char filename[40];
-		sprintf(filename, "image/bullet_effect/bullet_%d_%d.png", bulletType, 1);
-		animation->addSpriteFrameWithFileName(filename);
+	} else if (bulletType == EnemyBullet) {
+		for (size_t i = 1; i <= 2; i++) {
+			sprintf(filename, "image/bullet_effect/enemy/bullet_0_%d.png", i);
+			animation->addSpriteFrameWithFileName(filename);
+		}
+	} else if (bulletType == WingAircraftBullet) {
+		for (size_t i = 1; i <= 2; i++) {
+			sprintf(filename, "image/bullet_effect/wingAircraft/bullet_0_%d.png", i);
+			animation->addSpriteFrameWithFileName(filename);
+		}
 	}
 	//间隔时间
-	animation->setDelayPerUnit(0.2f);
+	animation->setDelayPerUnit(0.5f);
 	animation->setLoops(-1);
 	//开启动画
 	Animate* animate = Animate::create(animation);
@@ -76,7 +106,7 @@ void Bullet::update(float dt) {
 
 	//如果是死亡状态,则回收自身
 	if (!isLive) {
-		BulletManager::getInstance()->collection(this, type);
+		BulletManager::getInstance()->collection(this, bulletType);
 		return;
 	}
 
@@ -91,24 +121,35 @@ void Bullet::update(float dt) {
 		//removeFromParent();//从父节点上移除
 
 		//将当前子弹从管理类中移除
-		BulletManager::getInstance()->collection(this, type);
+		BulletManager::getInstance()->collection(this, bulletType);
 	}
 }
 
 /*
 	发射子弹的声音
 */
-void Bullet::shootSound(int type) {
-	int bulletEff;
-	switch (type) {
-	case -1:
+void Bullet::shootSound() {
+	//int bulletEff;
+	switch (bulletType) {
+	case HeroBullet:
 		AudioUtil::getInstence()->enemyShootSound();
-		break;	
-	case 1:
+		break;
+	case EnemyBullet:
 		AudioUtil::getInstence()->heroShoottSound();
-		break;	
-	case 2:
+		break;
+	case WingAircraftBullet:
 		AudioUtil::getInstence()->wingAirShoot();
 		break;
 	}
+	//switch (type) {
+	//case -1:
+	//	AudioUtil::getInstence()->enemyShootSound();
+	//	break;	
+	//case 1:
+	//	AudioUtil::getInstence()->heroShoottSound();
+	//	break;	
+	//case 2:
+	//	AudioUtil::getInstence()->wingAirShoot();
+	//	break;
+	//}
 }
