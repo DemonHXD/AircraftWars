@@ -267,8 +267,16 @@ void Hero::defenseUpdate(float dt) {
 		blinkCount = 0;
 		this->isShield = false;
 		unschedule(schedule_selector(Hero::defenseUpdate));
-		//return;
 	}
+}
+
+/*
+	延长防护罩时间
+*/
+void Hero::extendDefenseTime() {
+	blinkCount = 0;
+	unschedule(schedule_selector(Hero::defenseUpdate));
+	schedule(schedule_selector(Hero::defenseUpdate), 1, 5, 5);
 }
 
 /*

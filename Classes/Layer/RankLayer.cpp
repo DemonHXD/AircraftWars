@@ -3,7 +3,7 @@
 #include "ui/CocosGUI.h"
 #include "cocostudio/CocoStudio.h"
 using namespace cocos2d::ui;
-RankLayer::RankLayer(Layer *sence):sence(sence){
+RankLayer::RankLayer(){
 
 }
 
@@ -11,8 +11,8 @@ RankLayer::~RankLayer() {
 
 }
 
-RankLayer* RankLayer::create(Layer *sence) {
-	RankLayer *ret = new (std::nothrow)RankLayer(sence);
+RankLayer* RankLayer::create() {
+	RankLayer *ret = new (std::nothrow)RankLayer();
 	if (ret && ret->init()) {
 		ret->autorelease();
 		return ret;
@@ -41,32 +41,21 @@ bool RankLayer::init() {
 
 	//关闭按钮
 	Button* closeMenuBtn = dynamic_cast<Button*>(root->getChildByName("closeBtn"));
-
-	//背景
-	Sprite* bgSp = dynamic_cast<Sprite*>(root->getChildByName("bg"));
-
-	if (sence->getTag() == 100) {
-		bgSp->setVisible(false);
-		//是游戏场景类
-		closeMenuBtn->addClickEventListener([this, eventListener](Ref*) {
-			eventListener->setSwallowTouches(false);
-			AudioUtil::getInstence()->buttonClickSound();
-			//移出暂停层
-			removeAllChildren();
-			//恢复背景音乐
-			AudioUtil::getInstence()->audioResume();
-			//游戏继续
-			Director::getInstance()->resume();
-		});
-	} else if(sence->getTag() == 101) {
 		//开始场景类
 		closeMenuBtn->addClickEventListener([this, eventListener](Ref*) {
+			if (onExit != nullptr) {
+				onExit();
+			}
+
 			eventListener->setSwallowTouches(false);
 			AudioUtil::getInstence()->buttonClickSound();
-			//移出排行榜层
-			removeAllChildren();
+			Director::getInstance()->resume();//游戏继续
+
+			runAct(Vec2(0, 0),Vec2(0, size.width),CallFunc::create([this]() {
+				removeAllChildren();//移出排行版层
+			})
+			);
 		});
-	}
 
 	//分数文本
 	TextAtlas *scoreText_1 = dynamic_cast<TextAtlas*>(root->getChildByName("ScoreNumberText_1"));
@@ -77,4 +66,14 @@ bool RankLayer::init() {
 	scoreText_2->setString("0");
 	scoreText_3->setString("0");
 	return true;
+}
+
+void RankLayer::runAct(Vec2 v1, Vec2 v2, CallFunc* callFunc) {
+	MoveBy* mb = MoveBy::create(0, v1);
+	MoveTo* mt = MoveTo::create(0.3f, v2);
+	//auto callFunc = CallFunc::create([this]() {
+	//	removeAllChildren();//移出排行版层
+	//});
+	Sequence* seqAct = Sequence::create(mb, mt, callFunc, nullptr);
+	this->runAction(seqAct);
 }

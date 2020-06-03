@@ -23,12 +23,13 @@ bool SelectMapSence::init() {
 	this->addChild(root);
 
 	//返回按钮
-	//Button* backBtn = dynamic_cast<Button*>(root->getChildByName("backBtn"));
-	//backBtn->addClickEventListener([](Ref*) {
-	//	AudioUtil::getInstence()->buttonClickSound();
-	//	Scene* startSence = StartSence::createScene();
-	//	Director::getInstance()->replaceScene(startSence);
-	//});
+	Button* backBtn = dynamic_cast<Button*>(root->getChildByName("backBtn"));
+	backBtn->addClickEventListener([](Ref*) {
+		AudioUtil::getInstence()->buttonClickSound();
+		Scene* startSence = StartSence::createScene();
+		auto reSence = TransitionSlideInR::create(0.5f, startSence);
+		Director::getInstance()->replaceScene(reSence);
+	});
 
 	//获取ScrollView子节点
 	ScrollView* scrollView = dynamic_cast<ScrollView*>(root->getChildByName("ScrollView"));
@@ -69,7 +70,7 @@ bool SelectMapSence::init() {
 		//创建一个新场景
 		Scene* gameSence = GameSence::createScene();
 		//设置一个界面切换的动作，0.5秒的跳动动作
-		auto reSence = TransitionJumpZoom::create(0.5f, gameSence);
+		auto reSence = TransitionFade::create(0.5f, gameSence);
 		Director::getInstance()->replaceScene(reSence);
 	});
 	return true;

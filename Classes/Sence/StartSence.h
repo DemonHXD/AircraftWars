@@ -12,9 +12,13 @@ public:
 	StartSence();
 	~StartSence();
 
+	void onEnter() override;
+
 	CREATE_FUNC(StartSence);
 private:
 	Node* root;
+	Size size;
+	Sprite* bg_Mask;
 };
 
 #endif // !__StartSence_H__

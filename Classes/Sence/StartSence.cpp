@@ -27,11 +27,16 @@ StartSence::~StartSence() {
 	//AudioEngine::end();
 }
 
+void StartSence::onEnter() {
+	Layer::onEnter();
+	//bg_Mask->setVisible(false);
+}
+
 bool StartSence::init() {
 	if (!Layer::init()) {
 		return false;
 	}
-	
+	size = Director::getInstance()->getVisibleSize();
 	////加载cocostudio文件
 	//root = CSLoader::createNode("scenes/start/layers/choiceLayer.csb");
 	//this->addChild(root);
@@ -99,6 +104,9 @@ bool StartSence::init() {
 	//给当前类设置个tag
 	this->setTag(101);
 
+	//获取背景遮罩
+	bg_Mask = dynamic_cast<Sprite*>(root->getChildByName("bg_Mask"));
+
 	//开始游戏按钮
 	Button* startGameBtn = dynamic_cast<Button*>(root->getChildByName("startGameBtn"));
 	startGameBtn->addClickEventListener([this](Ref*) {
@@ -116,16 +124,16 @@ bool StartSence::init() {
 		//创建一个新场景
 		Scene* selectMapSence = SelectMapSence::createScene();
 		//设置一个界面切换的动作，0.5秒的跳动动作
-		//auto reSence = TransitionJumpZoom::create(0.5f, GameSence);
-		
-		Director::getInstance()->replaceScene(selectMapSence);
+		auto reSence = TransitionFadeBL::create(0.8f, selectMapSence);
+
+		Director::getInstance()->replaceScene(reSence);
 	});
 
 	//游戏设置按钮
 	Button* settingBtn = dynamic_cast<Button*>(root->getChildByName("settingBtn"));
 
 	//游戏帮助按钮
-	Button* helpBtn = dynamic_cast<Button*>(root->getChildByName("choiceHeroBtn"));
+	Button* selectHeroBtn = dynamic_cast<Button*>(root->getChildByName("choiceHeroBtn"));
 
 	//关于游戏按钮
 	Button* aboutBtn = dynamic_cast<Button*>(root->getChildByName("aboutBtn"));
@@ -133,29 +141,54 @@ bool StartSence::init() {
 	//排行榜按钮
 	Button* rankBtn = dynamic_cast<Button*>(root->getChildByName("rankBtn"));
 
-	settingBtn->addClickEventListener([this, startGameBtn, settingBtn, helpBtn, aboutBtn](Ref*) {
+	settingBtn->addClickEventListener([this, startGameBtn, settingBtn, selectHeroBtn, aboutBtn](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
+
+		//开启背景遮罩
+		bg_Mask->setVisible(true);
 		//创建设置层
 		SettingLayer* settingLayer = SettingLayer::create();
+
+		//设置层退出回调
+		settingLayer->onExit = [this]() {
+			//关闭背景遮罩
+			bg_Mask->setVisible(false);
+		};
+
+		//运行动画
+		settingLayer->runAct(Vec2(0, size.width), Vec2(0, 0));
+
 		this->addChild(settingLayer);
-
 	});
-
+	
 	rankBtn->addClickEventListener([this](Ref*) {
+		//开启背景遮罩
+		bg_Mask->setVisible(true);
 		AudioUtil::getInstence()->buttonClickSound();
 		//创建排行榜层
-		RankLayer* rankLayer = RankLayer::create(this);
+		RankLayer* rankLayer = RankLayer::create();
+
+		//设置层退出回调
+		rankLayer->onExit = [this]() {
+			//关闭背景遮罩
+			bg_Mask->setVisible(false);
+		};
+
+		//运行动画
+		rankLayer->runAct(Vec2(0, size.width), Vec2(0, 0));
+
 		this->addChild(rankLayer);
 	});
 
-	helpBtn->addClickEventListener([this](Ref*) {
+	selectHeroBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
 		//创建一个新场景
 		Scene* choiceHeroSence = ChoiceHeroSence::createScene();
-		//设置一个界面切换的动作，0.5秒的跳动动作
-		//auto reSence = TransitionJumpZoom::create(0.5f, GameSence);
+		//设置一个界面切换的动作，0.5秒的动作
+		//auto reSence = TransitionMoveInL::create(0.5f, choiceHeroSence);
+		auto reSence = TransitionSlideInL::create(0.5f, choiceHeroSence);
 
-		Director::getInstance()->replaceScene(choiceHeroSence);
+		Director::getInstance()->replaceScene(reSence);
 	});
 	return true;
 }

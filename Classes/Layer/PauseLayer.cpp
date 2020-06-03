@@ -30,7 +30,7 @@ bool PauseLayer::init() {
 	if (!Layer::init()) {
 		return false;
 	}
-
+	size = Director::getInstance()->getVisibleSize();
 	//创建触摸监听器，吞噬触摸
 	//1.创建单点触摸监听器
 	EventListenerTouchOneByOne* eventListener = EventListenerTouchOneByOne::create();
@@ -52,11 +52,13 @@ bool PauseLayer::init() {
 		eventListener->setSwallowTouches(false);
 		AudioUtil::getInstence()->buttonClickSound();
 		//移出暂停层
-		removeAllChildren();
-		//恢复背景音乐
-		AudioUtil::getInstence()->audioResume();
-		//游戏继续
-		Director::getInstance()->resume();
+		//removeAllChildren();
+		Director::getInstance()->resume();//游戏继续
+		AudioUtil::getInstence()->audioResume();//恢复背景音乐
+		runAct(Vec2(0, 0), Vec2(0, size.width), CallFunc::create([this]() {
+			removeAllChildren();//移出暂停层
+		})
+		);
 	});
 
 	//重新开始游戏按钮
@@ -76,7 +78,9 @@ bool PauseLayer::init() {
 		UserDefault::getInstance()->setIntegerForKey("score", gameSence->getScore());
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
-		Director::getInstance()->replaceScene(EndSence::createScene());
+		Scene* endScene = EndSence::createScene();
+		auto reSence = TransitionFade::create(0.5f, endScene);
+		Director::getInstance()->replaceScene(reSence);
 	});
 
 	//回到主界面按钮
@@ -86,8 +90,17 @@ bool PauseLayer::init() {
 		UserDefault::getInstance()->setIntegerForKey("score", gameSence->getScore());
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
-		Director::getInstance()->replaceScene(StartSence::createScene());
+		Scene* startScene = StartSence::createScene();
+		auto reSence = TransitionFade::create(0.5f, startScene);
+		Director::getInstance()->replaceScene(reSence);
 	});
 
 	return true;
+}
+
+void PauseLayer::runAct(Vec2 v1, Vec2 v2, CallFunc* callFunc) {
+	MoveBy* mb = MoveBy::create(0, v1);
+	MoveTo* mt = MoveTo::create(0.3f, v2);
+	Sequence* seqAct = Sequence::create(mb, mt, callFunc, nullptr);
+	this->runAction(seqAct);
 }

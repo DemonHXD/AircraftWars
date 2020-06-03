@@ -15,16 +15,18 @@ SettingLayer* SettingLayer::create() {
 	}
 }
 
-SettingLayer::SettingLayer() {
-
-}
-SettingLayer::~SettingLayer() {
-}
-
 bool SettingLayer::init() {
 	if (!Layer::init()) {
 		return false;
 	}
+	Size size = Director::getInstance()->getVisibleSize();
+	EventListenerTouchOneByOne* eventListener = EventListenerTouchOneByOne::create();
+	eventListener->onTouchBegan = [this](Touch *touch, Event *event) {
+		return true;
+	};
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(eventListener, this);
+	//设置吞噬触摸
+	eventListener->setSwallowTouches(true);
 
 	//加载cocostudio文件
 	root = CSLoader::createNode("scenes/start/layers/SettingLayer.csb");
@@ -32,10 +34,29 @@ bool SettingLayer::init() {
 
 	//关闭按钮
 	Button* closeMenuBtn = dynamic_cast<Button*>(root->getChildByName("closeMenuBtn"));
-	closeMenuBtn->addClickEventListener([this](Ref*) {
+	closeMenuBtn->addClickEventListener([this, eventListener, size](Ref*) {
+
+		if (onExit != nullptr) {
+			onExit();
+		}
+
+		eventListener->setSwallowTouches(false);//关闭吞噬触摸
 		AudioUtil::getInstence()->buttonClickSound();
-		//移出暂停层
-		removeAllChildren();
+
+		//MoveBy* mb = MoveBy::create(0, Vec2(0, 0));
+		//MoveTo* mt = MoveTo::create(0.5f, Vec2(0, size.height));
+		//auto callFunc = CallFunc::create([this]() {
+		//	//移出暂停层
+		//	removeAllChildren();
+		//});
+		//Sequence* seqAct = Sequence::create(mb, mt, callFunc, nullptr);
+		//this->runAction(seqAct);
+
+		runAct(Vec2(0, 0), Vec2(0, size.width), CallFunc::create([this]() {
+			removeAllChildren();//移出设置层
+		})
+		);
+		
 	});
 
 	initSoundEff();
@@ -137,4 +158,12 @@ void SettingLayer::initBGMusic() {
 		//保存背景音乐开信息到本地
 		UserDefault::getInstance()->setBoolForKey("bgmSound", true);
 	});
+}
+
+
+void SettingLayer::runAct(Vec2 v1, Vec2 v2, CallFunc* callFunc) {
+	MoveBy* mb = MoveBy::create(0, v1);
+	MoveTo* mt = MoveTo::create(0.3f, v2);
+	Sequence* seqAct = Sequence::create(mb, mt, callFunc, nullptr);
+	this->runAction(seqAct);
 }

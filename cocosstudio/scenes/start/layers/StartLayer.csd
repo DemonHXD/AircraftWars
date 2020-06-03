@@ -93,6 +93,17 @@
             <PreSize X="0.0000" Y="0.0000" />
             <FileData Type="Normal" Path="scenes/start/ani/StartGame.csd" Plist="" />
           </AbstractNodeData>
+          <AbstractNodeData Name="bg_Mask" ActionTag="115816916" VisibleForFrame="False" Alpha="178" Tag="141" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" ctype="SpriteObjectData">
+            <Size X="480.0000" Y="800.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="240.0000" Y="400.0000" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="0.5000" />
+            <PreSize X="1.0000" Y="1.0000" />
+            <FileData Type="Normal" Path="scenes/start/image/start_bg.png" Plist="" />
+            <BlendFunc Src="770" Dst="771" />
+          </AbstractNodeData>
         </Children>
       </ObjectData>
     </Content>

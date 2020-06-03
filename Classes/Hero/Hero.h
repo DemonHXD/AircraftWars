@@ -50,6 +50,7 @@ public:
 	void isOpenDefense(bool isShield);
 	//防护罩的调度器
 	void defenseUpdate(float dt);
+	void extendDefenseTime();//延长防护罩时间
 	//僚机的调度器
 	void WingAirUpdate(float dt);
 	//英雄死亡

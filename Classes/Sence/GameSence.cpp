@@ -316,7 +316,7 @@ bool GameSence::init() {
 	scheduleUpdate();
 
 	//开启创建敌机的调度器
-	schedule(schedule_selector(GameSence::createEnemy), 1, -1, 1);
+	schedule(schedule_selector(GameSence::createEnemy), 2, -1, 1);
 
 	//创建血条
 	//LoadingBar* hpBar = LoadingBar::create("image/ui/blood.png");//1.图片路径  2.LOCAL/PLIST
@@ -414,31 +414,33 @@ void GameSence::createUi() {
 
 	//暂停按钮
 	Button* pauseBtn = dynamic_cast<Button*>(root->getChildByName("pauseBtn"));
+	//Sprite* bg_Mask = dynamic_cast<Sprite*>(root->getChildByName("bg_Mask"));
 	pauseBtn->setTag(100);
 
 	//给暂停按钮添加点击事件
 	pauseBtn->addClickEventListener([this, pauseBtn](Ref*){
-		//背景音乐暂停
-		AudioUtil::getInstence()->audioPause();
-		AudioUtil::getInstence()->buttonClickSound();
-		//游戏暂停
-		Director::getInstance()->pause();
-		//创建暂停界面
-		PauseLayer* pauseLayer = PauseLayer::create(this);
+		AudioUtil::getInstence()->buttonClickSound();//背景音乐暂停
+		PauseLayer* pauseLayer = PauseLayer::create(this);//创建暂停界面
+		pauseLayer->runAct(Vec2(0, size.width), Vec2(0, 0), CallFunc::create([this]() {
+			//背景音乐暂停
+			AudioUtil::getInstence()->audioPause();
+			//游戏暂停
+			Director::getInstance()->pause();
+		}));
 		this->addChild(pauseLayer, 10);
 	});
 
 	//创建排行榜按钮
 	Button* rankBtn = dynamic_cast<Button*>(root->getChildByName("rankBtn"));
-	rankBtn->setTag(3);
+	//rankBtn->setTag(3);
 	rankBtn->addClickEventListener([this](Ref*) {
-		//背景音乐暂停
-		AudioUtil::getInstence()->audioPause();
 		AudioUtil::getInstence()->buttonClickSound();
-		//游戏暂停
-		Director::getInstance()->pause();
 		//创建排行榜界面
-		RankLayer* rankLayer = RankLayer::create(this);
+		RankLayer* rankLayer = RankLayer::create();
+		rankLayer->runAct(Vec2(0, size.width), Vec2(0, 0), CallFunc::create([this]() {
+			//游戏暂停
+			Director::getInstance()->pause();
+		}));
 		this->addChild(rankLayer, 10);
 	});
 
@@ -521,7 +523,11 @@ void GameSence::collisionHeroAndProp() {
 			switch (prop->getType()) {
 			case PropType::Shield:
 				//捡到防护罩道具后加一个防护罩
-				hero->isOpenDefense(true);
+				if (!hero->getShield()) {//没有防护罩的时候才添加一个
+					hero->isOpenDefense(true);
+				} else {
+					hero->extendDefenseTime();//延长防护罩时间
+				}
 				break;
 			case PropType::WingAir:
 				//英雄开启僚机
@@ -573,3 +579,6 @@ void GameSence::collisionWingAircraftAndEenmyBullet() {
 		}
 	}
 }
+
+
+

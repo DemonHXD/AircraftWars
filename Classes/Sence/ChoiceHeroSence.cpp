@@ -26,7 +26,8 @@ bool ChoiceHeroSence::init() {
 	backBtn->addClickEventListener([](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
 		Scene* startSence = StartSence::createScene();
-		Director::getInstance()->replaceScene(startSence);
+		auto reSence = TransitionSlideInR::create(0.5f, startSence);
+		Director::getInstance()->replaceScene(reSence);
 	});
 
 	//获取ScrollView子节点

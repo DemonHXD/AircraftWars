@@ -5,12 +5,16 @@ using namespace cocos2d;
 
 class RankLayer : public Layer{
 public:
-	RankLayer(Layer *sence);
+	RankLayer();
 	~RankLayer();
-	static RankLayer* create(Layer *sence);
+	static RankLayer* create();
 	bool init() override;
+	void runAct(Vec2 v1, Vec2 v2, CallFunc* callFunc = nullptr);
+public:
+	typedef std::function<void()> ccExitCallback;
+
+	ccExitCallback onExit;//指向退出设置时要调用的函数
 private:
-	Layer *sence;
 	
 	Size size;
 };
