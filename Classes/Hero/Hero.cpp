@@ -3,11 +3,12 @@
 #include "Bullet/BulletManager.h"
 #include "Sence/EndSence.h"
 #include "Bullet/BulletFactory.h"
+#include "Utils/AudioUtil.h"
 
 const float PI = 3.1415926;//圆周率
 bool flag = true;
 #define HERO 1
-Hero::Hero() :speed(80), isShield(false), liveCount(3), isMove(true), type(Type1){
+Hero::Hero() :speed(80), isShield(false), liveCount(3), isMove(true), defenseSP(nullptr), bulletCount(1) {
 
 }
 Hero::~Hero() {
@@ -48,6 +49,7 @@ Hero* Hero::create(const int herotype) {
 	初始化
 */
 bool Hero::init() {
+	type = UserDefault::getInstance()->getIntegerForKey("heroType", 0);
 	char filename[40];
 	sprintf_s(filename, "image/hero/hero_%d_1.png", type);
 	if (!Sprite::initWithFile(filename)) {
@@ -189,8 +191,12 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 
 		//判断是否创建了僚机
 		if (leftWa != nullptr && rightWa != nullptr) {
-			leftWa->setPosition(Vec2(getPosition().x - 60, getPosition().y + 30));
-			rightWa->setPosition(Vec2(getPosition().x + 60, getPosition().y + 30));
+			leftWa->setPosition(Vec2(getPosition().x - getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 10));
+			rightWa->setPosition(Vec2(getPosition().x + getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 10));
+		}
+
+		if (defenseSP != nullptr) {
+			defenseSP->setPosition(Vec2(getPosition().x, getPosition().y));
 		}
 
 		setPosition(pos);
@@ -203,7 +209,6 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 */
 void Hero::createShotgun(float angle) {
 	//创建子弹
-	//Bullet* bullet = Bullet::create(HERO,type);
 	Bullet* bullet = BulletFactory::createBullet(HeroBullet);
 	bullet->shootSound();
 	float h = getContentSize().height / 2;
@@ -224,19 +229,9 @@ void Hero::createShotgun(float angle) {
 }
 
 void Hero::shoot(float dt) {
-	/*if (bulletFlag)
-	{
-		
-		float angle[7] = { -15,-10,-5,0,5,10,15 };
-		for (int i = 0; i < 7; i++)
-		{
-			createShotgun(angle[i]);
-		}
+	for (int i = 0; i < bulletCount; i++) {
+		createShotgun(bulletAngle[i]);
 	}
-	else {
-		createShotgun(0);
-	}*/
-	createShotgun(0);
 }
 
 /*
@@ -248,12 +243,12 @@ void Hero::shoot(float dt) {
 void Hero::isOpenDefense(bool isShield) {
 	this->isShield = isShield;
 	if (isShield) {
-		Sprite* defenseSP = Sprite::create("image/ui/trans.png");
-		defenseSP->setAnchorPoint(Vec2(0, 0));
-		defenseSP->setPosition(Vec2(-23, 0));
-		defenseSP->setScale(0.5f);
-		defenseSP->setTag(25);
-		this->addChild(defenseSP);
+		defenseSP = Sprite::create("image/ui/trans.png");
+		//defenseSP->setAnchorPoint(Vec2(0, 0));
+		defenseSP->setPosition(Vec2(getPosition().x, getPosition().y));
+		defenseSP->setScale(0.6f);
+		//defenseSP->setTag(25);
+		_parent->addChild(defenseSP);
 		schedule(schedule_selector(Hero::defenseUpdate), 1, 5, 5);
 	}
 }
@@ -262,7 +257,7 @@ void Hero::isOpenDefense(bool isShield) {
 	防护罩的调度器
 */
 void Hero::defenseUpdate(float dt) {
-	Sprite* defenseSP = (Sprite*)this->getChildByTag(25);
+	//Sprite* defenseSP = (Sprite*)this->getChildByTag(25);
 	Blink * blink = Blink::create(1.0f, 2);
 	defenseSP->runAction(blink);
 	blinkCount++;
@@ -317,6 +312,8 @@ void Hero::die() {
 
 	CallFunc* callFuncAct = CallFunc::create([this]() {
 		this->removeFromParent();
+		//暂停所有音乐
+		AudioUtil::getInstence()->audioPause();
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
 		Director::getInstance()->replaceScene(EndSence::createScene());
@@ -334,15 +331,15 @@ void Hero::die() {
 void Hero::createWingAircraft() {
 	//创建左僚机
 	leftWa = WingAircraft::create();
-	leftWa->setPosition(Vec2(getPosition().x - 60, getPosition().y + 30));
-	leftWa->setScale(0.7f);
-	_parent->addChild(leftWa, 5);
+	leftWa->setPosition(Vec2(getPosition().x - getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 20));
+	leftWa->setScale(0.6f);
+	_parent->addChild(leftWa, 10);
 
 	//创建右僚机
 	rightWa = WingAircraft::create();
-	rightWa->setPosition(Vec2(getPosition().x + 60, getPosition().y + 30));
-	rightWa->setScale(0.7f);
-	_parent->addChild(rightWa, 5);
+	rightWa->setPosition(Vec2(getPosition().x + getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 20));
+	rightWa->setScale(0.6f);
+	_parent->addChild(rightWa, 10);
 
 	schedule(schedule_selector(Hero::WingAirUpdate), 1, 5, 15);
 }
@@ -380,4 +377,32 @@ void Hero::setAppearance(int type, int exp) {
 	char filename[40];
 	sprintf_s(filename, "image/hero/hero_%d_%d.png", type, exp);
 	setTexture(filename);
+}
+
+/*
+	子弹升级
+*/
+void Hero::bulletUp() {
+	if (bulletCount < 4) {
+		bulletCount++;
+		setAppearance(type, bulletCount);
+		switch (bulletCount) {
+		case 2:
+			bulletAngle[0] = -5;
+			bulletAngle[1] = 5;
+			break;
+		case 3:
+			bulletAngle[0] = -4;
+			bulletAngle[1] = 1;
+			bulletAngle[2] = 6;
+			break;
+		case 4:
+			bulletAngle[0] = -8;
+			bulletAngle[1] = -3;
+			bulletAngle[2] = 3;
+			bulletAngle[3] = 8;
+			break;
+		}
+	}
+	
 }

@@ -23,8 +23,11 @@ Bg* Bg::create() {
 }
 
 bool Bg::init() {
+	char filename[80];
+	int mapType = UserDefault::getInstance()->getIntegerForKey("mapType", 0);
+	sprintf_s(filename, "scenes/selectMap/image/bg%d.jpg", mapType);
 	//调用父类Sprite的initWithFile方法
-	if (!Sprite::initWithFile("image/bg/bg1.jpg")) {
+	if (!Sprite::initWithFile(filename)) {
 		return false;
 	}
 	//设置自己的锚点

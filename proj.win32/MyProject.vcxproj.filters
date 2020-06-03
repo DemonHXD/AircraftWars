@@ -37,6 +37,9 @@
     <Filter Include="src\util">
       <UniqueIdentifier>{55453b31-f941-41c0-9d4b-aff0638ca33e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\skill">
+      <UniqueIdentifier>{563205f3-b4b3-4fdb-9747-c0df2e5bb119}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -102,6 +105,21 @@
     <ClCompile Include="..\Classes\Sence\WelcomeSence.cpp">
       <Filter>src\Sence</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Sence\ChoiceHeroSence.cpp">
+      <Filter>src\Sence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Ui\ChoiceHeroItem.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Sence\SelectMapSence.cpp">
+      <Filter>src\Sence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Ui\SelectMapItem.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Skill\SkillButton.cpp">
+      <Filter>src\skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -166,6 +184,21 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Sence\WelcomeSence.h">
       <Filter>src\Sence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sence\ChoiceHeroSence.h">
+      <Filter>src\Sence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Ui\ChoiceHeroItem.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Sence\SelectMapSence.h">
+      <Filter>src\Sence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Ui\SelectMapItem.h">
+      <Filter>src\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Skill\SkillButton.h">
+      <Filter>src\skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

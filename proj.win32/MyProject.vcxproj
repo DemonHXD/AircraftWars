@@ -161,11 +161,16 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Layer\SettingLayer.cpp" />
     <ClCompile Include="..\Classes\Prop\Prop.cpp" />
     <ClCompile Include="..\Classes\Prop\PropManager.cpp" />
+    <ClCompile Include="..\Classes\Sence\ChoiceHeroSence.cpp" />
     <ClCompile Include="..\Classes\Sence\EndSence.cpp" />
     <ClCompile Include="..\Classes\Sence\GameSence.cpp" />
+    <ClCompile Include="..\Classes\Sence\SelectMapSence.cpp" />
     <ClCompile Include="..\Classes\Sence\StartSence.cpp" />
     <ClCompile Include="..\Classes\Sence\WelcomeSence.cpp" />
+    <ClCompile Include="..\Classes\Skill\SkillButton.cpp" />
+    <ClCompile Include="..\Classes\Ui\ChoiceHeroItem.cpp" />
     <ClCompile Include="..\Classes\Ui\ChoiceItem.cpp" />
+    <ClCompile Include="..\Classes\Ui\SelectMapItem.cpp" />
     <ClCompile Include="..\Classes\Utils\AudioUtil.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -184,11 +189,16 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Layer\SettingLayer.h" />
     <ClInclude Include="..\Classes\Prop\Prop.h" />
     <ClInclude Include="..\Classes\Prop\PropManager.h" />
+    <ClInclude Include="..\Classes\Sence\ChoiceHeroSence.h" />
     <ClInclude Include="..\Classes\Sence\EndSence.h" />
     <ClInclude Include="..\Classes\Sence\GameSence.h" />
+    <ClInclude Include="..\Classes\Sence\SelectMapSence.h" />
     <ClInclude Include="..\Classes\Sence\StartSence.h" />
     <ClInclude Include="..\Classes\Sence\WelcomeSence.h" />
+    <ClInclude Include="..\Classes\Skill\SkillButton.h" />
+    <ClInclude Include="..\Classes\Ui\ChoiceHeroItem.h" />
     <ClInclude Include="..\Classes\Ui\ChoiceItem.h" />
+    <ClInclude Include="..\Classes\Ui\SelectMapItem.h" />
     <ClInclude Include="..\Classes\Utils\AudioUtil.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

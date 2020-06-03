@@ -218,9 +218,17 @@
             <Folder Name="image">
               <Image Name="backTo.png" />
               <Image Name="finish_bg.png" />
+              <Image Name="hero_0_1.png" />
+              <Image Name="hero_1_1.png" />
+              <Image Name="hero_2_1.png" />
+              <Image Name="hero_3_1.png" />
+              <Image Name="boxAtribut.png" />
+              <Image Name="boxStat.png" />
+              <Image Name="YesBtn.png" />
             </Folder>
             <Folder Name="layers">
               <Project Name="BuyHeroLayer.csd" Type="Layer" />
+              <Project Name="HeroChoiceItem.csd" Type="Layer" />
             </Folder>
           </Folder>
           <Folder Name="end">
@@ -253,6 +261,7 @@
               <Image Name="Score.png" />
               <Image Name="start_bg.png" />
               <Image Name="x.png" />
+              <Image Name="skill_1.png" />
             </Folder>
             <Folder Name="layers">
               <Project Name="GameLayer.csd" Type="Layer" />
@@ -284,6 +293,7 @@
               <Image Name="start_bg.png" />
               <Image Name="startGame.png" />
               <Image Name="zz-num-g.png" />
+              <Image Name="choiceHero.png" />
             </Folder>
             <Folder Name="item">
               <Project Name="ChoiceItem.csd" Type="Layer" />
@@ -294,6 +304,7 @@
               <Project Name="SettingLayer.csd" Type="Layer" />
               <Project Name="StartLayer.csd" Type="Layer" />
             </Folder>
+            <Image Name="choiceHero.png" />
           </Folder>
           <Folder Name="welcome">
             <Folder Name="image">
@@ -301,6 +312,28 @@
             </Folder>
             <Folder Name="layers">
               <Project Name="WelcomeLayer.csd" Type="Layer" />
+            </Folder>
+          </Folder>
+          <Folder Name="selectMap">
+            <Folder Name="image">
+              <Image Name="bg1.jpg" />
+              <Image Name="bg2.jpg" />
+              <Image Name="bg3.jpg" />
+              <Image Name="bg4.jpg" />
+              <Image Name="bg5.jpg" />
+              <Image Name="bg7.jpg" />
+              <Image Name="boxAtribut.png" />
+              <Image Name="boxStat.png" />
+              <Image Name="YesBtn.png" />
+              <Image Name="selectMap_bg.jpg" />
+              <Image Name="SelectLevel.png" />
+              <Image Name="start_game.png" />
+            </Folder>
+            <Folder Name="layers">
+              <Project Name="SelectMapLayer.csd" Type="Layer" />
+            </Folder>
+            <Folder Name="items">
+              <Project Name="SelectMapItem.csd" Type="Layer" />
             </Folder>
           </Folder>
         </Folder>

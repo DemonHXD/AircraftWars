@@ -1,10 +1,4 @@
-﻿  Bullet.cpp
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(84): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
-  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(89): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
-  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
-e:\cocos2d-x_project\aircraftwars\classes\bullet\bullet.cpp(94): warning C4996: 'cocos2d::Animation::addSpriteFrameWithFileName': 被声明为已否决
-  e:\cocos2d-x_project\aircraftwars\cocos2d\cocos\2d\ccanimation.h(207): note: 参见“cocos2d::Animation::addSpriteFrameWithFileName”的声明
+﻿  GameSence.cpp
   MyProject.vcxproj -> E:\Cocos2d-x_project\AircraftWars\proj.win32\Debug.win32\MyProject.exe
   Performing Custom Build Step
   复制了 0 个文件

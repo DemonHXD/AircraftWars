@@ -13,6 +13,7 @@
 #include "StartSence.h"
 #include "Hero/WingAircraft.h"
 #include "cocostudio/CocoStudio.h"
+#include "Skill/SkillButton.h"
 
 #define HERO 50
 
@@ -315,7 +316,7 @@ bool GameSence::init() {
 	scheduleUpdate();
 
 	//开启创建敌机的调度器
-	schedule(schedule_selector(GameSence::createEnemy), 3, -1, 1);
+	schedule(schedule_selector(GameSence::createEnemy), 1, -1, 1);
 
 	//创建血条
 	//LoadingBar* hpBar = LoadingBar::create("image/ui/blood.png");//1.图片路径  2.LOCAL/PLIST
@@ -396,6 +397,7 @@ void GameSence::onExit() {
 	生产道具的自定义调度器
 */
 void GameSence::createPropSchedule(float dt) {
+	srand(time(0));
 	Prop* prop = Prop::create((PropType)(rand() % 3 + 1));
 	prop->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
 	this->addChild(prop, 10);
@@ -439,6 +441,17 @@ void GameSence::createUi() {
 		RankLayer* rankLayer = RankLayer::create(this);
 		this->addChild(rankLayer, 10);
 	});
+
+	//创建技能按钮
+	SkillButton* skill = SkillButton::create(5, "scenes/game/image/skill_1.png");
+	//设置技能不可以
+	//skill->setEnabled(false);
+	skill->onColdBegan = []() {log("start"); };
+	skill->onColdEnded = []() {log("end"); };
+
+	skill->setScale(0.5, 0.5);
+	skill->setPosition(Vec2(size.width - 100, 40));
+	this->addChild(skill);
 }
 
 /*
@@ -446,6 +459,7 @@ void GameSence::createUi() {
 */
 void GameSence::createEnemy(float dt) {
 	float x;
+	//srand(time(0));
 	x = rand() % (int)size.width;
 	//创建敌机
 	Enemy* enemy = Enemy::create((EnemyType)(rand() % 7));
@@ -468,6 +482,9 @@ void GameSence::update(float dt) {
 	collisionHeroAndProp();
 	//检测英雄与敌机子弹的碰撞
 	collisionHeroAndEenmyBullet();
+	//检测僚机子弹与敌机碰撞
+	collisionWingAircraftAndEenmyBullet();
+
 }
 
 /*
@@ -512,7 +529,7 @@ void GameSence::collisionHeroAndProp() {
 				break;
 			case PropType::ChangeBullet:
 				//英雄更改攻击方式
-				hero->changeBullet();
+				hero->bulletUp();
 				break;
 			}
 			prop->propTextAct();
@@ -532,6 +549,26 @@ void GameSence::collisionHeroAndEenmyBullet() {
 			bullet->setLive(false);//设置子弹死亡
 			if (!hero->getShield()) {//如果没有防护罩
 					hero->hit();
+			}
+		}
+	}
+}
+
+/*
+	检测僚机子弹与敌机碰撞
+*/
+void GameSence::collisionWingAircraftAndEenmyBullet() {
+	for (Bullet* bullet : bulletManager->wingAircraftLives) {
+		for (Enemy* enemy : enemyManager->enemyList) {
+			//如果enemy为死亡状态
+			if (!enemy->getLive()) {
+				continue;
+			}
+			bool isCrash = bullet->getBoundingBox().intersectsRect(enemy->getBoundingBox());
+			if (isCrash) {
+				bullet->setLive(false);//设置子弹死亡
+				enemy->hurt(bullet->getAtk());//设置敌机受伤
+				break;
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿#include "StartSence.h"
 #include "Sence/GameSence.h"
+#include "Sence/SelectMapSence.h"
 #include "Layer/SettingLayer.h"
 #include "Layer/RankLayer.h"
 #include "Utils/AudioUtil.h"
@@ -7,6 +8,7 @@
 #include "cocostudio/CocoStudio.h"
 #include "Ui/ChoiceItem.h"
 #include "ui/CocosGUI.h"//UI头文件
+#include "ChoiceHeroSence.h"
 using namespace cocos2d::ui;//UI命名空间
 using namespace cocostudio::timeline;
 USING_NS_CC;
@@ -109,21 +111,21 @@ bool StartSence::init() {
 		//std::string password = TextField_password->getString();
 
 		//恢复背景音乐
-		AudioUtil::getInstence()->audioResume();
+		//AudioUtil::getInstence()->audioResume();
 
 		//创建一个新场景
-		Scene* GameSence = GameSence::createScene();
+		Scene* selectMapSence = SelectMapSence::createScene();
 		//设置一个界面切换的动作，0.5秒的跳动动作
-		auto reSence = TransitionJumpZoom::create(0.5f, GameSence);
+		//auto reSence = TransitionJumpZoom::create(0.5f, GameSence);
 		
-		Director::getInstance()->replaceScene(reSence);
+		Director::getInstance()->replaceScene(selectMapSence);
 	});
 
 	//游戏设置按钮
 	Button* settingBtn = dynamic_cast<Button*>(root->getChildByName("settingBtn"));
 
 	//游戏帮助按钮
-	Button* helpBtn = dynamic_cast<Button*>(root->getChildByName("helpBtn"));
+	Button* helpBtn = dynamic_cast<Button*>(root->getChildByName("choiceHeroBtn"));
 
 	//关于游戏按钮
 	Button* aboutBtn = dynamic_cast<Button*>(root->getChildByName("aboutBtn"));
@@ -146,7 +148,14 @@ bool StartSence::init() {
 		this->addChild(rankLayer);
 	});
 
-	
+	helpBtn->addClickEventListener([this](Ref*) {
+		AudioUtil::getInstence()->buttonClickSound();
+		//创建一个新场景
+		Scene* choiceHeroSence = ChoiceHeroSence::createScene();
+		//设置一个界面切换的动作，0.5秒的跳动动作
+		//auto reSence = TransitionJumpZoom::create(0.5f, GameSence);
 
+		Director::getInstance()->replaceScene(choiceHeroSence);
+	});
 	return true;
 }

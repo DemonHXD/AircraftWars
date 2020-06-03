@@ -35,6 +35,10 @@ void Bullet::onEnter() {
 
 	bulletRun();
 
+
+	//setAnchorPoint(Vec2(0.5, 0));
+	//setDir(Vec2(0, 1));
+
 	isLive = true;
 }
 

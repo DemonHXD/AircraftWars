@@ -36,7 +36,7 @@ bool Enemy::init() {
 		sprintf(filename, "image/enemy/boss%d_0.png", enemyType);//输出到字符数组中：
 	}
 	else {
-		sprintf(filename, "image/enemy/enemy%d_0.png", enemyType);//输出到字符数组中：
+		sprintf(filename, "image/enemy/enemy%d.png", enemyType);//输出到字符数组中：
 	}
 	
 	if (!Sprite::initWithFile(filename))

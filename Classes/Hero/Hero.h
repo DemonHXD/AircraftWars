@@ -10,6 +10,7 @@ class Hero : public Sprite
 private:
 	float speed;
 	bool bulletFlag = true;
+	int bulletCount;//子弹数量
 	//初始化生命值为3
 	int liveCount;
 	bool isChange = false;
@@ -20,6 +21,8 @@ private:
 	bool isShield;//是否拥有防御罩
 	bool isMove;
 	WingAircraft *leftWa = nullptr, *rightWa = nullptr;
+	Sprite* defenseSP;
+	int bulletAngle[4] = {0};
 public:
 	~Hero();
 	Hero();
@@ -54,10 +57,8 @@ public:
 	//射击方法
 	void shoot(float dt);		
 
-	//改变子弹攻击设计方式
-	inline void changeBullet() {
-		bulletFlag = !bulletFlag;
-	}
+	//子弹升级
+	void bulletUp();
 
 	//开启僚机
 	void createWingAircraft();

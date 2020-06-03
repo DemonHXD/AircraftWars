@@ -96,7 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//初始化本地信息状态
 	UserDefault::getInstance()->setBoolForKey("effSound", true);
 	UserDefault::getInstance()->setBoolForKey("bgmSound", true);
-
+	//UserDefault::getInstance()->setIntegerForKey("heroType", 0);
     // run
     director->runWithScene(scene);
 

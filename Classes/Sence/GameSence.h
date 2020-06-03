@@ -48,6 +48,9 @@ public:
 	//检测英雄与道具的碰撞
 	void collisionHeroAndProp();
 
+	//检测僚机子弹与敌机碰撞
+	void collisionWingAircraftAndEenmyBullet();
+
 	void addScore(int add_score);
 
 	int getScore() {
