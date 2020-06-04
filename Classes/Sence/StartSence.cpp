@@ -70,6 +70,9 @@ bool StartSence::init() {
 	//	});
 	//}
 
+	//播放背景音乐
+	AudioUtil::getInstence()->playStartBgm();
+
 	//加载cocostudio文件
 	root = CSLoader::createNode("scenes/start/layers/StartLayer.csb");
 	this->addChild(root);

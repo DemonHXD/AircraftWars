@@ -14,7 +14,13 @@ AudioUtil* AudioUtil::getInstence() {
 	return instence;
 }
 
-AudioUtil::AudioUtil():m_bgmAudioState(true), m_effAudioState(true){
+AudioUtil::AudioUtil()
+	:m_bgmAudioState(true), 
+	m_effAudioState(true), 
+	startBgmId(0), 
+	gameBgmId(0),
+	isPauseStartBgm(false),
+	isPauseGameBgm(false){
 
 }
 
@@ -30,10 +36,34 @@ void AudioUtil::buttonClickSound() {
 /*
 	游戏主场景声音
 */
-void AudioUtil::gameBGMSound() {
-	if (instence->m_bgmAudioState) {
-		AudioEngine::setVolume(AudioEngine::play2d("sound/game_music.mp3", true), 0.3);
+void AudioUtil::playGameBgm() {
+	if (instence->m_bgmAudioState && gameBgmId == 0) {
+		gameBgmId = AudioEngine::play2d("sound/game_music.mp3", true);
+		AudioEngine::setVolume(gameBgmId, 0.1);
+	} else if (instence->m_bgmAudioState && gameBgmId != 0 && isPauseGameBgm) {
+		AudioEngine::resume(gameBgmId);
+		isPauseGameBgm = false;
 	}
+}
+
+void AudioUtil::stopGameBgm() {
+	AudioEngine::pause(gameBgmId);
+	isPauseGameBgm = true;
+}
+
+void AudioUtil::playStartBgm() {
+	if (instence->m_bgmAudioState && startBgmId == 0) {
+		startBgmId = AudioEngine::play2d("sound/start_bg.mp3", true);
+		AudioEngine::setVolume(startBgmId, 0.1);
+	} else if (instence->m_bgmAudioState && startBgmId != 0 && isPauseStartBgm) {
+		AudioEngine::resume(startBgmId);
+		isPauseStartBgm = false;
+	}
+}
+
+void AudioUtil::stopStartBgm() {
+	AudioEngine::pause(startBgmId);
+	isPauseStartBgm = true;
 }
 
 /*

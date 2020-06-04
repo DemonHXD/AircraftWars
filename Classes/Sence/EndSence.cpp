@@ -28,6 +28,8 @@ bool EndSence::init() {
 		//设置一个界面切换的动作，0.5秒的跳动动作
 		auto reSence = TransitionJumpZoom::create(0.5f, StartSence);
 		Director::getInstance()->replaceScene(reSence);
+		//播放背景音乐
+		AudioUtil::getInstence()->playStartBgm();
 	});
 
 	//分数数字

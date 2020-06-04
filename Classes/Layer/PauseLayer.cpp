@@ -54,7 +54,7 @@ bool PauseLayer::init() {
 		//移出暂停层
 		//removeAllChildren();
 		Director::getInstance()->resume();//游戏继续
-		AudioUtil::getInstence()->audioResume();//恢复背景音乐
+		//AudioUtil::getInstence()->audioResume();//恢复背景音乐
 		runAct(Vec2(0, 0), Vec2(0, size.width), CallFunc::create([this]() {
 			removeAllChildren();//移出暂停层
 		})
@@ -74,12 +74,16 @@ bool PauseLayer::init() {
 	Button* finishBtn = dynamic_cast<Button*>(root->getChildByName("finishBtn"));
 	finishBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
-		AudioUtil::getInstence()->audioPause();
+		//AudioUtil::getInstence()->audioPause();
 		int maxScore = UserDefault::getInstance()->getIntegerForKey("score", 0);
 		if (maxScore < gameSence->getScore()) {
 			UserDefault::getInstance()->setIntegerForKey("score", gameSence->getScore());
 		}
 		Director::getInstance()->resume();
+
+		//关闭游戏场景BGM
+		AudioUtil::getInstence()->stopGameBgm();
+
 		//切换场景(当前场景被销毁，新场景被创建)
 		Scene* endScene = EndSence::createScene();
 		auto reSence = TransitionFade::create(0.5f, endScene);
@@ -93,9 +97,15 @@ bool PauseLayer::init() {
 		UserDefault::getInstance()->setIntegerForKey("score", gameSence->getScore());
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
+		//关闭游戏场景BGM
+		AudioUtil::getInstence()->stopGameBgm();
+
 		Scene* startScene = StartSence::createScene();
 		auto reSence = TransitionFade::create(0.5f, startScene);
 		Director::getInstance()->replaceScene(reSence);
+
+		//播放开始场景BGM
+		AudioUtil::getInstence()->playStartBgm();
 	});
 
 	return true;

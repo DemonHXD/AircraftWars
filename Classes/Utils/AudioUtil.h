@@ -7,8 +7,7 @@ public:
 	static AudioUtil* getInstence();
 	//按钮点击声音
 	void buttonClickSound();
-	//游戏主场景声音
-	void gameBGMSound();
+
 	//敌机射击声音
 	void enemyShootSound();
 	//英雄射击声音
@@ -17,6 +16,13 @@ public:
 	void wingAirShoot();
 	//敌机死亡音效
 	void enemyDesyEff();
+
+	
+	void playGameBgm();//开启游戏主场景BGM
+	void stopGameBgm();//关闭游戏主场景BGM
+
+	void playStartBgm();//播放开始场景背景音乐
+	void stopStartBgm();//关闭开始场景背景音乐
 
 	//声音暂停
 	void audioPause();
@@ -50,6 +56,10 @@ private:
 
 	AudioUtil();
 	static AudioUtil* instence;
+	int startBgmId;
+	int gameBgmId;
+	bool isPauseStartBgm;
+	bool isPauseGameBgm;
 };
 #endif // !__AudioUtil_H__
 

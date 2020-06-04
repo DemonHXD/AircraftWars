@@ -358,7 +358,7 @@ void GameSence::onEnter() {
 	Layer::onEnter();
 
 	//开启背景音乐
-	AudioUtil::getInstence()->gameBGMSound();
+	//AudioUtil::getInstence()->play();
 	//bgmID = AudioEngine::play2d("sound/game_music.mp3", true);
 	//AudioEngine::setVolume(bgmID, 0.3);
 
@@ -450,7 +450,7 @@ void GameSence::createUi() {
 		PauseLayer* pauseLayer = PauseLayer::create(this);//创建暂停界面
 		pauseLayer->runAct(Vec2(0, size.width), Vec2(0, 0), CallFunc::create([this]() {
 			//背景音乐暂停
-			AudioUtil::getInstence()->audioPause();
+			//AudioUtil::getInstence()->audioPause();
 			//游戏暂停
 			Director::getInstance()->pause();
 		}));

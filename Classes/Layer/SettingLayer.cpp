@@ -138,6 +138,7 @@ void SettingLayer::initBGMusic() {
 		//关闭背景音乐
 		AudioUtil::getInstence()->setBgmAudioState(false);
 		AudioUtil::getInstence()->buttonClickSound();
+		AudioUtil::getInstence()->stopStartBgm();
 		//隐藏开始背景音乐按钮
 		soundOpenBtn->setVisible(false);
 		//显示关闭背景音乐按钮
@@ -151,6 +152,7 @@ void SettingLayer::initBGMusic() {
 		//开启背景音乐
 		AudioUtil::getInstence()->setBgmAudioState(true);
 		AudioUtil::getInstence()->buttonClickSound();
+		AudioUtil::getInstence()->playStartBgm();
 		//显示开始背景音乐按钮
 		soundOpenBtn->setVisible(true);
 		//隐藏关闭背景音乐按钮

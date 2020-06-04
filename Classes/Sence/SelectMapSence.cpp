@@ -64,14 +64,20 @@ bool SelectMapSence::init() {
 	Button* startGameBtn = dynamic_cast<Button*>(root->getChildByName("startGameBtn"));
 	startGameBtn->addClickEventListener([](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
+		//关闭开始场景背景音乐
+		AudioUtil::getInstence()->stopStartBgm();
+		
+
 		//恢复背景音乐
-		AudioUtil::getInstence()->audioResume();
+		//AudioUtil::getInstence()->audioResume();
 
 		//创建一个新场景
 		Scene* gameSence = GameSence::createScene();
 		//设置一个界面切换的动作，0.5秒的跳动动作
 		auto reSence = TransitionFade::create(0.5f, gameSence);
 		Director::getInstance()->replaceScene(reSence);
+		//开启游戏场景BGM
+		AudioUtil::getInstence()->playGameBgm();
 	});
 	return true;
 }
