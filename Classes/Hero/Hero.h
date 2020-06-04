@@ -20,6 +20,7 @@ private:
 	int blinkCount = 0;//计算闪烁次数
 	bool isShield;//是否拥有防御罩
 	bool isMove;
+	bool isStackEnemy;//是否自动追踪敌机攻击
 	WingAircraft *leftWa = nullptr, *rightWa = nullptr;
 	Sprite* defenseSP;
 	int bulletAngle[4] = {0};
@@ -28,6 +29,12 @@ public:
 	Hero();
 	static Hero* create();
 	void hit();//英雄被击中
+	void setStackEnemy(bool _isStackEnemy) {
+		isStackEnemy = _isStackEnemy;
+	}
+	bool getStackEnemy() {
+		return isStackEnemy;
+	}
 	int getLiveCount() {
 		return liveCount;
 	}
@@ -56,13 +63,19 @@ public:
 	//英雄死亡
 	void die();
 	//射击方法
-	void shoot(float dt);		
+	void shoot(float dt);	
+	void move(Vec2 dir);
 
 	//子弹升级
 	void bulletUp();
 
 	//开启僚机
 	void createWingAircraft();
+
+	//增加生命值
+	inline void incHealth() {
+		liveCount++;
+	}
 
 	//更改英雄外观
 	void setAppearance(int type, int exp);
@@ -77,5 +90,11 @@ public:
 
 	//当触摸移动时，要执行的函数
 	void onTouchMoved(Touch* touch, Event* event);
+
+	void trackEnemy(Vec2 pos);
+
+public:
+	typedef std::function<void(cocos2d::Vec2)> ccHeroMovedCallback;
+	ccHeroMovedCallback onHeroMoved;//当摇杆拖动时
 };
 

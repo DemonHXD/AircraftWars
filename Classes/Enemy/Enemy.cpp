@@ -7,7 +7,7 @@
 #include "AudioEngine.h"
 using namespace experimental;
 #define ENEMY -1
-Enemy::Enemy(EnemyType type):enemyType(type), speed(30),isLive(true) {
+Enemy::Enemy(Vec2 heroPos, EnemyType type):enemyType(type), speed(30),isLive(true), heroPos(heroPos), onEnemyMoved(nullptr){
 	//根据不同类型的敌机设置不同的血量
 	score = totalHp = hp = (type + 1) * 10;
 }
@@ -16,8 +16,8 @@ Enemy::~Enemy() {
 
 }
 
-Enemy* Enemy::create(EnemyType type) {
-	Enemy* ret = new(std::nothrow) Enemy(type);
+Enemy* Enemy::create(EnemyType type, Vec2 heroPos) {
+	Enemy* ret = new(std::nothrow) Enemy(heroPos, type);
 	if (ret && ret->init())
 	{
 		ret->autorelease();
@@ -65,6 +65,10 @@ void Enemy::update(float dt) {
 	float y = getPositionY();
 	y = y - dt * speed;
 	setPositionY(y);
+
+	if (onEnemyMoved != nullptr) {
+		onEnemyMoved(getPosition());
+	}
 
 	//当超出屏幕时
 	if (y < -40)
@@ -158,13 +162,16 @@ void Enemy::shoot(float dt) {
 	y = y + 30 * dt;
 	//创建子弹
 	//Bullet* bullet = Bullet::create(ENEMY, Missile);
-	Bullet* bullet = BulletFactory::createBullet(EnemyBullet);
+	Vec2 newDir = heroPos - Vec2(getPositionX(), getPositionY() + 20);
+	newDir = newDir.getNormalized();
+	Bullet* bullet = BulletFactory::createBullet(EnemyBullet, newDir);
 	bullet->shootSound();
 	//设置子弹的位置:敌机的坐标 + 敌机图片高度的一半
 	bullet->setPosition(Vec2(getPositionX(), getPositionY() + 20));
 	//设置子弹的方向
-	bullet->setRotation(180);
-	bullet->setDir(Vec2(0, -1));
+	//bullet->setRotation(180);
+
+	//bullet->setDir(newDir);
 	_parent->addChild(bullet);
 	//将子弹添加到管理类中
 	BulletManager::getInstance()->addEnemyBullet(bullet);

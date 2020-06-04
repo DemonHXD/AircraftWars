@@ -75,7 +75,10 @@ bool PauseLayer::init() {
 	finishBtn->addClickEventListener([this](Ref*) {
 		AudioUtil::getInstence()->buttonClickSound();
 		AudioUtil::getInstence()->audioPause();
-		UserDefault::getInstance()->setIntegerForKey("score", gameSence->getScore());
+		int maxScore = UserDefault::getInstance()->getIntegerForKey("score", 0);
+		if (maxScore < gameSence->getScore()) {
+			UserDefault::getInstance()->setIntegerForKey("score", gameSence->getScore());
+		}
 		Director::getInstance()->resume();
 		//切换场景(当前场景被销毁，新场景被创建)
 		Scene* endScene = EndSence::createScene();

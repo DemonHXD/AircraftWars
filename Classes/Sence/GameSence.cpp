@@ -14,6 +14,7 @@
 #include "Hero/WingAircraft.h"
 #include "cocostudio/CocoStudio.h"
 #include "Skill/SkillButton.h"
+#include "Ui/JoyStick.h"
 
 #define HERO 50
 
@@ -252,6 +253,19 @@ unscheduleAllCallbacks:关闭所有调度器
 		2.道具/技能等
 */
 
+/*
+	1.什么情况下使用虚析构？
+		当父类的指针指向子类的对象释放内存时，为了调用子类的析构函数
+	2.为什么要使用常引用？
+		防止调用拷贝构造函数，提高效率。
+		保护数据成员不被修改
+	3.重载/隐藏/覆盖:
+		1.函数重载：函数名相同，形参表不同(个数，类型，顺序不同)
+		2.隐藏：子类与父类具有相同函数时，子类的函数会隐藏父类的函数
+		3.覆盖(override)：子类重写父类的虚函数
+*/
+
+
 
 Scene* GameSence::createScene() {
 	auto scene = Scene::create();
@@ -299,7 +313,9 @@ bool GameSence::init() {
 	}
 
 	//创建英雄
-	Hero* hero = Hero::create();
+	hero = Hero::create();
+	//hero->onHeroMoved = CC_CALLBACK_1(BulletManager::trackHero, BulletManager::getInstance());
+
 	hero->setPosition(Vec2(size.width / 2, hero->getContentSize().height / 2));
 	hero->setTag(HERO);
 	this->addChild(hero, 2);
@@ -310,13 +326,13 @@ bool GameSence::init() {
 	createUi();
 
 	//开启创建道具调度器
-	schedule(schedule_selector(GameSence::createPropSchedule), 20, -1, 0);
+	//schedule(schedule_selector(GameSence::createPropSchedule), 20, -1, 0);
 
 	//开启默认调度器
 	scheduleUpdate();
 
 	//开启创建敌机的调度器
-	schedule(schedule_selector(GameSence::createEnemy), 2, -1, 1);
+	schedule(schedule_selector(GameSence::createEnemy), 2, -1, 0);
 
 	//创建血条
 	//LoadingBar* hpBar = LoadingBar::create("image/ui/blood.png");//1.图片路径  2.LOCAL/PLIST
@@ -355,6 +371,14 @@ void GameSence::onEnter() {
 		Enemy* userData = (Enemy*)event->getUserData();
 		//加分逻辑
 		this->addScore(userData->getScore());
+		//消灭一个敌机，有五分之一的几率掉落道具
+		if (rand() % 5 == 0) {
+			Prop* prop = Prop::create((PropType)(rand()% 4 + 1));
+			//prop->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
+			prop->setPosition(Vec2(userData->getPosition()));
+			this->addChild(prop, 10);
+			PropManager::getInstance()->addPorp(prop);
+		}
 	});//1.消息的名字 2.CC_CALLBACK_1或者lambda
 
 	//2.在对应的位置分发消息
@@ -370,7 +394,10 @@ void GameSence::onEnter() {
 			//关闭调度器
 			unscheduleUpdate();
 			userData->die();
-			UserDefault::getInstance()->setIntegerForKey("score", score);
+			int maxScore = UserDefault::getInstance()->getIntegerForKey("score", 0);
+			if (maxScore < score) {
+				UserDefault::getInstance()->setIntegerForKey("score", score);
+			}
 		}
 	});
 }
@@ -398,7 +425,7 @@ void GameSence::onExit() {
 */
 void GameSence::createPropSchedule(float dt) {
 	srand(time(0));
-	Prop* prop = Prop::create((PropType)(rand() % 3 + 1));
+	Prop* prop = Prop::create((PropType)(4));
 	prop->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
 	this->addChild(prop, 10);
 	PropManager::getInstance()->addPorp(prop);
@@ -448,23 +475,41 @@ void GameSence::createUi() {
 	SkillButton* skill = SkillButton::create(5, "scenes/game/image/skill_1.png");
 	//设置技能不可以
 	//skill->setEnabled(false);
-	skill->onColdBegan = []() {log("start"); };
-	skill->onColdEnded = []() {log("end"); };
+	skill->onColdBegan = [this]() { 
+		bulletManager->destEnemyBullets();
+		enemyManager->destEnemys();
+	};
+	//skill->onColdEnded = [this]() {  };
 
 	skill->setScale(0.5, 0.5);
 	skill->setPosition(Vec2(size.width - 100, 40));
 	this->addChild(skill);
+
+	//JoyStick* stick = JoyStick::create("scenes/game/image/JoyStick_Bg.png", "scenes/game/image/JoyStick.png");
+	//Hero* hero = (Hero*)this->getChildByTag(HERO);
+	//stick->onJoyStickMoved = CC_CALLBACK_1(Hero::move, hero);
+	//stick->setPosition(Vec2(size.width - 100, 200));
+	//this->addChild(stick);
 }
 
 /*
 	自定义生产敌机的调度器
 */
 void GameSence::createEnemy(float dt) {
+	/*Hero* hero = (Hero*)this->getChildByTag(HERO);*/
 	float x;
-	//srand(time(0));
 	x = rand() % (int)size.width;
+	//Vec2 newDir = pos - bullet->getPosition();
+	//newDir = newDir.getNormalized();
 	//创建敌机
-	Enemy* enemy = Enemy::create((EnemyType)(rand() % 7));
+	Enemy* enemy = Enemy::create((EnemyType)(rand() % 7), hero->getPosition());
+
+	//if (hero->getStackEnemy()) {
+	//	enemy->onEnemyMoved = CC_CALLBACK_1(BulletManager::trackEnemy, BulletManager::getInstance());
+	//} else {
+	//	enemy->onEnemyMoved = nullptr;
+	//}
+	
 	enemy->setPosition(Vec2(x, size.height + 50));
 	this->addChild(enemy, 2);
 	// 将创建的敌机添加到敌机管理类中
@@ -516,7 +561,7 @@ void GameSence::collisionBulletAndEenmy() {
 	英雄与道具碰撞检测
 */
 void GameSence::collisionHeroAndProp() {
-	Hero* hero = (Hero*)this->getChildByTag(HERO);
+	//Hero* hero = (Hero*)this->getChildByTag(HERO);
 	for (Prop* prop : propManager->porpList) {
 		bool isCrash = hero->getBoundingBox().intersectsRect(prop->getBoundingBox());
 		if (isCrash) {
@@ -537,6 +582,11 @@ void GameSence::collisionHeroAndProp() {
 				//英雄更改攻击方式
 				hero->bulletUp();
 				break;
+			case PropType::Health:
+				//英雄生命值+1
+				hero->incHealth();
+				heroLiveCount->setString(std::to_string(hero->getLiveCount()));
+				break;
 			}
 			prop->propTextAct();
 			prop->setLive(false);//设置道具死亡
@@ -548,7 +598,7 @@ void GameSence::collisionHeroAndProp() {
 	判断英雄与敌机子弹的碰撞
 */
 void GameSence::collisionHeroAndEenmyBullet() {
-	Hero* hero = (Hero*)this->getChildByTag(HERO);
+	//Hero* hero = (Hero*)this->getChildByTag(HERO);
 	for (Bullet* bullet : bulletManager->enemyLives) {
 		bool isCrash = bullet->getBoundingBox().intersectsRect(hero->getBoundingBox());
 		if (isCrash) {

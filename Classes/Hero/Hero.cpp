@@ -8,7 +8,15 @@
 const float PI = 3.1415926;//圆周率
 bool flag = true;
 #define HERO 1
-Hero::Hero() :speed(80), isShield(false), liveCount(3), isMove(true), defenseSP(nullptr), bulletCount(1) {
+Hero::Hero() 
+	:speed(80), 
+	isShield(false), 
+	liveCount(3), 
+	isMove(true), 
+	defenseSP(nullptr), 
+	bulletCount(1),
+	isStackEnemy(false)
+{
 
 }
 Hero::~Hero() {
@@ -200,6 +208,10 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 		}
 
 		setPosition(pos);
+
+		//if (onHeroMoved != nullptr) {
+		//	onHeroMoved(pos);
+		//}
 	}
 	
 }
@@ -209,7 +221,7 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 */
 void Hero::createShotgun(float angle) {
 	//创建子弹
-	Bullet* bullet = BulletFactory::createBullet(HeroBullet);
+	Bullet* bullet = BulletFactory::createBullet(HeroBullet,Vec2(0, 1));
 	bullet->shootSound();
 	float h = getContentSize().height / 2;
 	//设置子弹的位置:英雄的坐标 + 英雄图片高度的一半
@@ -414,3 +426,20 @@ void Hero::bulletUp() {
 	}
 	
 }
+
+/*
+	根据摇杆移动
+*/
+void Hero::move(Vec2 dir) {
+	Vec2 pos = getPosition();
+	setPosition(pos + dir);
+}
+
+///*
+//	英雄子弹追踪敌机攻击
+//*/
+//void trackEnemy(Vec2 pos) {
+//	Vec2 newDir = pos - bullet->getPosition();
+//	newDir = newDir.getNormalized();
+//	bullet->setDir(newDir);
+//}

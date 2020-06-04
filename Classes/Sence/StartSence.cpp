@@ -74,16 +74,27 @@ bool StartSence::init() {
 	root = CSLoader::createNode("scenes/start/layers/StartLayer.csb");
 	this->addChild(root);
 	
-	//Node* startGame = root->getChildByName("startGame");
+	Node* qbtAni = root->getChildByName("qbt_ani");
 	
 	//创建时间线动作 参数:动画节点的路径
-	//ActionTimeline* action = CSLoader::createTimeline("scenes/start/ani/StartGame.csb");
+	ActionTimeline* qbtAct = CSLoader::createTimeline("scenes/start/ani/qbt_ani.csb");
 	////指定播放哪些帧之间的动作 1.起始帧 2.结束帧(默认为最后一帧) 3.动作是否循环
-	////action->gotoFrameAndPlay(0, 20, true);
+	//action->gotoFrameAndPlay(0, 200, true);
 	////播放某个动作 参数：1.动作的名字 2.是否循环
-	//action->play("blink", true);
+	qbtAct->play("run", true);
 	////指定节点播放动作
-	//startGame->runAction(action);
+	qbtAni->runAction(qbtAct);	
+	
+	Node* planeAni = root->getChildByName("planeAni");
+	
+	//创建时间线动作 参数:动画节点的路径
+	ActionTimeline* plabneAct = CSLoader::createTimeline("scenes/start/ani/plane_ani.csb");
+	////指定播放哪些帧之间的动作 1.起始帧 2.结束帧(默认为最后一帧) 3.动作是否循环
+	//action->gotoFrameAndPlay(0, 200, true);
+	////播放某个动作 参数：1.动作的名字 2.是否循环
+	plabneAct->play("run", true);
+	////指定节点播放动作
+	planeAni->runAction(plabneAct);
 
 	//设置动作播放完的回调 1.动画的名字 2.回调函数(无返回值，无参的函数)
 	//action->setAnimationEndCallFunc("fly", [hero]() {

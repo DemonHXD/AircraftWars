@@ -120,6 +120,9 @@
     <ClCompile Include="..\Classes\Skill\SkillButton.cpp">
       <Filter>src\skill</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Ui\JoyStick.cpp">
+      <Filter>src\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Skill\SkillButton.h">
       <Filter>src\skill</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Ui\JoyStick.h">
+      <Filter>src\ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

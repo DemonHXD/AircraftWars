@@ -21,6 +21,10 @@ public:
 	}
 	~EnemyManager();
 	void clearList();	//清空集合
+	void destEnemys();//销毁所有敌机
+	//list<Enemy*> getList() {
+	//	return enemyList;
+	//}
 public:
 	list<Enemy*> enemyList;
 private:

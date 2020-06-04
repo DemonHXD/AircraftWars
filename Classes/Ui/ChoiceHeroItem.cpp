@@ -53,6 +53,9 @@ bool ChoiceHeroItem::init(int index) {
 		break;	
 	case 3:
 		text->setText("pink aircraft");
+		break;	
+	case 4:
+		text->setText("black aircraft");
 		break;
 	}
 

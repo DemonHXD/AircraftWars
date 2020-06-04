@@ -1,12 +1,13 @@
 ﻿#include "Bullet.h"
 #include "BulletManager.h"
+#include "Enemy/EnemyManager.h"
 #include "Utils/AudioUtil.h"
-Bullet::Bullet(BulletType bulletType)
-	:speed(200), 
+#include "Hero/Hero.h"
+Bullet::Bullet(BulletType bulletType, Vec2 dir)
+	:speed(200),
 	bulletType(bulletType),
-	//type(type),
 	isLive(true),
-	dir(Vec2(0, 1)),
+	dir(dir),
 	//atk(20 + rand() % 11)//伤害值:20-30:20 + (0-10) 
 	atk(10)//伤害值:20-30:20 + (0-10) 
 {
@@ -16,8 +17,8 @@ Bullet::~Bullet() {
 
 }
 
-Bullet* Bullet::create(BulletType bulletType) {
-	Bullet* ret = new(std::nothrow) Bullet(bulletType);
+Bullet* Bullet::create(BulletType bulletType, Vec2 dir) {
+	Bullet* ret = new(std::nothrow) Bullet(bulletType, dir);
 	if (ret && ret->init()) {
 		ret->autorelease();
 		return ret;
@@ -32,12 +33,17 @@ void Bullet::onEnter() {
 
 	//开启调度器
 	scheduleUpdate();
+	//schedule(schedule_selector(Bullet::bulletUpdate), 1.5f, -1, 0);
 
 	bulletRun();
 
-
-	//setAnchorPoint(Vec2(0.5, 0));
-	//setDir(Vec2(0, 1));
+	Hero* hero = (Hero*)_parent->getChildByTag(50);
+	if (bulletType == EnemyBullet) {
+		Vec2 newDir = hero->getPosition() - getPosition();
+		newDir = newDir.getNormalized();
+		setDir(newDir);
+	}
+	
 
 	isLive = true;
 }
@@ -70,7 +76,7 @@ bool Bullet::init() {
 	bulletRun();
 	//设置子弹的锚点
 	setAnchorPoint(Vec2(0.5, 0));
-
+	//schedule(schedule_selector(Bullet::bulletUpdate), 1, -1, 0);
 	//scheduleUpdate();
 	return true;
 }
@@ -99,7 +105,7 @@ void Bullet::bulletRun() {
 		}
 	}
 	//间隔时间
-	animation->setDelayPerUnit(0.5f);
+	animation->setDelayPerUnit(0.3f);
 	animation->setLoops(-1);
 	//开启动画
 	Animate* animate = Animate::create(animation);
@@ -113,9 +119,12 @@ void Bullet::update(float dt) {
 		BulletManager::getInstance()->collection(this, bulletType);
 		return;
 	}
-
+	//if
+	//if (heroPos != Vec2::ZERO) {
+	//	dir = heroPos;
+	//}
 	Vec2 pos = getPosition();//获取原先的坐标
-	setPosition(pos + dir * speed * dt);
+	setPosition(pos + dir * speed * dt + heroPos);
 	float h = Director::getInstance()->getVisibleSize().height;
 	float w = Director::getInstance()->getVisibleSize().width;
 	float y = getPositionY();

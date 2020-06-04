@@ -22,3 +22,12 @@ void EnemyManager::collection(Enemy* enemy) {
 void EnemyManager::clearList() {
 	enemyList.clear();
 }
+
+/*
+	销毁所有敌机
+*/
+void EnemyManager::destEnemys() {
+	for (Enemy* enemy : enemyList) {
+		enemy->hurt(9999);
+	}
+}

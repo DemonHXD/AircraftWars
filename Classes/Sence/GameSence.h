@@ -9,6 +9,7 @@ class ShowNumberNode;
 class BulletManager;
 class EnemyManager;
 class PropManager;
+class Hero;
 class GameSence : public cocos2d::Layer {
 public:
 	static cocos2d::Scene* createScene();
@@ -66,6 +67,7 @@ private:
 	TextAtlas* heroLiveCount;
 	Size size;
 	Node* root;
+	Hero* hero;
 };
 
 #endif // __GameSenceManager_SCENE_H__

@@ -8,6 +8,7 @@ enum BulletType { HeroBullet = 1, EnemyBullet, WingAircraftBullet};
 class Bullet : public Sprite
 {
 private:
+	Vec2 heroPos;
 	int atk;//攻击力
 	bool isLive;//是否存活
 	float speed;
@@ -15,21 +16,26 @@ private:
 	//int type;
 	BulletType bulletType;
 	Vec2 dir;//子弹的方向 上dir = (0,1) 右dir = (1,0) 斜dir = (sin30,cos30);
+	//Vec2 heroDir;
 public:
 	//friend class BulletManager;
-	Bullet(BulletType bulletType);//带参构造函数
+	Bullet(BulletType bulletType, Vec2 dir = Vec2(0, 1));//带参构造函数
 	~Bullet();
-	static Bullet* create(BulletType bulletType);
+	static Bullet* create(BulletType bulletType, Vec2 dir);
 	void onEnter() override;
 	//void onExit() override;
 	bool init();
-	void update(float dt) override;
+	void update(float dt) override;//自定义子弹调度器
 	void bulletRun();
 	//发射子弹的声音
 	void shootSound();
+	//void setDeroDir
 	void setDir(Vec2 dir) {//设置方向
 		this->dir = dir;
 	}
+	//Vec2 getDir() {
+	//	return dir;
+	//}
 	void setLive(bool isLive)//设置isLive
 	{
 		this->isLive = isLive;

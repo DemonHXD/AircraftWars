@@ -6,7 +6,7 @@
       <ObjectData Name="Layer" Tag="68" ctype="GameLayerObjectData">
         <Size X="400.0000" Y="500.0000" />
         <Children>
-          <AbstractNodeData Name="Button_bg" ActionTag="-683628122" Tag="98" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="50.0000" RightMargin="50.0000" TouchEnable="True" FontSize="14" ButtonText="Button" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="317" Scale9Height="599" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+          <AbstractNodeData Name="Button_bg" ActionTag="-683628122" Alpha="127" Tag="98" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" LeftMargin="50.0000" RightMargin="50.0000" TouchEnable="True" FontSize="14" ButtonText="Button" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="317" Scale9Height="599" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
             <Size X="300.0000" Y="500.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="200.0000" Y="250.0000" />
@@ -41,7 +41,7 @@
             <FileData Type="Normal" Path="scenes/buyHero/image/YesBtn.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="boxAtribut_4" ActionTag="1390356396" Tag="72" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="39.0001" RightMargin="38.9999" TopMargin="359.7619" BottomMargin="21.2381" ctype="SpriteObjectData">
+          <AbstractNodeData Name="boxAtribut_4" ActionTag="1390356396" Alpha="76" Tag="72" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="39.0001" RightMargin="38.9999" TopMargin="359.7619" BottomMargin="21.2381" ctype="SpriteObjectData">
             <Size X="322.0000" Y="119.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
             <Position X="200.0001" Y="80.7381" />

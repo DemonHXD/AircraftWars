@@ -17,13 +17,13 @@
             <FileData Type="Normal" Path="scenes/start/image/start_bg.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="startGameBtn" ActionTag="347589434" Tag="11" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="120.0000" RightMargin="120.0000" TopMargin="285.0000" BottomMargin="465.0000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="210" Scale9Height="28" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+          <AbstractNodeData Name="startGameBtn" ActionTag="347589434" Tag="11" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="120.0002" RightMargin="119.9998" TopMargin="305.0000" BottomMargin="445.0000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="210" Scale9Height="28" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
             <Size X="240.0000" Y="50.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="240.0000" Y="490.0000" />
+            <Position X="240.0002" Y="470.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.5000" Y="0.6125" />
+            <PrePosition X="0.5000" Y="0.5875" />
             <PreSize X="0.5000" Y="0.0625" />
             <TextColor A="255" R="65" G="65" B="70" />
             <NormalFileData Type="Normal" Path="scenes/start/image/startGame.png" Plist="" />
@@ -92,6 +92,48 @@
             <PrePosition X="0.5000" Y="0.5625" />
             <PreSize X="0.0000" Y="0.0000" />
             <FileData Type="Normal" Path="scenes/start/ani/StartGame.csd" Plist="" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="LOGO_1" ActionTag="869295020" Tag="12" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="-46.4991" RightMargin="-46.5009" TopMargin="137.9074" BottomMargin="484.0926" ctype="SpriteObjectData">
+            <Size X="573.0000" Y="178.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="240.0009" Y="573.0926" />
+            <Scale ScaleX="0.5000" ScaleY="0.5000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.5000" Y="0.7164" />
+            <PreSize X="1.1938" Y="0.2225" />
+            <FileData Type="Normal" Path="scenes/start/image/LOGO.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="logo_pig_5" ActionTag="1770719328" Tag="18" IconVisible="False" LeftMargin="382.3015" RightMargin="30.6985" TopMargin="134.2008" BottomMargin="613.7992" ctype="SpriteObjectData">
+            <Size X="67.0000" Y="52.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="415.8015" Y="639.7992" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.8663" Y="0.7997" />
+            <PreSize X="0.1396" Y="0.0650" />
+            <FileData Type="Normal" Path="scenes/start/image/logo_pig.png" Plist="" />
+            <BlendFunc Src="1" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="qbt_ani" ActionTag="529499809" Tag="32" IconVisible="True" LeftMargin="77.5543" RightMargin="402.4457" TopMargin="158.9227" BottomMargin="641.0773" StretchWidthEnable="False" StretchHeightEnable="False" InnerActionSpeed="1.0000" CustomSizeEnabled="False" ctype="ProjectNodeObjectData">
+            <Size X="0.0000" Y="0.0000" />
+            <AnchorPoint />
+            <Position X="77.5543" Y="641.0773" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.1616" Y="0.8013" />
+            <PreSize X="0.0000" Y="0.0000" />
+            <FileData Type="Normal" Path="scenes/start/ani/qbt_ani.csd" Plist="" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="planeAni" ActionTag="-776476123" Tag="68" IconVisible="True" LeftMargin="353.3833" RightMargin="126.6167" TopMargin="429.7830" BottomMargin="370.2170" StretchWidthEnable="False" StretchHeightEnable="False" InnerActionSpeed="1.0000" CustomSizeEnabled="False" ctype="ProjectNodeObjectData">
+            <Size X="0.0000" Y="0.0000" />
+            <AnchorPoint />
+            <Position X="353.3833" Y="370.2170" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="255" B="255" />
+            <PrePosition X="0.7362" Y="0.4628" />
+            <PreSize X="0.0000" Y="0.0000" />
+            <FileData Type="Normal" Path="scenes/start/ani/plane_ani.csd" Plist="" />
           </AbstractNodeData>
           <AbstractNodeData Name="bg_Mask" ActionTag="115816916" VisibleForFrame="False" Alpha="178" Tag="141" IconVisible="False" PositionPercentXEnabled="True" PositionPercentYEnabled="True" ctype="SpriteObjectData">
             <Size X="480.0000" Y="800.0000" />

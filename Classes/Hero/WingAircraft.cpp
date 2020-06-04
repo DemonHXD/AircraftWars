@@ -58,7 +58,7 @@ void WingAircraft::flyAct() {
 */
 void WingAircraft::shoot(float dt) {
 	//创建子弹
-	Bullet* bullet = BulletFactory::createBullet(WingAircraftBullet);
+	Bullet* bullet = BulletFactory::createBullet(WingAircraftBullet, Vec2(0, 1));
 	float h = getContentSize().height / 2;
 	//设置子弹的位置:英雄的坐标 + 英雄图片高度的一半
 	bullet->setPosition(getPosition() + Vec2(0, 0));

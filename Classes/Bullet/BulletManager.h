@@ -26,6 +26,8 @@ public:
 	}
 	~BulletManager();
 	void clearList();	//清空集合
+	void trackEnemy(Vec2 dir);//追踪英雄
+	void destEnemyBullets();//销毁所有敌机子弹
 public :
 	//英雄的子弹
 	list<Bullet*> heroLives;//生存池

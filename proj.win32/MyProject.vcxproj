@@ -170,6 +170,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Skill\SkillButton.cpp" />
     <ClCompile Include="..\Classes\Ui\ChoiceHeroItem.cpp" />
     <ClCompile Include="..\Classes\Ui\ChoiceItem.cpp" />
+    <ClCompile Include="..\Classes\Ui\JoyStick.cpp" />
     <ClCompile Include="..\Classes\Ui\SelectMapItem.cpp" />
     <ClCompile Include="..\Classes\Utils\AudioUtil.cpp" />
     <ClCompile Include="main.cpp" />
@@ -198,6 +199,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Skill\SkillButton.h" />
     <ClInclude Include="..\Classes\Ui\ChoiceHeroItem.h" />
     <ClInclude Include="..\Classes\Ui\ChoiceItem.h" />
+    <ClInclude Include="..\Classes\Ui\JoyStick.h" />
     <ClInclude Include="..\Classes\Ui\SelectMapItem.h" />
     <ClInclude Include="..\Classes\Utils\AudioUtil.h" />
     <ClInclude Include="main.h" />

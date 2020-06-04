@@ -8,7 +8,7 @@ using namespace cocos2d;
 		WingAir：僚机
 		ChangeBullet:子弹道具
 */
-enum PropType { Shield = 1, WingAir, ChangeBullet};
+enum PropType { Shield = 1, WingAir, ChangeBullet, Health};
 class Prop : public Sprite {
 public:
 	static Prop* create(PropType type);

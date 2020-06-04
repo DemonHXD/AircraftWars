@@ -36,10 +36,10 @@ bool ChoiceHeroSence::init() {
 	int selectHero = UserDefault::getInstance()->getIntegerForKey("heroType", 0);
 
 	//设置滚动区域的innerSize
-	scrollView->setInnerContainerSize(Size(400 * 4, 500));
+	scrollView->setInnerContainerSize(Size(400 * 5, 500));
 	std::vector<ChoiceHeroItem*> items;
 	//添加子控件，子控件必须作为scrollView的子节点
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		ChoiceHeroItem* item = ChoiceHeroItem::create(i);
 		item->setPosition(Vec2(i * 400, 0));
 		scrollView->addChild(item);

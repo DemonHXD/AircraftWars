@@ -129,3 +129,20 @@ Bullet* BulletManager::findInDeath(BulletType bulletType) {
 	}
 	return bt;
 }
+
+void BulletManager::trackEnemy(Vec2 pos) {
+	//for (auto bullet : heroLives) {
+	//	Vec2 newDir = pos - bullet->getPosition();
+	//	newDir = newDir.getNormalized();
+	//	bullet->setDir(newDir);
+	//}
+}
+
+/*
+	销毁所有敌机子弹
+*/
+void BulletManager::destEnemyBullets() {
+	for (Bullet* bullet : enemyLives) {
+		bullet->setLive(false);
+	}
+}

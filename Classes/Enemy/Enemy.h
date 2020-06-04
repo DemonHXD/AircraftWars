@@ -9,9 +9,9 @@ enum EnemyType {
 class Enemy : public Sprite
 {
 public:
-	Enemy(EnemyType type = Enemy1);
+	Enemy(Vec2 heroPos, EnemyType type = Enemy1);
 	~Enemy();
-	static Enemy* create(EnemyType type);
+	static Enemy* create(EnemyType type, Vec2 heroPos);
 	bool init();
 	void update(float dt) override;
 	//敌机动画
@@ -53,6 +53,9 @@ public:
 			//unscheduleUpdate();
 		}
 	}
+public:
+	typedef std::function<void(cocos2d::Vec2)> ccEnemyMovedCallback;
+	ccEnemyMovedCallback onEnemyMoved;//当摇杆拖动时
 private:
 	int hp;//血量
 	int totalHp;//总血量
@@ -62,5 +65,6 @@ private:
 	EnemyType enemyType;
 	//敌机移动速度
 	float speed;
+	Vec2 heroPos;
 };
 
