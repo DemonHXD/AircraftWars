@@ -10,7 +10,10 @@ bool flag = true;
 #define HERO 1
 Hero::Hero() 
 	:speed(80), 
+	blinkDefCount(0),
+	blinkWingAirCount(0),
 	isShield(false), 
+	isWingAir(false),
 	liveCount(3), 
 	isMove(true), 
 	defenseSP(nullptr), 
@@ -256,12 +259,20 @@ void Hero::isOpenDefense(bool isShield) {
 	this->isShield = isShield;
 	if (isShield) {
 		defenseSP = Sprite::create("image/ui/trans.png");
-		//defenseSP->setAnchorPoint(Vec2(0, 0));
 		defenseSP->setPosition(Vec2(getPosition().x, getPosition().y));
 		defenseSP->setScale(0.6f);
-		//defenseSP->setTag(25);
 		_parent->addChild(defenseSP);
 		schedule(schedule_selector(Hero::defenseUpdate), 1, 5, 5);
+	}
+}
+
+/*
+	是否创建僚机
+*/
+void Hero::isCreateWingAir(bool isWingAir) {
+	this->isWingAir = isWingAir;
+	if (isWingAir) {
+		createWingAircraft();
 	}
 }
 
@@ -269,14 +280,13 @@ void Hero::isOpenDefense(bool isShield) {
 	防护罩的调度器
 */
 void Hero::defenseUpdate(float dt) {
-	//Sprite* defenseSP = (Sprite*)this->getChildByTag(25);
 	Blink * blink = Blink::create(1.0f, 2);
 	defenseSP->runAction(blink);
-	blinkCount++;
-	if (blinkCount == 5) {
+	blinkDefCount++;
+	if (blinkDefCount == 5) {
 		defenseSP->removeFromParent();
 		defenseSP = nullptr;
-		blinkCount = 0;
+		blinkDefCount = 0;
 		this->isShield = false;
 		unschedule(schedule_selector(Hero::defenseUpdate));
 	}
@@ -286,9 +296,61 @@ void Hero::defenseUpdate(float dt) {
 	延长防护罩时间
 */
 void Hero::extendDefenseTime() {
-	blinkCount = 0;
+	blinkDefCount = 0;
 	unschedule(schedule_selector(Hero::defenseUpdate));
 	schedule(schedule_selector(Hero::defenseUpdate), 1, 5, 5);
+}
+
+/*
+	延长僚机时间
+*/
+void Hero::extendWingAirTime() {
+	blinkWingAirCount = 0;
+	unschedule(schedule_selector(Hero::WingAirUpdate));
+	schedule(schedule_selector(Hero::WingAirUpdate), 1, 5, 5);
+}
+
+
+
+/*
+	开启僚机
+*/
+void Hero::createWingAircraft() {
+	//创建左僚机
+	leftWa = WingAircraft::create();
+	leftWa->setPosition(Vec2(getPosition().x - getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 20));
+	leftWa->setScale(0.6f);
+	_parent->addChild(leftWa, 10);
+
+	//创建右僚机
+	rightWa = WingAircraft::create();
+	rightWa->setPosition(Vec2(getPosition().x + getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 20));
+	rightWa->setScale(0.6f);
+	_parent->addChild(rightWa, 10);
+
+	schedule(schedule_selector(Hero::WingAirUpdate), 1, 5, 15);
+}
+
+/*
+	僚机的调度器
+	僚机开启时间为20s
+	最后五秒会闪烁消失
+*/
+void Hero::WingAirUpdate(float dt) {
+	Blink* blink1 = Blink::create(1.0f, 2);
+	Blink* blink2 = Blink::create(1.0f, 2);
+	leftWa->runAction(blink1);
+	rightWa->runAction(blink2);
+	blinkWingAirCount++;
+	if (blinkWingAirCount == 5) {
+		leftWa->removeFromParent();
+		rightWa->removeFromParent();
+		leftWa = nullptr;
+		rightWa = nullptr;
+		blinkWingAirCount = 0;
+		isWingAir = false;
+		unschedule(schedule_selector(Hero::WingAirUpdate));
+	}
 }
 
 /*
@@ -343,51 +405,6 @@ void Hero::die() {
 	Sequence* seqAct = Sequence::create(animate, callFuncAct, nullptr);
 
 	this->runAction(seqAct);
-}
-
-/*
-	开启僚机
-*/
-void Hero::createWingAircraft() {
-	//创建左僚机
-	leftWa = WingAircraft::create();
-	leftWa->setPosition(Vec2(getPosition().x - getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 20));
-	leftWa->setScale(0.6f);
-	_parent->addChild(leftWa, 10);
-
-	//创建右僚机
-	rightWa = WingAircraft::create();
-	rightWa->setPosition(Vec2(getPosition().x + getContentSize().width / 2, getPosition().y + getContentSize().height / 2 + 20));
-	rightWa->setScale(0.6f);
-	_parent->addChild(rightWa, 10);
-
-	schedule(schedule_selector(Hero::WingAirUpdate), 1, 5, 15);
-}
-
-/*
-	僚机的调度器
-	僚机开启时间为30s
-	最后五秒会闪烁消失
-*/
-void Hero::WingAirUpdate(float dt) {
-	Blink* blink1 = Blink::create(1.0f, 2);
-	Blink* blink2 = Blink::create(1.0f, 2);
-	//if (leftWa != nullptr && rightWa != nullptr) {
-	//	leftWa->runAction(blink);
-	//	rightWa->runAction(blink);
-	//}
-	leftWa->runAction(blink1);
-	rightWa->runAction(blink2);
-	blinkCount++;
-	//count++;
-	if (blinkCount == 5) {
-		leftWa->removeFromParent();
-		rightWa->removeFromParent();
-		leftWa = nullptr;
-		rightWa = nullptr;
-		blinkCount = 0;
-		unschedule(schedule_selector(Hero::WingAirUpdate));
-	}
 }
 
 /*

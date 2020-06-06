@@ -224,8 +224,8 @@
               <Image Name="hero_1_1.png" />
               <Image Name="hero_2_1.png" />
               <Image Name="hero_3_1.png" />
-              <Image Name="YesBtn.png" />
               <Image Name="hero_4_1.png" />
+              <Image Name="YesBtn.png" />
             </Folder>
             <Folder Name="layers">
               <Project Name="BuyHeroLayer.csd" Type="Layer" />
@@ -296,9 +296,9 @@
           <Folder Name="start">
             <Folder Name="ani">
               <Project Name="hero_1.csd" Type="Node" />
-              <Project Name="StartGame.csd" Type="Node" />
-              <Project Name="qbt_ani.csd" Type="Node" />
               <Project Name="plane_ani.csd" Type="Node" />
+              <Project Name="qbt_ani.csd" Type="Node" />
+              <Project Name="StartGame.csd" Type="Node" />
             </Folder>
             <Folder Name="image">
               <Image Name="about.png" />
@@ -307,10 +307,17 @@
               <Image Name="close_normal.png" />
               <Image Name="close_pressed.png" />
               <Image Name="help.png" />
+              <Image Name="img_cloud_1.png" />
+              <Image Name="img_cloud_2.png" />
+              <Image Name="LOGO.png" />
+              <Image Name="logo_pig.png" />
+              <Image Name="logo_qbt.png" />
               <Image Name="musicOff.png" />
               <Image Name="musicOn.png" />
               <Image Name="open_close_sound.png" />
               <Image Name="open_close_sound_eff.png" />
+              <Image Name="plane_ani_1.png" />
+              <Image Name="plane_ani_2.png" />
               <Image Name="rank_normal.png" />
               <Image Name="rank_pressed.png" />
               <Image Name="rankSp.png" />
@@ -321,13 +328,6 @@
               <Image Name="start_bg.png" />
               <Image Name="startGame.png" />
               <Image Name="zz-num-g.png" />
-              <Image Name="LOGO.png" />
-              <Image Name="logo_pig.png" />
-              <Image Name="logo_qbt.png" />
-              <Image Name="img_cloud_1.png" />
-              <Image Name="img_cloud_2.png" />
-              <Image Name="plane_ani_1.png" />
-              <Image Name="plane_ani_2.png" />
             </Folder>
             <Folder Name="item">
               <Project Name="ChoiceItem.csd" Type="Layer" />

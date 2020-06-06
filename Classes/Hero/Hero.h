@@ -17,8 +17,10 @@ private:
 	int type;			//默认是小飞机
 	//static Hero* instance;
 	static int count;
-	int blinkCount = 0;//计算闪烁次数
+	int blinkDefCount = 0;//计算闪烁次数
+	int blinkWingAirCount = 0;//计算闪烁次数
 	bool isShield;//是否拥有防御罩
+	bool isWingAir;//是否拥有僚机
 	bool isMove;
 	bool isStackEnemy;//是否自动追踪敌机攻击
 	WingAircraft *leftWa = nullptr, *rightWa = nullptr;
@@ -43,6 +45,12 @@ public:
 	}
 	bool getShield() {
 		return isShield;
+	}	
+	void setWingAir(bool isOpenWingAir) {
+		isWingAir = isOpenWingAir;
+	}
+	bool getWingAir() {
+		return isWingAir;
 	}
 	void setMove(bool move) {
 		isMove = move;
@@ -55,9 +63,12 @@ public:
 	//static Hero* getInstance();
 	//是否开启英雄无敌防护罩
 	void isOpenDefense(bool isShield);
+	//是否创建僚机
+	void isCreateWingAir(bool isWingAir);
 	//防护罩的调度器
 	void defenseUpdate(float dt);
 	void extendDefenseTime();//延长防护罩时间
+	void extendWingAirTime();//延长僚机时间
 	//僚机的调度器
 	void WingAirUpdate(float dt);
 	//英雄死亡
@@ -91,7 +102,7 @@ public:
 	//当触摸移动时，要执行的函数
 	void onTouchMoved(Touch* touch, Event* event);
 
-	void trackEnemy(Vec2 pos);
+	//void trackEnemy(Vec2 pos);
 
 public:
 	typedef std::function<void(cocos2d::Vec2)> ccHeroMovedCallback;

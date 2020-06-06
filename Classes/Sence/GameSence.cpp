@@ -576,7 +576,12 @@ void GameSence::collisionHeroAndProp() {
 				break;
 			case PropType::WingAir:
 				//英雄开启僚机
-				hero->createWingAircraft();
+				if (!hero->getWingAir()) {//没有僚机的时候才创建僚机
+					hero->isCreateWingAir(true);
+				} else {
+					hero->extendWingAirTime();//延长僚机时间
+				}
+				//hero->createWingAircraft();
 				break;
 			case PropType::ChangeBullet:
 				//英雄更改攻击方式
