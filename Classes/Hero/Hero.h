@@ -23,7 +23,7 @@ private:
 	bool isWingAir;//是否拥有僚机
 	bool isMove;
 	bool isLocking;//是否锁定攻击
-	bool lockingCount;
+	int lockingCount;
 	bool isStackEnemy;//是否自动追踪敌机攻击
 	WingAircraft *leftWa = nullptr, *rightWa = nullptr;
 	Sprite* defenseSP;
@@ -110,7 +110,7 @@ public:
 	//当触摸移动时，要执行的函数
 	void onTouchMoved(Touch* touch, Event* event);
 
-	void lockingFeiDan(Vec2 enemyPos);//锁定导弹调度器
+	void lockingFeiDan(Vec2 enemyPos, bool &isShoot);//锁定导弹调度器
 
 public:
 	typedef std::function<void(cocos2d::Vec2)> ccHeroMovedCallback;

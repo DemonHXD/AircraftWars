@@ -63,7 +63,8 @@ bool Bullet::init() {
 		sprintf_s(filename, "image/bullet_effect/hero/bullet_0_%d.png", 2);
 		break;
 	case EnemyBullet:
-		sprintf_s(filename, "image/bullet_effect/enemy/bullet_0_%d.png", 1);
+		randEnemyBullet = rand() % 2;
+		sprintf_s(filename, "image/bullet_effect/enemy/bullet_%d_%d.png", randEnemyBullet, 1);
 		break;
 	case WingAircraftBullet:
 		sprintf_s(filename, "image/bullet_effect/wingAircraft/bullet_0_%d.png", 1);
@@ -96,7 +97,7 @@ void Bullet::bulletRun() {
 		}
 	} else if (bulletType == EnemyBullet) {
 		for (size_t i = 1; i <= 2; i++) {
-			sprintf(filename, "image/bullet_effect/enemy/bullet_0_%d.png", i);
+			sprintf(filename, "image/bullet_effect/enemy/bullet_%d_%d.png", randEnemyBullet, i);
 			animation->addSpriteFrameWithFileName(filename);
 		}
 	} else if (bulletType == WingAircraftBullet) {

@@ -3,13 +3,28 @@
 #include "Bullet/Bullet.h"
 #include "Bullet/BulletManager.h"
 #include "bullet/BulletFactory.h"
+#include "Prop/propManager.h"
+#include "Prop/prop.h"
 #include "Utils/AudioUtil.h"
 #include "AudioEngine.h"
 using namespace experimental;
 #define ENEMY -1
-Enemy::Enemy(Vec2 heroPos, EnemyType type):enemyType(type), speed(30),isLive(true), heroPos(heroPos), onEnemyMoved(nullptr){
-	//根据不同类型的敌机设置不同的血量
-	score = totalHp = hp = (type + 1) * 10;
+const float PI = 3.1415926;//圆周率
+Enemy::Enemy(Vec2 heroPos, EnemyType type):
+	enemyType(type), 
+	speed(150),
+	isLive(true), 
+	heroPos(heroPos), 
+	onEnemyMoved(nullptr),
+	isSkillBullet(false)
+{
+	if (type <= Boss1) {
+		//根据不同类型的敌机设置不同的血量
+		score = totalHp = hp = (type + 1) * 10;
+	} else {
+		score = totalHp = hp = 5000;
+	}
+	
 }
 
 Enemy::~Enemy() {
@@ -43,6 +58,8 @@ bool Enemy::init() {
 	{
 		return false;
 	}
+
+	size = Director::getInstance()->getVisibleSize();
 	//开启敌机飞行的调度器
 	scheduleUpdate();
 
@@ -50,17 +67,26 @@ bool Enemy::init() {
 
 	//开启敌机射击的调度器
 	schedule(schedule_selector(Enemy::shoot), 1, -1, 1);
-
+	
 	schedule(schedule_selector(Enemy::moveUpdate), 0.5, -1, 0);
 
+	
+
+	//createProp
+
 	//开启敌机飞行的动画
-	//enemyAction();
+	if (enemyType == Boss2) {
+		enemyAction();
+		schedule(schedule_selector(Enemy::fastShootUpdate), 5, -1, 5);
+		schedule(schedule_selector(Enemy::createProp), 5, -1, 5);
+		//schedule(schedule_selector(Enemy::dispersedShootUpdate), 0.3, -1, 8);
+	}
 	return true;
 }
 
 void Enemy::moveUpdate(float dt) {
 	if (onEnemyMoved != nullptr) {
-		onEnemyMoved(getPosition());
+		onEnemyMoved(getPosition(), isSkillBullet);
 	}
 }
 
@@ -74,14 +100,63 @@ void Enemy::update(float dt) {
 	y = y - dt * speed;
 	setPositionY(y);
 
+	if (enemyType == Boss2) {
+		if (y <= size.height / 4 * 3) {
+			unscheduleUpdate();
+		}
+	}else if (y <= size.height / 2 + 100) {
+		unscheduleUpdate();
+	}
+	
 
 
 	//当超出屏幕时
 	if (y < -40)
 	{
-		//removeFromParent();//从父节点上移除
 		//将敌机从敌机管理器中移除
 		EnemyManager::getInstance()->collection(this);
+	}
+}
+
+void Enemy::createShoot(float angle) {
+	//创建子弹
+	Bullet* bullet = BulletFactory::createBullet(EnemyBullet, Vec2(1, 0));
+	bullet->setPosition(getPositionX(), getPositionY() - 100);
+	if (angle != 0) {
+		//设置子弹旋转
+		bullet->setRotation(angle);
+		// 设置子弹的方向
+		bullet->setDir(Vec2(sin(angle / 180 * PI), cos(angle / 180 * PI)));
+	}
+	_parent->addChild(bullet);
+
+	//将子弹添加到管理类中, 
+	BulletManager::getInstance()->addEnemyBullet(bullet);
+}
+
+//void Enemy::dispersedShootUpdate(float dt) {
+//	float angle[5] = { -11, -6, -1, 5, 10 };
+//	for (int i = 0; i < 5; i++) {
+//		createShoot(angle[i]);
+//	}
+//}
+
+void Enemy::createProp(float dt) {
+	Prop* prop = Prop::create((PropType)(rand() % 4 + 1));
+	prop->setPosition(Vec2(getPosition()));
+	_parent->addChild(prop, 10);
+	PropManager::getInstance()->addPorp(prop);
+}
+
+void Enemy::fastShootUpdate(float dt) {
+	for (int i = 1; i <= 8; i++) {
+		Vec2 newDir = heroPos - Vec2(getPositionX(), getPositionY() - 50);
+		newDir = newDir.getNormalized();
+		Bullet* bullet = BulletFactory::createBullet(EnemyBullet, newDir);
+		bullet->shootSound();
+		bullet->setPosition(getPositionX() + getContentSize().width / 2 - 30 * i, getPositionY() - 100);
+		_parent->addChild(bullet);
+		BulletManager::getInstance()->addEnemyBullet(bullet);
 	}
 }
 
@@ -91,25 +166,11 @@ void Enemy::update(float dt) {
 void Enemy::enemyAction() {
 	//创建图片收集者
 	Animation* animation = Animation::create();
-	if (enemyType == Enemy1 || enemyType == Enemy2)
-	{
-		for (int i = 0; i < 5; i++)
-		{
-			char filename[40];
-			sprintf(filename, "image/enemy/boss%d_%d.png", enemyType, i);
-			log("%s", filename);
-			animation->addSpriteFrameWithFileName(filename);
-		}
-	}
-	else if (enemyType == Enemy3 || enemyType == Enemy4)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			char filename[40];
-			sprintf(filename, "image/enemy/boss%d_%d.png", enemyType, i);
-			log("%s", filename);
-			animation->addSpriteFrameWithFileName(filename);
-		}
+	for (int i = 0; i <= 4; i++) {
+		char filename[40];
+		sprintf(filename, "image/enemy/boss%d_%d.png", enemyType, i);
+		//log("%s", filename);
+		animation->addSpriteFrameWithFileName(filename);
 	}
 	//间隔时间
 	animation->setDelayPerUnit(0.2f);
@@ -135,6 +196,10 @@ void Enemy::die(){
 	isLive = false;
 	//播放死亡动画的时候需要关闭子弹调度器
 	unschedule(schedule_selector(Enemy::shoot));
+	if (enemyType >= Boss1) {
+		unschedule(schedule_selector(Enemy::createProp));
+		unschedule(schedule_selector(Enemy::fastShootUpdate));
+	}
 	
 	//创建图片收集者
 	Animation* ani = Animation::create();
@@ -168,12 +233,12 @@ void Enemy::shoot(float dt) {
 	y = y + 30 * dt;
 	//创建子弹
 	//Bullet* bullet = Bullet::create(ENEMY, Missile);
-	Vec2 newDir = heroPos - Vec2(getPositionX(), getPositionY() + 20);
+	Vec2 newDir = heroPos - Vec2(getPositionX(), getPositionY() - 50);
 	newDir = newDir.getNormalized();
 	Bullet* bullet = BulletFactory::createBullet(EnemyBullet, newDir);
 	bullet->shootSound();
 	//设置子弹的位置:敌机的坐标 + 敌机图片高度的一半
-	bullet->setPosition(Vec2(getPositionX(), getPositionY() + 20));
+	bullet->setPosition(Vec2(getPositionX(), getPositionY() - 50));
 	//设置子弹的方向
 	//bullet->setRotation(180);
 

@@ -11,6 +11,7 @@
 #include "Layer/PauseLayer.h"
 #include "Layer/RankLayer.h"
 #include "StartSence.h"
+#include "Sence/EndSence.h"
 #include "Hero/WingAircraft.h"
 #include "cocostudio/CocoStudio.h"
 #include "Skill/SkillButton.h"
@@ -383,6 +384,10 @@ void GameSence::onEnter() {
 			this->addChild(prop, 10);
 			PropManager::getInstance()->addPorp(prop);
 		}
+		//如果Boss死亡，游戏结束
+		if (userData->getEnemyType() >= EnemyType::Boss1) {
+			scheduleOnce(schedule_selector(GameSence::gameOver), 3);
+		}
 	});//1.消息的名字 2.CC_CALLBACK_1或者lambda
 
 	//2.在对应的位置分发消息
@@ -404,6 +409,22 @@ void GameSence::onEnter() {
 			}
 		}
 	});
+}
+
+void GameSence::gameOver(float dt) {
+	int maxScore = UserDefault::getInstance()->getIntegerForKey("score", 0);
+	if (maxScore < score) {
+		UserDefault::getInstance()->setIntegerForKey("score", score);
+	}
+	Director::getInstance()->resume();
+
+	//关闭游戏场景BGM
+	AudioUtil::getInstence()->stopGameBgm();
+
+	//切换场景(当前场景被销毁，新场景被创建)
+	Scene* endScene = EndSence::createScene();
+	auto reSence = TransitionFade::create(0.5f, endScene);
+	Director::getInstance()->replaceScene(reSence);
 }
 
 void GameSence::onExit() {
@@ -503,7 +524,7 @@ void GameSence::createUi() {
 	lockingSkill->onColdBegan = [this]() {
 		hero->setLocking(true);
 		for (Enemy* enemy : EnemyManager::getInstance()->enemyList) {
-			enemy->onEnemyMoved = CC_CALLBACK_1(Hero::lockingFeiDan, hero);
+			enemy->onEnemyMoved = CC_CALLBACK_2(Hero::lockingFeiDan, hero);
 		}
 	};
 	lockingSkill->onColdEnded = [this]() {
@@ -533,14 +554,24 @@ void GameSence::createUi() {
 	自定义生产敌机的调度器
 */
 void GameSence::createEnemy(float dt) {
-	float x;
-	x = rand() % (int)size.width;
-	//创建敌机
-	Enemy* enemy = Enemy::create((EnemyType)(rand() % 7), hero->getPosition());
-	enemy->setPosition(Vec2(x, size.height + 50));
-	this->addChild(enemy, 2);
-	// 将创建的敌机添加到敌机管理类中
-	EnemyManager::getInstance()->addEnemy(enemy);
+
+	if (score < 1200) {
+		float x;
+		x = rand() % (int)size.width;
+		//创建敌机
+		Enemy* enemy = Enemy::create((EnemyType)(rand() % 7), hero->getPosition());
+		enemy->setPosition(Vec2(x, size.height + 50));
+		this->addChild(enemy, 2);
+		// 将创建的敌机添加到敌机管理类中
+		EnemyManager::getInstance()->addEnemy(enemy);
+	} else {
+		Enemy* enemy = Enemy::create(EnemyType::Boss2, hero->getPosition());
+		enemy->setPosition(Vec2(size.width / 2, size.height + 50));
+		this->addChild(enemy, 2);
+		EnemyManager::getInstance()->addEnemy(enemy);
+		unschedule(schedule_selector(GameSence::createEnemy));
+	}
+	
 }
 
 
@@ -676,7 +707,7 @@ void GameSence::collisionSkillBulletAndEenmy() {
 			bool isCrash = bullet->getBoundingBox().intersectsRect(enemy->getBoundingBox());
 			if (isCrash) {
 				bullet->setLive(false);//设置子弹死亡
-				enemy->hurt(bullet->getAtk());//设置敌机受伤
+				enemy->hurt(100);//直接消灭敌机
 				break;
 			}
 		}

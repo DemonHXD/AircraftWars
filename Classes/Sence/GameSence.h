@@ -29,6 +29,7 @@ public:
 
 	//调度的方法
 	void createEnemy(float dt);//dt:从上一次调用到这一次调用的时间
+	void gameOver(float dt);
 
 	void onEnter() override;
 

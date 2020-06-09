@@ -254,8 +254,9 @@ void Hero::shoot(float dt) {
 /*
 	锁定导弹调度器
 */
-void Hero::lockingFeiDan(Vec2 enemyPos) {
-	if (isLocking) {
+void Hero::lockingFeiDan(Vec2 enemyPos, bool &isShoot) {
+	if (isLocking && !isShoot) {
+		isShoot = true;
 		lockingCount++;
 		Vec2 newDir = enemyPos - Vec2(getPositionX(), getPositionY());
 		newDir = newDir.getNormalized();

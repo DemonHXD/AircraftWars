@@ -12,6 +12,7 @@ private:
 	int atk;//攻击力
 	bool isLive;//是否存活
 	float speed;
+	int randEnemyBullet;
 	//1为英雄子弹 -1为敌机子弹 2为僚机子弹
 	//int type;
 	BulletType bulletType;

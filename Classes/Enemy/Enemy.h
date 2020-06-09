@@ -25,6 +25,9 @@ public:
 	void createEnemyBlood();
 	//血条检测调度器
 	void scheduleBlood(float dt);
+	void fastShootUpdate(float dt);//快速射击
+	void createProp(float dt);//创建道具
+	void createShoot(float angle);
 
 	void setLive(bool isLive)//设置isLive
 	{
@@ -43,6 +46,9 @@ public:
 	int getScore() const {
 		return score;
 	}
+	int getEnemyType()const{
+		return enemyType;
+	}
 	void hurt(int atk)//受伤
 	{
 		hp -= atk;
@@ -55,7 +61,7 @@ public:
 		}
 	}
 public:
-	typedef std::function<void(cocos2d::Vec2)> ccEnemyMovedCallback;
+	typedef std::function<void(cocos2d::Vec2, bool &)> ccEnemyMovedCallback;
 	ccEnemyMovedCallback onEnemyMoved;
 private:
 	int hp;//血量
@@ -67,5 +73,7 @@ private:
 	//敌机移动速度
 	float speed;
 	Vec2 heroPos;
+	bool isSkillBullet;
+	Size size;
 };
 
