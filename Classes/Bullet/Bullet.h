@@ -3,12 +3,12 @@
 using namespace cocos2d;
 
 //定义子弹类型:枚举(整数  4个字节)
-enum BulletType { HeroBullet = 1, EnemyBullet, WingAircraftBullet};
+enum BulletType { HeroBullet = 1, EnemyBullet, WingAircraftBullet, SkillBullet};
 
 class Bullet : public Sprite
 {
 private:
-	Vec2 heroPos;
+	//Vec2 heroPos;
 	int atk;//攻击力
 	bool isLive;//是否存活
 	float speed;

@@ -53,6 +53,10 @@ void BulletManager::addWingAircraftBullet(Bullet* bullet) {
 	wingAircraftLives.push_back(bullet);
 }
 
+void BulletManager::addSkillBullet(Bullet* bullet) {
+	skillLives.push_back(bullet);
+}
+
 //回收子弹，添加到死亡池中
 void BulletManager::collection(Bullet* bullet, BulletType bulletType) {
 	switch (bulletType) {
@@ -74,6 +78,9 @@ void BulletManager::collection(Bullet* bullet, BulletType bulletType) {
 		//将僚机子弹添加到死亡池中
 		wingAircraftDeaths.push_back(bullet);
 		break;
+	case SkillBullet:
+		skillLives.remove(bullet);
+		skillDeaths.push_back(bullet);
 	}
 	//将子弹从父节点上移除
 	bullet->removeFromParent();
@@ -88,6 +95,9 @@ void BulletManager::clearList() {
 
 	wingAircraftLives.clear();
 	wingAircraftDeaths.clear();
+
+	skillLives.clear();
+	skillDeaths.clear();
 }
 
 Bullet* BulletManager::findInDeath(BulletType bulletType) {
@@ -98,7 +108,6 @@ Bullet* BulletManager::findInDeath(BulletType bulletType) {
 		for (Bullet* bullet : heroDeaths) {
 			if (bullet->getBulletType() == bulletType) {
 				bt = bullet;
-				//addHeroBullet(bt);
 				heroDeaths.remove(bt);//从死亡池中移出
 				break;
 			}
@@ -109,7 +118,6 @@ Bullet* BulletManager::findInDeath(BulletType bulletType) {
 		for (Bullet* bullet : enemyDeaths) {
 			if (bullet->getBulletType() == bulletType) {
 				bt = bullet;
-				//addEnemyBullet(bt);
 				enemyDeaths.remove(bt);//从死亡池中移出
 				break;
 			}
@@ -120,22 +128,23 @@ Bullet* BulletManager::findInDeath(BulletType bulletType) {
 		for (Bullet* bullet : wingAircraftDeaths) {
 			if (bullet->getBulletType() == bulletType) {
 				bt = bullet;
-				//addEnemyBullet(bt);
 				wingAircraftDeaths.remove(bt);//从死亡池中移出
+				break;
+			}
+		}
+		break;
+	case SkillBullet :
+		//遍历僚机死亡池中的子弹
+		for (Bullet* bullet : skillDeaths) {
+			if (bullet->getBulletType() == bulletType) {
+				bt = bullet;
+				skillDeaths.remove(bt);//从死亡池中移出
 				break;
 			}
 		}
 		break;
 	}
 	return bt;
-}
-
-void BulletManager::trackEnemy(Vec2 pos) {
-	//for (auto bullet : heroLives) {
-	//	Vec2 newDir = pos - bullet->getPosition();
-	//	newDir = newDir.getNormalized();
-	//	bullet->setDir(newDir);
-	//}
 }
 
 /*

@@ -265,6 +265,8 @@
               <Image Name="skill_1.png" />
               <Image Name="start_bg.png" />
               <Image Name="x.png" />
+              <Image Name="board3_menu.png" />
+              <Image Name="bottom_cover.png" />
             </Folder>
             <Folder Name="layers">
               <Project Name="GameLayer.csd" Type="Layer" />
@@ -273,12 +275,12 @@
           </Folder>
           <Folder Name="selectMap">
             <Folder Name="image">
-              <Image Name="bg1.jpg" />
-              <Image Name="bg2.jpg" />
-              <Image Name="bg3.jpg" />
-              <Image Name="bg4.jpg" />
-              <Image Name="bg5.jpg" />
-              <Image Name="bg7.jpg" />
+              <Image Name="bg_1.jpg" />
+              <Image Name="bg_2.jpg" />
+              <Image Name="bg_3.jpg" />
+              <Image Name="bg_4.jpg" />
+              <Image Name="bg_5.jpg" />
+              <Image Name="bg_6.jpg" />
               <Image Name="boxAtribut.png" />
               <Image Name="boxStat.png" />
               <Image Name="SelectLevel.png" />

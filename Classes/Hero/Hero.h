@@ -22,6 +22,8 @@ private:
 	bool isShield;//是否拥有防御罩
 	bool isWingAir;//是否拥有僚机
 	bool isMove;
+	bool isLocking;//是否锁定攻击
+	bool lockingCount;
 	bool isStackEnemy;//是否自动追踪敌机攻击
 	WingAircraft *leftWa = nullptr, *rightWa = nullptr;
 	Sprite* defenseSP;
@@ -54,6 +56,12 @@ public:
 	}
 	void setMove(bool move) {
 		isMove = move;
+	}
+	int getBulletCount()const {
+		return bulletCount;
+	}
+	void setLocking(bool locking) {
+		isLocking = locking;
 	}
 	//根据飞机类型来创建英雄
 	static Hero* create(const int herotype);
@@ -102,7 +110,7 @@ public:
 	//当触摸移动时，要执行的函数
 	void onTouchMoved(Touch* touch, Event* event);
 
-	//void trackEnemy(Vec2 pos);
+	void lockingFeiDan(Vec2 enemyPos);//锁定导弹调度器
 
 public:
 	typedef std::function<void(cocos2d::Vec2)> ccHeroMovedCallback;

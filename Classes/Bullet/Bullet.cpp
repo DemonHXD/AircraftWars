@@ -1,6 +1,7 @@
 ﻿#include "Bullet.h"
 #include "BulletManager.h"
 #include "Enemy/EnemyManager.h"
+#include "Enemy/Enemy.h"
 #include "Utils/AudioUtil.h"
 #include "Hero/Hero.h"
 Bullet::Bullet(BulletType bulletType, Vec2 dir)
@@ -42,16 +43,15 @@ void Bullet::onEnter() {
 		Vec2 newDir = hero->getPosition() - getPosition();
 		newDir = newDir.getNormalized();
 		setDir(newDir);
+	} else if (bulletType == SkillBullet) {
+		Enemy* enemy =  EnemyManager::getInstance()->enemyList.front();
+		Vec2 newDir = enemy->getPosition() - getPosition();
+		newDir = newDir.getNormalized();
+		setDir(newDir);
 	}
-	
 
 	isLive = true;
 }
-
-//void Bullet::onExit() {
-//	Sprite::onExit();
-//
-//}
 
 bool Bullet::init() {
 	//根据不同的类型使用不同的路径
@@ -68,6 +68,9 @@ bool Bullet::init() {
 	case WingAircraftBullet:
 		sprintf_s(filename, "image/bullet_effect/wingAircraft/bullet_0_%d.png", 1);
 		break;
+	case SkillBullet:
+		sprintf_s(filename, "image/bullet_effect/skill/feidan.png");
+		break;
 	}
 
 	if (!Sprite::initWithFile(filename)) {
@@ -76,8 +79,6 @@ bool Bullet::init() {
 	bulletRun();
 	//设置子弹的锚点
 	setAnchorPoint(Vec2(0.5, 0));
-	//schedule(schedule_selector(Bullet::bulletUpdate), 1, -1, 0);
-	//scheduleUpdate();
 	return true;
 }
 
@@ -119,20 +120,14 @@ void Bullet::update(float dt) {
 		BulletManager::getInstance()->collection(this, bulletType);
 		return;
 	}
-	//if
-	//if (heroPos != Vec2::ZERO) {
-	//	dir = heroPos;
-	//}
 	Vec2 pos = getPosition();//获取原先的坐标
-	setPosition(pos + dir * speed * dt + heroPos);
+	setPosition(pos + dir * speed * dt);
 	float h = Director::getInstance()->getVisibleSize().height;
 	float w = Director::getInstance()->getVisibleSize().width;
 	float y = getPositionY();
 	float x = getPositionX();
 	//当超出屏幕时 
 	if (y >= h + 20 || x <= -20 || x >= w + 20) {
-		//removeFromParent();//从父节点上移除
-
 		//将当前子弹从管理类中移除
 		BulletManager::getInstance()->collection(this, bulletType);
 	}

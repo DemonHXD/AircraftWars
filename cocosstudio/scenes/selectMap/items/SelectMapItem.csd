@@ -27,7 +27,7 @@
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.5000" />
             <PreSize X="1.2000" Y="1.3333" />
-            <FileData Type="Normal" Path="scenes/selectMap/image/bg1.jpg" Plist="" />
+            <FileData Type="Normal" Path="scenes/selectMap/image/bg_1.jpg" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
           <AbstractNodeData Name="Image_yes" ActionTag="-19656779" Tag="109" IconVisible="False" LeftMargin="268.9546" RightMargin="19.0454" TopMargin="-6.7248" BottomMargin="494.7248" ctype="SpriteObjectData">

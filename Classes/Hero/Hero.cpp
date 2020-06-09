@@ -18,7 +18,9 @@ Hero::Hero()
 	isMove(true), 
 	defenseSP(nullptr), 
 	bulletCount(1),
-	isStackEnemy(false)
+	isStackEnemy(false),
+	isLocking(false),
+	lockingCount(0)
 {
 
 }
@@ -212,15 +214,15 @@ void Hero::onTouchMoved(Touch* touch, Event* event) {
 
 		setPosition(pos);
 
-		//if (onHeroMoved != nullptr) {
-		//	onHeroMoved(pos);
-		//}
+		if (onHeroMoved != nullptr) {
+			onHeroMoved(pos);
+		}
 	}
 	
 }
 
 /*
-	设置散弹效果
+	创建多弹攻击
 */
 void Hero::createShotgun(float angle) {
 	//创建子弹
@@ -246,6 +248,28 @@ void Hero::createShotgun(float angle) {
 void Hero::shoot(float dt) {
 	for (int i = 0; i < bulletCount; i++) {
 		createShotgun(bulletAngle[i]);
+	}
+}
+
+/*
+	锁定导弹调度器
+*/
+void Hero::lockingFeiDan(Vec2 enemyPos) {
+	if (isLocking) {
+		lockingCount++;
+		Vec2 newDir = enemyPos - Vec2(getPositionX(), getPositionY());
+		newDir = newDir.getNormalized();
+		Bullet* bullet = BulletFactory::createBullet(SkillBullet, newDir);
+		float w = getContentSize().width / 2;
+		if (lockingCount % 2 == 0) {
+			bullet->setPosition(getPosition().x - w, getPosition().y);
+		} else {
+			bullet->setPosition(getPosition().x + w, getPosition().y);
+		}
+		_parent->addChild(bullet);
+
+		//将子弹添加到管理类中
+		BulletManager::getInstance()->addSkillBullet(bullet);
 	}
 }
 
@@ -364,7 +388,7 @@ void Hero::hit() {
 		isMove = false;
 		//设置英雄初始位置
 		Size size = Director::getInstance()->getVisibleSize();
-		this->setPosition(Vec2(size.width / 2, this->getContentSize().height / 2));
+		this->setPosition(Vec2(size.width / 2, this->getContentSize().height / 2 + 100));
 		//判断是否创建了僚机
 		if (leftWa != nullptr && rightWa != nullptr) {
 			leftWa->setPosition(Vec2(getPosition().x - 60, getPosition().y + 30));

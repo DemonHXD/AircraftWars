@@ -314,10 +314,9 @@ bool GameSence::init() {
 
 	//创建英雄
 	hero = Hero::create();
-	//hero->onHeroMoved = CC_CALLBACK_1(BulletManager::trackHero, BulletManager::getInstance());
-
-	hero->setPosition(Vec2(size.width / 2, hero->getContentSize().height / 2));
+	hero->setPosition(Vec2(size.width / 2, hero->getContentSize().height / 2 + 100));
 	hero->setTag(HERO);
+	//hero->setLocalZOrder(2);
 	this->addChild(hero, 2);
 
 	//获取分数文本
@@ -373,8 +372,13 @@ void GameSence::onEnter() {
 		this->addScore(userData->getScore());
 		//消灭一个敌机，有五分之一的几率掉落道具
 		if (rand() % 5 == 0) {
+			int randNum = rand() % 4 + 1;
+			if (hero->getBulletCount() == 4) {
+				do {
+					randNum = rand() % 4 + 1;
+				} while (randNum != 3);
+			}
 			Prop* prop = Prop::create((PropType)(rand()% 4 + 1));
-			//prop->setPosition(Vec2(rand() % (int)size.width, size.height + 40));
 			prop->setPosition(Vec2(userData->getPosition()));
 			this->addChild(prop, 10);
 			PropManager::getInstance()->addPorp(prop);
@@ -436,6 +440,16 @@ void GameSence::createPropSchedule(float dt) {
 */
 void GameSence::createUi() {
 
+	//创建底部技能框
+	Sprite* bottom_cover = Sprite::create("image/ui/bottom_cover.png");
+	bottom_cover->setPosition(Vec2(size.width / 2, 42));
+	bottom_cover->setScale(0.8, 0.8);
+	this->addChild(bottom_cover, 1);
+	Sprite* board3_menu = Sprite::create("image/ui/board3_menu.png");
+	board3_menu->setPosition(Vec2(size.width / 2, 56));
+	board3_menu->setScale(0.45, 0.45);
+	this->addChild(board3_menu, 1);
+	
 	//获取血量文本
 	heroLiveCount = dynamic_cast<TextAtlas*>(root->getChildByName("heroHpText"));
 
@@ -471,19 +485,42 @@ void GameSence::createUi() {
 		this->addChild(rankLayer, 10);
 	});
 
-	//创建技能按钮
-	SkillButton* skill = SkillButton::create(5, "scenes/game/image/skill_1.png");
-	//设置技能不可以
-	//skill->setEnabled(false);
-	skill->onColdBegan = [this]() { 
+	//清屏技能按钮
+	SkillButton* clearScreenskill = SkillButton::create(5, "image/ui/img_ui_34.png");
+	clearScreenskill->setScale(0.6, 0.6);
+	clearScreenskill->setPosition(Vec2(size.width / 2, 54));
+	this->addChild(clearScreenskill, 1);
+	clearScreenskill->onColdBegan = [this]() {
 		bulletManager->destEnemyBullets();
 		enemyManager->destEnemys();
 	};
-	//skill->onColdEnded = [this]() {  };
 
-	skill->setScale(0.5, 0.5);
-	skill->setPosition(Vec2(size.width - 100, 40));
-	this->addChild(skill);
+	//发射锁定敌机导弹技能按钮
+	SkillButton* lockingSkill = SkillButton::create(5, "image/ui/img_ui_33.png");
+	lockingSkill->setScale(0.6, 0.6);
+	lockingSkill->setPosition(Vec2(size.width / 2 - 43, 54));
+	this->addChild(lockingSkill, 1);
+	lockingSkill->onColdBegan = [this]() {
+		hero->setLocking(true);
+		for (Enemy* enemy : EnemyManager::getInstance()->enemyList) {
+			enemy->onEnemyMoved = CC_CALLBACK_1(Hero::lockingFeiDan, hero);
+		}
+	};
+	lockingSkill->onColdEnded = [this]() {
+		hero->setLocking(false);
+	};
+
+
+	//磁力道具技能按钮
+	SkillButton* magnetSkill = SkillButton::create(5, "image/ui/img_ui_28.png");
+	magnetSkill->setScale(0.6, 0.6);
+	magnetSkill->setPosition(Vec2(size.width / 2 + 43, 54));
+	this->addChild(magnetSkill, 1);
+	magnetSkill->onColdBegan = [this]() {
+		for (Prop* prop : propManager->porpList) {
+			prop->magnetProp(hero->getPosition());
+		}
+	};
 
 	//JoyStick* stick = JoyStick::create("scenes/game/image/JoyStick_Bg.png", "scenes/game/image/JoyStick.png");
 	//Hero* hero = (Hero*)this->getChildByTag(HERO);
@@ -496,20 +533,10 @@ void GameSence::createUi() {
 	自定义生产敌机的调度器
 */
 void GameSence::createEnemy(float dt) {
-	/*Hero* hero = (Hero*)this->getChildByTag(HERO);*/
 	float x;
 	x = rand() % (int)size.width;
-	//Vec2 newDir = pos - bullet->getPosition();
-	//newDir = newDir.getNormalized();
 	//创建敌机
 	Enemy* enemy = Enemy::create((EnemyType)(rand() % 7), hero->getPosition());
-
-	//if (hero->getStackEnemy()) {
-	//	enemy->onEnemyMoved = CC_CALLBACK_1(BulletManager::trackEnemy, BulletManager::getInstance());
-	//} else {
-	//	enemy->onEnemyMoved = nullptr;
-	//}
-	
 	enemy->setPosition(Vec2(x, size.height + 50));
 	this->addChild(enemy, 2);
 	// 将创建的敌机添加到敌机管理类中
@@ -530,7 +557,10 @@ void GameSence::update(float dt) {
 	//检测英雄与敌机子弹的碰撞
 	collisionHeroAndEenmyBullet();
 	//检测僚机子弹与敌机碰撞
-	collisionWingAircraftAndEenmyBullet();
+	collisionWingAircraftAndEenmy();
+	//检测技能子弹与敌机碰撞
+	collisionSkillBulletAndEenmy();
+
 
 }
 
@@ -618,8 +648,26 @@ void GameSence::collisionHeroAndEenmyBullet() {
 /*
 	检测僚机子弹与敌机碰撞
 */
-void GameSence::collisionWingAircraftAndEenmyBullet() {
+void GameSence::collisionWingAircraftAndEenmy() {
 	for (Bullet* bullet : bulletManager->wingAircraftLives) {
+		for (Enemy* enemy : enemyManager->enemyList) {
+			//如果enemy为死亡状态
+			if (!enemy->getLive()) {
+				continue;
+			}
+			bool isCrash = bullet->getBoundingBox().intersectsRect(enemy->getBoundingBox());
+			if (isCrash) {
+				bullet->setLive(false);//设置子弹死亡
+				enemy->hurt(bullet->getAtk());//设置敌机受伤
+				break;
+			}
+		}
+	}
+}
+
+
+void GameSence::collisionSkillBulletAndEenmy() {
+	for (Bullet* bullet : bulletManager->skillLives) {
 		for (Enemy* enemy : enemyManager->enemyList) {
 			//如果enemy为死亡状态
 			if (!enemy->getLive()) {

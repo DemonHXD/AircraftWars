@@ -50,7 +50,10 @@ public:
 	void collisionHeroAndProp();
 
 	//检测僚机子弹与敌机碰撞
-	void collisionWingAircraftAndEenmyBullet();
+	void collisionWingAircraftAndEenmy();
+
+	//检测技能子弹与敌机碰撞
+	void collisionSkillBulletAndEenmy();
 
 	void addScore(int add_score);
 

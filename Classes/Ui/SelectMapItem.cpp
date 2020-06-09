@@ -40,7 +40,7 @@ bool SelectMapItem::init(int index) {
 
 	//根据值改变图片 参数:图片路径
 	char filename[80];
-	sprintf_s(filename, "scenes/selectMap/image/bg%d.jpg", index);
+	sprintf_s(filename, "scenes/selectMap/image/bg_%d.jpg", index);
 	Image_player->setTexture(filename);
 
 	//获取背景按钮，设置吞噬触摸为false

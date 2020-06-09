@@ -14,6 +14,7 @@ public:
 	static Enemy* create(EnemyType type, Vec2 heroPos);
 	bool init();
 	void update(float dt) override;
+	void moveUpdate(float dt);
 	//敌机动画
 	void enemyAction();
 	//敌机设计的调度器
@@ -55,7 +56,7 @@ public:
 	}
 public:
 	typedef std::function<void(cocos2d::Vec2)> ccEnemyMovedCallback;
-	ccEnemyMovedCallback onEnemyMoved;//当摇杆拖动时
+	ccEnemyMovedCallback onEnemyMoved;
 private:
 	int hp;//血量
 	int totalHp;//总血量

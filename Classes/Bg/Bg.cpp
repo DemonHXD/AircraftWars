@@ -25,7 +25,7 @@ Bg* Bg::create() {
 bool Bg::init() {
 	char filename[80];
 	int mapType = UserDefault::getInstance()->getIntegerForKey("mapType", 0);
-	sprintf_s(filename, "scenes/selectMap/image/bg%d.jpg", mapType);
+	sprintf_s(filename, "scenes/selectMap/image/bg_%d.jpg", mapType);
 	//调用父类Sprite的initWithFile方法
 	if (!Sprite::initWithFile(filename)) {
 		return false;

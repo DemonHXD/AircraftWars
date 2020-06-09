@@ -27,6 +27,8 @@ bool SkillButton::init(
 		return false;
 	}
 	/*EventListenerTouchOneByOne*/
+	//创建背景
+
 	//创建遮罩精灵:灰色
 	Sprite* sp = Sprite::create(normalImage);
 	//sp->setAnchorPoint(Vec2(0, 0));
@@ -64,5 +66,11 @@ bool SkillButton::init(
 			progressTimer->runAction(seqAct);
 		}
 	});
+
+	//Sprite* bg = Sprite::create("image/ui/img_ui_31.png");
+	//bg->setAnchorPoint(Vec2::ZERO);
+	//bg->setPosition(progressTimer->getPosition().x - 6, progressTimer->getPosition().y - 6);
+	//this->addChild(bg, -1);
+
 	return true;
 }

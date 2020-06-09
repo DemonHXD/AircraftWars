@@ -19,6 +19,9 @@ Bullet* BulletFactory::createBullet(BulletType bulletType, Vec2 dir) {
 	case WingAircraftBullet:
 		BulletManager::getInstance()->addWingAircraftBullet(bt);
 		break;
+	case SkillBullet:
+		BulletManager::getInstance()->addSkillBullet(bt);
+		break;
 	}
 	return bt;
 }

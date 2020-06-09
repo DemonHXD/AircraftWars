@@ -51,9 +51,17 @@ bool Enemy::init() {
 	//开启敌机射击的调度器
 	schedule(schedule_selector(Enemy::shoot), 1, -1, 1);
 
+	schedule(schedule_selector(Enemy::moveUpdate), 0.5, -1, 0);
+
 	//开启敌机飞行的动画
 	//enemyAction();
 	return true;
+}
+
+void Enemy::moveUpdate(float dt) {
+	if (onEnemyMoved != nullptr) {
+		onEnemyMoved(getPosition());
+	}
 }
 
 void Enemy::update(float dt) {
@@ -66,9 +74,7 @@ void Enemy::update(float dt) {
 	y = y - dt * speed;
 	setPositionY(y);
 
-	if (onEnemyMoved != nullptr) {
-		onEnemyMoved(getPosition());
-	}
+
 
 	//当超出屏幕时
 	if (y < -40)

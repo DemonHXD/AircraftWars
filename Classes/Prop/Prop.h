@@ -25,6 +25,7 @@ public:
 	PropType getType() {
 		return type;
 	}
+	void magnetProp(Vec2 heroPos);//把道具吸到英雄上
 private:
 	//速度
 	int speed;
@@ -33,6 +34,9 @@ private:
 	bool isLive;
 	Size size;
 	PropType type;
+	bool isCloseFiy;
+	int showPropTextCount;
+	static Sprite* textSp;
 };
 
 #endif // !__Porp_H__
