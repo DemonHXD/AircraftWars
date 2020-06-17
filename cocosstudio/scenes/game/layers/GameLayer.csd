@@ -34,56 +34,56 @@
             <OutlineColor A="255" R="255" G="0" B="0" />
             <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
-          <AbstractNodeData Name="heroSp" ActionTag="1392514302" Tag="54" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="189.9720" RightMargin="197.0280" TopMargin="9.0615" BottomMargin="661.9385" ctype="SpriteObjectData">
+          <AbstractNodeData Name="heroSp" ActionTag="1392514302" Tag="54" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="189.9720" RightMargin="197.0280" TopMargin="17.0618" BottomMargin="653.9382" ctype="SpriteObjectData">
             <Size X="93.0000" Y="129.0000" />
             <AnchorPoint ScaleX="0.5880" ScaleY="0.4523" />
-            <Position X="244.6560" Y="720.2852" />
+            <Position X="244.6560" Y="712.2849" />
             <Scale ScaleX="0.5000" ScaleY="0.5000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.5097" Y="0.9004" />
+            <PrePosition X="0.5097" Y="0.8904" />
             <PreSize X="0.1937" Y="0.1612" />
             <FileData Type="Normal" Path="scenes/game/image/hero1_1.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="xSp" ActionTag="1713029112" Tag="55" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="252.0480" RightMargin="167.9520" TopMargin="39.7145" BottomMargin="700.2855" ctype="SpriteObjectData">
+          <AbstractNodeData Name="xSp" ActionTag="1713029112" Tag="55" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="252.0480" RightMargin="167.9520" TopMargin="47.7150" BottomMargin="692.2850" ctype="SpriteObjectData">
             <Size X="60.0000" Y="60.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="282.0480" Y="730.2855" />
+            <Position X="282.0480" Y="722.2850" />
             <Scale ScaleX="0.7000" ScaleY="0.7000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.5876" Y="0.9129" />
+            <PrePosition X="0.5876" Y="0.9029" />
             <PreSize X="0.1250" Y="0.0750" />
             <FileData Type="Normal" Path="scenes/game/image/x.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="heroHpText" ActionTag="1668019408" Tag="56" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="299.7120" RightMargin="166.2880" TopMargin="59.6883" BottomMargin="722.3117" CharWidth="14" CharHeight="18" LabelText="3" StartChar="." ctype="TextAtlasObjectData">
+          <AbstractNodeData Name="heroHpText" ActionTag="1668019408" Tag="56" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="299.7120" RightMargin="166.2880" TopMargin="67.6886" BottomMargin="714.3114" CharWidth="14" CharHeight="18" LabelText="3" StartChar="." ctype="TextAtlasObjectData">
             <Size X="14.0000" Y="18.0000" />
             <AnchorPoint ScaleY="0.5000" />
-            <Position X="299.7120" Y="731.3117" />
+            <Position X="299.7120" Y="723.3114" />
             <Scale ScaleX="2.0000" ScaleY="2.0000" />
             <CColor A="255" R="27" G="250" B="31" />
-            <PrePosition X="0.6244" Y="0.9141" />
+            <PrePosition X="0.6244" Y="0.9041" />
             <PreSize X="0.0292" Y="0.0225" />
             <LabelAtlasFileImage_CNB Type="Default" Path="Default/TextAtlas.png" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ScoreSp" ActionTag="-1784590789" Tag="57" IconVisible="False" LeftMargin="-9.1043" RightMargin="361.1043" TopMargin="39.4115" BottomMargin="696.5885" ctype="SpriteObjectData">
+          <AbstractNodeData Name="ScoreSp" ActionTag="-1784590789" Tag="57" IconVisible="False" LeftMargin="-9.1044" RightMargin="361.1044" TopMargin="44.4120" BottomMargin="691.5880" ctype="SpriteObjectData">
             <Size X="128.0000" Y="64.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="54.8957" Y="728.5885" />
+            <Position X="54.8956" Y="723.5880" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
-            <PrePosition X="0.1144" Y="0.9107" />
+            <PrePosition X="0.1144" Y="0.9045" />
             <PreSize X="0.2667" Y="0.0800" />
             <FileData Type="Normal" Path="scenes/game/image/Score.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="ScoreNumberText" ActionTag="357566176" Tag="58" IconVisible="False" LeftMargin="99.8988" RightMargin="366.1012" TopMargin="64.1074" BottomMargin="717.8926" CharWidth="14" CharHeight="18" LabelText="0" StartChar="." ctype="TextAtlasObjectData">
+          <AbstractNodeData Name="ScoreNumberText" ActionTag="357566176" Tag="58" IconVisible="False" LeftMargin="99.8988" RightMargin="366.1012" TopMargin="69.1082" BottomMargin="712.8918" CharWidth="14" CharHeight="18" LabelText="0" StartChar="." ctype="TextAtlasObjectData">
             <Size X="14.0000" Y="18.0000" />
             <AnchorPoint ScaleY="0.5000" />
-            <Position X="99.8988" Y="726.8926" />
+            <Position X="99.8988" Y="721.8918" />
             <Scale ScaleX="1.5000" ScaleY="1.5000" />
             <CColor A="255" R="27" G="250" B="31" />
-            <PrePosition X="0.2081" Y="0.9086" />
+            <PrePosition X="0.2081" Y="0.9024" />
             <PreSize X="0.0292" Y="0.0225" />
             <LabelAtlasFileImage_CNB Type="Default" Path="Default/TextAtlas.png" Plist="" />
           </AbstractNodeData>

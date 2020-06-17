@@ -42,10 +42,10 @@
             <FileData Type="Normal" Path="scenes/selectMap/image/SelectLevel.png" Plist="" />
             <BlendFunc Src="1" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="startGameBtn" ActionTag="-963318004" Tag="120" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="134.9999" RightMargin="135.0001" TopMargin="714.8203" BottomMargin="15.1797" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="180" Scale9Height="48" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+          <AbstractNodeData Name="startGameBtn" ActionTag="-963318004" Tag="120" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="135.0000" RightMargin="135.0000" TopMargin="714.8203" BottomMargin="15.1797" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="180" Scale9Height="48" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
             <Size X="210.0000" Y="70.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="239.9999" Y="50.1797" />
+            <Position X="240.0000" Y="50.1797" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.0627" />

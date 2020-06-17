@@ -17,10 +17,10 @@
             <FileData Type="Normal" Path="scenes/start/image/start_bg.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
           </AbstractNodeData>
-          <AbstractNodeData Name="startGameBtn" ActionTag="347589434" Tag="11" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="120.0002" RightMargin="119.9998" TopMargin="305.0000" BottomMargin="445.0000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="210" Scale9Height="28" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
+          <AbstractNodeData Name="startGameBtn" ActionTag="347589434" Tag="11" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="120.0000" RightMargin="120.0000" TopMargin="305.0000" BottomMargin="445.0000" TouchEnable="True" FontSize="14" Scale9Enable="True" LeftEage="15" RightEage="15" TopEage="11" BottomEage="11" Scale9OriginX="15" Scale9OriginY="11" Scale9Width="210" Scale9Height="28" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="ButtonObjectData">
             <Size X="240.0000" Y="50.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="240.0002" Y="470.0000" />
+            <Position X="240.0000" Y="470.0000" />
             <Scale ScaleX="1.0000" ScaleY="1.0000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.5875" />
@@ -93,10 +93,10 @@
             <PreSize X="0.0000" Y="0.0000" />
             <FileData Type="Normal" Path="scenes/start/ani/StartGame.csd" Plist="" />
           </AbstractNodeData>
-          <AbstractNodeData Name="LOGO_1" ActionTag="869295020" Tag="12" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="-46.4991" RightMargin="-46.5009" TopMargin="137.9074" BottomMargin="484.0926" ctype="SpriteObjectData">
+          <AbstractNodeData Name="LOGO_1" ActionTag="869295020" Tag="12" IconVisible="False" PositionPercentXEnabled="True" LeftMargin="-46.5000" RightMargin="-46.5000" TopMargin="137.9074" BottomMargin="484.0926" ctype="SpriteObjectData">
             <Size X="573.0000" Y="178.0000" />
             <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
-            <Position X="240.0009" Y="573.0926" />
+            <Position X="240.0000" Y="573.0926" />
             <Scale ScaleX="0.5000" ScaleY="0.5000" />
             <CColor A="255" R="255" G="255" B="255" />
             <PrePosition X="0.5000" Y="0.7164" />
@@ -145,6 +145,17 @@
             <PreSize X="1.0000" Y="1.0000" />
             <FileData Type="Normal" Path="scenes/start/image/start_bg.png" Plist="" />
             <BlendFunc Src="770" Dst="771" />
+          </AbstractNodeData>
+          <AbstractNodeData Name="Text_1" ActionTag="576049695" Tag="27" IconVisible="False" LeftMargin="93.9628" RightMargin="66.0372" TopMargin="663.8249" BottomMargin="96.1751" FontSize="20" LabelText="湖南科技学院-何相达-全民飞机大战&#xA;飞思FS01202005--02班" ShadowOffsetX="2.0000" ShadowOffsetY="-2.0000" ctype="TextObjectData">
+            <Size X="320.0000" Y="40.0000" />
+            <AnchorPoint ScaleX="0.5000" ScaleY="0.5000" />
+            <Position X="253.9628" Y="116.1751" />
+            <Scale ScaleX="1.0000" ScaleY="1.0000" />
+            <CColor A="255" R="255" G="0" B="0" />
+            <PrePosition X="0.5291" Y="0.1452" />
+            <PreSize X="0.6667" Y="0.0500" />
+            <OutlineColor A="255" R="255" G="0" B="0" />
+            <ShadowColor A="255" R="110" G="110" B="110" />
           </AbstractNodeData>
         </Children>
       </ObjectData>

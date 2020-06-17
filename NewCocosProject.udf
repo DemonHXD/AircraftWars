@@ -30,7 +30,14 @@
     </Item>
     <Item Key="TabsParamsKey">
       <Value ctype="TabsInfo">
-        <ActiveDocument />
+        <OpenedDocuments>
+          <FilePathData Path="scenes/start/layers/StartLayer.csd" />
+          <FilePathData Path="scenes/selectMap/layers/SelectMapLayer.csd" />
+          <FilePathData Path="scenes/game/layers/GameLayer.csd" />
+          <FilePathData Path="scenes/end/layers/EndLayer.csd" />
+          <FilePathData Path="scenes/buyHero/layers/BuyHeroLayer.csd" />
+        </OpenedDocuments>
+        <ActiveDocument Path="scenes/start/layers/StartLayer.csd" />
       </Value>
     </Item>
   </Properties>

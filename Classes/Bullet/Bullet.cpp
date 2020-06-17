@@ -34,7 +34,6 @@ void Bullet::onEnter() {
 
 	//开启调度器
 	scheduleUpdate();
-	//schedule(schedule_selector(Bullet::bulletUpdate), 1.5f, -1, 0);
 
 	bulletRun();
 

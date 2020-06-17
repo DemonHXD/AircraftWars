@@ -134,13 +134,6 @@ void Enemy::createShoot(float angle) {
 	BulletManager::getInstance()->addEnemyBullet(bullet);
 }
 
-//void Enemy::dispersedShootUpdate(float dt) {
-//	float angle[5] = { -11, -6, -1, 5, 10 };
-//	for (int i = 0; i < 5; i++) {
-//		createShoot(angle[i]);
-//	}
-//}
-
 void Enemy::createProp(float dt) {
 	Prop* prop = Prop::create((PropType)(rand() % 4 + 1));
 	prop->setPosition(Vec2(getPosition()));

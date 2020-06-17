@@ -554,8 +554,7 @@ void GameSence::createUi() {
 	自定义生产敌机的调度器
 */
 void GameSence::createEnemy(float dt) {
-
-	if (score < 1200) {
+	if (score < 300) {
 		float x;
 		x = rand() % (int)size.width;
 		//创建敌机

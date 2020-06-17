@@ -247,6 +247,8 @@
             <Folder Name="image">
               <Image Name="backMenu_normal.png" />
               <Image Name="backMenu_pressed.png" />
+              <Image Name="board3_menu.png" />
+              <Image Name="bottom_cover.png" />
               <Image Name="continueGame_normal.png" />
               <Image Name="continueGame_pressed.png" />
               <Image Name="finishGame_normal.png" />
@@ -265,8 +267,6 @@
               <Image Name="skill_1.png" />
               <Image Name="start_bg.png" />
               <Image Name="x.png" />
-              <Image Name="board3_menu.png" />
-              <Image Name="bottom_cover.png" />
             </Folder>
             <Folder Name="layers">
               <Project Name="GameLayer.csd" Type="Layer" />
